@@ -1,0 +1,184 @@
+/*
+ *-------------------------------------------------------------
+ * @File  : css reset copy from 张鑫旭 少许修改
+ * @Author: qingsong.guo 
+ * @Email : 1251005052@qq.com 
+ * @GitHub: https://guoqs.github.com/
+ * @Date  : 2017-11-10 11:42:10 
+ * @Last Modified by:   qingsong.guo 
+ * @Last Modified time: 2017-11-10 11:42:10 
+ *-------------------------------------------------------------
+ */
+
+html,
+body,
+div,
+span,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+abbr,
+address,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+samp,
+small,
+strong,
+sub,
+sup,
+var,
+b,
+i,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section,
+summary,
+time,
+mark,
+audio,
+video,
+a {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+}
+
+article,
+aside,
+canvas,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section,
+summary {
+	display: block;
+	box-sizing: border-box;
+}
+
+ul,
+ol {
+	list-style: none;
+}
+
+blockquote,
+q {
+	quotes: none;
+}
+
+ins {
+	background-color: #ff9;
+	color: #000;
+	text-decoration: none;
+}
+
+mark {
+	background-color: #ff9;
+	color: #000;
+	font-style: italic;
+	font-weight: bold;
+}
+
+del {
+	text-decoration: line-through;
+}
+
+abbr[title],
+dfn[title] {
+	border-bottom: 1px dotted #000;
+	cursor: help;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+hr {
+	display: block;
+	height: 1px;
+	border: 0;
+	border-top: 1px solid #cccccc;
+	margin: 1em 0;
+	padding: 0;
+}
+
+input,
+select {
+	vertical-align: middle;
+	-webkit-appearance: none;
+	appearance: none;
+	background-color: transparent;
+	border: 0;
+	border: 1px solid #ccc;
+	height: 2em;
+	border-radius: 3px;
+	box-sizing: border-box;
+	padding: 0 3px;
+}
+a{
+	color: #666;
+	text-decoration: none;
+}
+button,a,[type=button]{
+	transition-duration: .3s;
+}
+button:hover,[type=button]:hover,a:hover{
+	background-color: #eee;
+}
+button:active,[type=button]:active,a:active{
+	background-color: #ddd;
+}
+:focus{
+	outline: none;
+}

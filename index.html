@@ -6,13 +6,14 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
 		<title>项目案例-guoqs</title>
+		<link rel="stylesheet" type="text/css" href="common/style/reset.css" />
 	</head>
 	<style>
-		div {
+		.tips {
 			width: 500px;
 			max-width: 90%;
 			height: 200px;
-			margin: 100px auto;
+			margin: 100px auto 0 auto;
 			border: 1px solid green;
 			font-size: 20px;
 			font-weight: bold;
@@ -28,7 +29,49 @@
 	</style>
 
 	<body>
-		<div>网站正在建设中...</div>
+		<div class="tips">网站正在建设中...</div>
+		<hr class="divide" />
+		<div>
+			<mark>type="button"</mark>
+			<input type="button" value="一个按钮" />
+		</div>
+		<div>
+			<mark>a</mark>
+			<a href="#">一个a标签</a>
+		</div>
+		<div>
+			<mark>type="date"</mark>
+			<input type="date" />
+		</div>
+		<div>
+			<mark>type="datetime-local"</mark>
+			<input type="datetime-local" />
+		</div>
+		<div>
+			<mark>type="file"</mark>
+			<input type="file" />
+		</div>
+		<div>
+			<mark>type="number"</mark>
+			<input type="number" />
+		</div>
+		<div>
+			<mark>type="tel"</mark>
+			<input type="tel" />
+		</div>
+		<div>
+			<mark>type="email"</mark>
+			<input type="email" />
+		</div>
+		<div>
+			<mark>select</mark>
+			<select>
+				<option value="1">1</option>
+				<option value="2">2</option>
+			</select>
+		</div>
+	
 	</body>
+	<script src="common/js/jquery-3.2.1.min.js"></script>
 	<script src="g-test/index.js"></script>
 </html>
