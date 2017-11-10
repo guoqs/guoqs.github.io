@@ -1,0 +1,99 @@
+/*
+ *-------------------------------------------------------------
+ * @File  : guoqs 套路布局
+ * @Author: qingsong.guo 
+ * @Email : 1251005052@qq.com 
+ * @GitHub: https://github.com/guoqs
+ * @Date  : 2017-11-10 14:22:42 
+ * @Last Modified by:   qingsong.guo 
+ * @Last Modified time: 2017-11-10 14:22:42 
+ *-------------------------------------------------------------
+ */
+/*app区域*/
+#app{
+	/* 
+	 * 谷歌可以， ie11 不行
+	 * 内容居中，最宽640
+	 * */
+	/*
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: #f8f8f8;
+	wi
+	max-width: 640px;
+	max-width: 300px;
+	margin: 0 auto;
+	*/
+	/* 
+	 * 谷歌可以， ie11 可以
+	 * 内容居中，最宽640
+	 * */
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 50%;
+	right: 0;
+	background-color: #f8f8f8;
+	width: 100%;
+	max-width: 640px;
+	transform: translateX(-50%);
+}
+
+/*头部*/
+#layout-header{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 45px;
+	background-color: #62ab00;
+	display: flex;
+}
+#layout-header button{
+	display: block;
+	height: 45px;
+	width: 45px;
+	background-color: transparent;
+	border: 0;
+	padding: 0;
+}
+#layout-header h2{
+	flex: 1;
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+/*内容区*/
+#layout-contianer{
+	position: absolute;
+	top: 45px;
+	bottom: 45px;
+	left: 0;
+	right: 0;
+	background-color: #f8f8f8;
+	overflow-y: auto;
+}
+/*底部*/
+#layout-footer{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 45px;
+	background-color: #fff;
+	display: flex;
+	box-shadow: 0 -2px 1px #eee;
+}
+#layout-footer button{
+	flex: 1;
+	border: 0;
+	background-color: transparent;
+	border-right: 1px solid #eee;
+}
+#layout-footer button:active{
+	background-color: #eee;
+}

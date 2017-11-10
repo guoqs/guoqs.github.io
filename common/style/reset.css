@@ -9,7 +9,9 @@
  * @Last Modified time: 2017-11-10 11:42:10 
  *-------------------------------------------------------------
  */
-
+html{
+	font-family: "微软雅黑",Arial,Verdana,Sans-serif;
+}
 html,
 body,
 div,
@@ -88,7 +90,9 @@ a {
 	vertical-align: baseline;
 	background: transparent;
 }
-
+h1,h2,h3,h4,h5{
+	font-weight: normal;
+}
 article,
 aside,
 canvas,
@@ -157,7 +161,6 @@ input,
 select {
 	vertical-align: middle;
 	-webkit-appearance: none;
-	appearance: none;
 	background-color: transparent;
 	border: 0;
 	border: 1px solid #ccc;
@@ -172,6 +175,7 @@ a{
 }
 button,a,[type=button]{
 	transition-duration: .3s;
+	-webkit-appearance: none;
 }
 button:hover,[type=button]:hover,a:hover{
 	background-color: #eee;
