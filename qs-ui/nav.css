@@ -1,0 +1,50 @@
+/*
+ *-------------------------------------------------------------
+ * @File  : 京东菜单导航
+ * @Author: qingsong.guo 
+ * @Email : 1251005052@qq.com 
+ * @GitHub: https://github.com/guoqs
+ * @Date  : 2017-11-10 14:22:42 
+ * @Last Modified by:   qingsong.guo 
+ * @Last Modified time: 2017-11-10 14:22:42 
+ *-------------------------------------------------------------
+ */
+.nav{
+	margin: 8px 0;
+	background-color: #fff;
+}
+.nav:after{
+	content: '';
+	display: block;
+	clear: both;
+}
+.nav a{
+	width: 20%;
+	float: left;
+	height: 50px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 5px 0;
+}
+.nav i,.nav span{
+	display: block;
+}
+
+.nav i{
+	flex: 2;
+	width: 100%;
+}
+.nav a:nth-child(odd) i{
+	background-image: url(https://m.360buyimg.com/mobilecms/jfs/t5824/248/156712927/7215/1ad6be5f/591d94c6Nc4711ad2.png);
+}
+.nav a:nth-child(even) i{
+	background-image: url(https://m.360buyimg.com/mobilecms/jfs/t5668/159/160398199/14046/acfe1fa3/591d9424N068a7ad0.png);
+}
+.nav span{
+	flex: 1;
+	font-size: 10px;
+	display: flex;
+	align-items: center;
+}

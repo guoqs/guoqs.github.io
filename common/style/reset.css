@@ -169,19 +169,27 @@ select {
 	box-sizing: border-box;
 	padding: 0 3px;
 }
+/*上面是张鑫旭的*/
+/*---------------------------------------华丽的分割线---------------------------------------*/
+/*下面是自定义的*/
 a{
 	color: #666;
 	text-decoration: none;
+	outline: none;
 }
-button,a,[type=button]{
+button,a,input,select{
 	transition-duration: .3s;
 	-webkit-appearance: none;
+	 -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color:transparent;
+    outline:none；
 }
-button:hover,[type=button]:hover,a:hover{
+/*button:hover,[type=button]:hover,a:hover{
 	background-color: #eee;
-}
+}*/
 button:active,[type=button]:active,a:active{
 	background-color: #ddd;
+	outline: none;
 }
 :focus{
 	outline: none;
