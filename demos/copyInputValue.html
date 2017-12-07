@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<title>通过点击复制input元素里面的内容</title>
+	<meta name="Description" content="点击复制指定内容,前提是内容必须是input元素里面的内容"/>
+	<meta name="Keywords" content="js点击复制"/>
+</head>
+<body>
+	<input type="text" id="copyOrgin" value="输入要复制的内容"/>
+	<button id="btn">点击复制内容</button>
+	<textarea placeholder="这里可以用ctrl+v 试一下"></textarea>
+</body>
+<script>
+	document.getElementById('btn').addEventListener('click',function(){
+		document.getElementById('copyOrgin').select()
+		document.execCommand('copy')
+		this.focus()
+	},false)
+</script>
+</html>
