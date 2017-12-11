@@ -53,13 +53,15 @@
 	<input type="file" id="imgs" multiple accept="image/jpeg,image/jpg,image/png"/>
 	<input type="button" id="convert" value="转换"/>
 	<textarea id="baseres"></textarea>
-	<input type="button" id="copy" value="复制以上内容"/>
+	<input type="button" id="copy" value="复制以上JSON"/>
+	<input type="button" id="copy-part" value="复制以上JSON内容"/>
 </body>
 <script>
 	var imgs = document.getElementById('imgs')
 	var convert = document.getElementById('convert')
 	var baseres = document.getElementById('baseres')
 	var copy = document.getElementById('copy')
+	var copyPart = document.getElementById('copy-part')
 	// 绑定转换按钮
 	convert.addEventListener('click', function () {
 		if (!imgs.files.length) {
@@ -79,6 +81,17 @@
 			return
 		}
 		baseres.select()
+		document.execCommand('copy')
+		this.focus()
+		alert('复制成功')
+	},false)
+	copyPart.addEventListener('click',function(){
+		if(!baseres.value){
+			alert('请先择图片并转换成base64')
+			return
+		}
+		baseres.focus();
+		baseres.setSelectionRange(1,baseres.value.length - 1)
 		document.execCommand('copy')
 		this.focus()
 		alert('复制成功')
