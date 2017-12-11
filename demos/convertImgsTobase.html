@@ -55,6 +55,7 @@
 	<textarea id="baseres"></textarea>
 	<input type="button" id="copy" value="复制以上JSON"/>
 	<input type="button" id="copy-part" value="复制以上JSON内容"/>
+	<input type="button" id="clear" value="清空内容"/>
 </body>
 <script>
 	var imgs = document.getElementById('imgs')
@@ -62,6 +63,7 @@
 	var baseres = document.getElementById('baseres')
 	var copy = document.getElementById('copy')
 	var copyPart = document.getElementById('copy-part')
+	var clear = document.getElementById('clear')
 	// 绑定转换按钮
 	convert.addEventListener('click', function () {
 		if (!imgs.files.length) {
@@ -95,6 +97,10 @@
 		document.execCommand('copy')
 		this.focus()
 		alert('复制成功')
+	},false)
+	clear.addEventListener('click',function(){
+		imgs.value = ''
+		baseres.value = ''
 	},false)
 	//主要转换函数
 	/**
