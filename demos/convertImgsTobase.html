@@ -50,7 +50,7 @@
 	<mark>
 		建议选择小图片转换
 	</mark>
-	<input type="file" id="imgs" multiple/>
+	<input type="file" id="imgs" multiple accept="image/jpeg,image/jpg,image/png"/>
 	<input type="button" id="convert" value="转换"/>
 	<textarea id="baseres"></textarea>
 	<input type="button" id="copy" value="复制以上内容"/>
@@ -99,7 +99,7 @@
 				if (files[idx - 1]) {
 					var fr = new FileReader()
 					fr.addEventListener('load',function () {
-						res[files[idx - 1].name] = fr.result
+						res[files[idx - 1].name.split('.')[0]] = fr.result
 						convertFn (files, ++idx)
 					},false)
 					fr.readAsDataURL(files[idx - 1])
