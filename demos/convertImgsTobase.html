@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<title>多个图片转换成base64文件</title>
+	<meta name="Description" content="把多张图片一次性转换成base64"/>
+	<meta name="Keywords" content="图片转base64,图标转base64"/>
+</head>
+<style>
+	*{
+		margin: 0;
+		padding: 0;
+		border: 0;
+		outline: none;
+	}
+	body{
+		padding: 10px;
+	}
+	textarea{
+		display: block;
+		border: 1px solid #ccc;
+		box-shadow: 0 0 1px dodgerblue inset;
+		border-radius: 3px;
+		width: auto;
+		width: 100%;
+		padding: 3px;
+		margin: 10px 0;
+		min-height: 150px;
+		box-sizing: border-box;
+	}
+	[type="button"]{
+		padding: 3px 5px;
+		border-radius: 3px;
+		transition-duration: .1s;
+		background-color: lightskyblue;
+	}
+	[type="button"]:active{
+		color: red;
+		background-color: lightcyan;
+	}
+	mark{
+		display: block;
+		padding: 5px;
+		margin: 10px;
+	}
+</style>
+<body>
+	<mark>
+		建议选择小图片转换
+	</mark>
+	<input type="file" id="imgs" multiple/>
+	<input type="button" id="convert" value="转换"/>
+	<textarea id="baseres"></textarea>
+	<input type="button" id="copy" value="复制以上内容"/>
+</body>
+<script>
+	var imgs = document.getElementById('imgs')
+	var convert = document.getElementById('convert')
+	var baseres = document.getElementById('baseres')
+	var copy = document.getElementById('copy')
+	// 绑定转换按钮
+	convert.addEventListener('click', function () {
+		if (!imgs.files.length) {
+			alert('请选择图片')
+			return
+		}
+		var files = [].slice.call(imgs.files)
+		convertAll(files,1).then(function (res) {
+			baseres.value = JSON.stringify(res,null, ' ')
+		}).catch(function(err){
+		})
+	},false)
+	//绑定复制按钮
+	copy.addEventListener('click',function(){
+		if(!baseres.value){
+			alert('请先择图片并转换成base64')
+			return
+		}
+		baseres.select()
+		document.execCommand('copy')
+		this.focus()
+		alert('复制成功')
+	},false)
+	//主要转换函数
+	/**
+	 * 
+	 * @param {Object} files 文件数组，
+	 * @param {Object} idx 从第几个开始
+	 */
+	function convertAll (files,idx) {
+		var res = {}
+		var promise = new Promise(function (resolve,reject) {
+			(function convertFn (files,idx) {
+				if(idx < 1){
+					reject('idx 参数必须是大于或者等于1的整数，而你给的是 -> ' + idx)
+				}
+				if (files[idx - 1]) {
+					var fr = new FileReader()
+					fr.addEventListener('load',function () {
+						res[files[idx - 1].name] = fr.result
+						convertFn (files, ++idx)
+					},false)
+					fr.readAsDataURL(files[idx - 1])
+				} else {
+					resolve(res)
+				}
+			})(files,idx)
+		})
+		return promise
+	}
+</script>
+</html>
