@@ -48,7 +48,7 @@
 			html += '<li><span class="attr">adcode:</span><span  class="value">'+addressComponent.adcode+'</span></li>'
 			html += '<li><span class="attr">city_level:</span><span  class="value">'+addressComponent.city_level+'</span></li>'
 			document.getElementById('result').innerHTML = html
-			document.getElementById('pre-res').innerHTML = JSON.stringify(res.result,null, ' ')
+			document.getElementById('pre-res').innerHTML = JSON.stringify(res.result,null, '    ')
 		}
 		navigator.geolocation.getCurrentPosition(function(pos) {
 			 var crd = pos.coords;
