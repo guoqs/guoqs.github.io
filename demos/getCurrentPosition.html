@@ -14,11 +14,29 @@
 	</style>
 
 	<body>
-
+		<ul id="result">
+			<li><span class="attr">country:</span><span  class="value">中国</span></li>
+		</ul>
 	</body>
 	<script>
 		function renderReverse (res) {
 			alert(JSON.stringify(res,null,' '))
+			var html = ""
+			var addressComponent = res.result.addressComponent
+			html += '<li><span class="attr">country:</span><span  class="value">'+addressComponent.country+'</span></li>'
+			html += '<li><span class="attr">province:</span><span  class="value">'+addressComponent.province+'</span></li>'
+			html += '<li><span class="attr">city:</span><span  class="value">'+addressComponent.city+'</span></li>'
+			html += '<li><span class="attr">district:</span><span  class="value">'+addressComponent.district+'</span></li>'
+			
+			html += '<li><span class="attr">street:</span><span  class="value">'+addressComponent.street+'</span></li>'
+			html += '<li><span class="attr">street_number:</span><span  class="value">'+addressComponent.street_number+'</span></li>'
+			
+			html += '<li><span class="attr">direction:</span><span  class="value">'+addressComponent.direction+'</span></li>'
+			html += '<li><span class="attr">country_code_iso:</span><span  class="value">'+addressComponent.country_code_iso+'</span></li>'
+			html += '<li><span class="attr">country_code_iso2:</span><span  class="value">'+addressComponent.country_code_iso2+'</span></li>'
+			html += '<li><span class="attr">adcode:</span><span  class="value">'+addressComponent.adcode+'</span></li>'
+			html += '<li><span class="attr">city_level:</span><span  class="value">'+addressComponent.city_level+'</span></li>'
+			document.getElementById('result').innerHTML = html
 		}
 		navigator.geolocation.getCurrentPosition(function(pos) {
 			 var crd = pos.coords;
@@ -29,7 +47,6 @@
 		}, function(err) {
 			alert('error')
 			console.log(err)
-			
 			createScript('22.6362897','114.064065')
 		})
 		
