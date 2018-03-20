@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>navigator.geolocation.getCurrentPosition</title>
+		<script src="//api.map.baidu.com/geocoder?output=json&location=22.6362897,114.064065&key=uUOfDhx05NfiR8nxc9iFs6s1XwL3gHwU"></script>
+	</head>
+	<style>
+
+	</style>
+
+	<body>
+
+	</body>
+	<script>
+		navigator.geolocation.getCurrentPosition(function(pos) {
+			 var crd = pos.coords;
+			 alert('Latitude: ' + crd.latitude);
+			 alert('Longitude: ' + crd.longitude);
+			 alert('More or less ' + crd.accuracy + ' meters.');
+//			try{
+//				showValue(pos)
+//			}catch(er){
+//				alert(er)
+//			}
+			
+		}, function(err) {
+			alert('error')
+			console.log(err)
+		})
+//		function showValue (obj) {
+//			var pKey = ''
+//			;(function alertObjectKeyValue(obj,pKey) {
+//				for(var key in obj) {
+//					if(typeof obj[key] === 'object') {
+//						pKey = key
+//						alertObjectKeyValue(obj[key],key)
+//					} else {
+//						alert(pKey + '.' + key + ': ' + obj[key])
+//					}
+//				}
+//				pKey = pKey.replace(key,'')
+//			})(obj,pKey)
+//		}
+
+	</script>
+
+</html>
