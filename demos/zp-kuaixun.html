@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Document</title>
+	</head>
+	<style>
+		body{
+			padding: 0;
+			margin: 0;
+		}
+		.zp-kuanxun * {
+			margin: 0;
+			padding: 0;
+			border: 0;
+			font-size: 12px;
+		}
+		.zp-kuanxun{
+			position: relative;
+			height: 36px;
+		}
+		.zp-kuanxun h3{
+			position: absolute;
+			width: 3em;
+			line-height: 30px;
+			top: 3px;
+			left: 0;
+			bottom: 3px;
+			text-align: center;
+			border-right: 2px solid #999;
+		}
+		.zp-kuanxun .zp-kx-content{
+			position: absolute;
+			top: 3px;
+			left: 3em;
+			bottom: 3px;
+			right: 0;
+			margin: 0 5px;
+			overflow: hidden;
+		}
+		.zp-kuanxun  .zp-kx-list{
+			position: absolute;
+		}
+		.zp-kuanxun  .zp-kx-list:after{
+			display: block;
+			content: '';
+			clear: both;
+		}
+		.zp-kuanxun  .zp-kx-item{
+			float: left;
+			line-height: 30px;
+			cursor: pointer;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+	</style>
+	<body>
+		<div class="zp-kuanxun" id="zp-kuanxun">
+			<h3>快讯</h3>
+			<div class="zp-kx-content">
+				<div class="zp-kx-list">
+					<div class="zp-kx-item" onclick="alert(0)">
+						111111111111111111111111111111
+					</div>
+					<div class="zp-kx-item">
+						222222222222222222222222222222222222222222222222222222
+					</div>
+					<div class="zp-kx-item">
+						3333333333333333333
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script>
+		(function zpKuanxun (ele,speed) {
+			if(!ele){
+				console.error('dom元素不存在')
+				return
+			}
+			var width = getComputedStyle(ele.querySelector('.zp-kx-content'),null).width
+			var list = ele.querySelector('.zp-kx-list')
+			var items = Array.prototype.slice.call(ele.querySelectorAll('.zp-kx-item'))
+			//如果 不够滚动的条件，就不滚动
+			if (items.length < 2) {
+				return
+			}
+//			var cloneFirst = items[0].cloneNode(true)
+//			items.push(cloneFirst)
+//			list.appendChild(cloneFirst)
+			//把每个item 都复制一边，方便无线循环
+			// 这里len 必须先去出来
+			for (var i = 0,len = items.length;i<len;i++) {
+				var cloneNode = items[i].cloneNode(true)
+				items.push(cloneNode)
+				list.appendChild(cloneNode)
+			}
+			// 动画有用的一些参数
+			var contentWidth = width.slice(0,-2) * 1
+//			var listWitdh = contentWidth * items.length
+			var listWitdh = 0
+			items.forEach(function (item) {
+				item.style.minWidth = (contentWidth / 2) + 'px'
+				item.style.maxWidth = contentWidth + 'px'
+				item.style.marginRight = '20px'
+				listWitdh += (getComputedStyle(item,null).width.slice(0, -2) * 1) + 21
+			})
+			listWitdh = parseInt(listWitdh.toFixed(0))
+//			alert(listWitdh)
+			list.style.width = listWitdh + 'px'
+			var RAF = requestAnimationFrame || webkitRequestAnimationFrame || mozRequestAnimationFrame || msRequestAnimationFrame
+			var RAFTag = ''
+			;(function move () {
+				var listLeft = getComputedStyle(list,null).left.slice(0,-2) * 1
+//				console.log(contentWidth)
+//				console.log(listWitdh)
+//				console.log(listLeft)
+				if(listLeft + listWitdh <=  listWitdh / 2 + 2){
+					list.style.left = '0px'
+				} else {
+					list.style.left = (listLeft - (speed || 1)) + 'px'
+				}
+				RAF(move)
+			})()
+		})(document.getElementById('zp-kuanxun'), 0.5)
+	</script>
+</html>
