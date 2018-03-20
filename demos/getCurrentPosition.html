@@ -10,13 +10,25 @@
 		
 	</head>
 	<style>
-
+		.attr{
+			font-size: 14px;
+			color: #999;
+			padding: 0 5px;
+		}
 	</style>
 
 	<body>
+		<h3>H5 getCurrentPosition 结果</h3>
+		<ul id="getCurrentPosition-res">
+			<li><span class="attr">country:</span><span  class="value">中国</span></li>
+		</ul>
+		<hr />
+		<h3>上面结果用//api.map.baidu.com/geocoder/v2/ 得到结果</h3>
 		<ul id="result">
 			<li><span class="attr">country:</span><span  class="value">中国</span></li>
 		</ul>
+		<pre class="pre-res" style="font-size: 10px;">
+		</pre>
 	</body>
 	<script>
 		function renderReverse (res) {
@@ -37,13 +49,21 @@
 			html += '<li><span class="attr">adcode:</span><span  class="value">'+addressComponent.adcode+'</span></li>'
 			html += '<li><span class="attr">city_level:</span><span  class="value">'+addressComponent.city_level+'</span></li>'
 			document.getElementById('result').innerHTML = html
+			document.getElementById('pre-res').innerHTML = JSON.stringify(res.result,null, ' ')
 		}
 		navigator.geolocation.getCurrentPosition(function(pos) {
 			 var crd = pos.coords;
-			 alert('Latitude: ' + crd.latitude);
-			 alert('Longitude: ' + crd.longitude);
-			 alert('More or less ' + crd.accuracy + ' meters.');
+//			 alert('Latitude: ' + crd.latitude);
+//			 alert('Longitude: ' + crd.longitude);
+//			 alert('More or less ' + crd.accuracy + ' meters.');
 			 createScript(crd.latitude,crd.longitude)
+			 var html = ''
+			 html += '<li><span class="attr">Latitude:</span><span  class="value">'+crd.latitude+'</span></li>'
+			 html += '<li><span class="attr">Longitude:</span><span  class="value">'+crd.longitude+'</span></li>'
+			 html += '<li><span class="attr">Accuracy:</span><span  class="value">'+crd.accuracy+'</span></li>'
+			 html += '<li><span class="attr">Timestamp:</span><span  class="value">'+pos.timestamp+'</span></li>'
+			document.getElementById('getCurrentPosition-res').innerHTML = html
+			 
 		}, function(err) {
 			alert('error')
 			console.log(err)
