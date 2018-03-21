@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<!--<script src="libs/md5.js"></script>-->
+	<script src="libs/md5.min.js"></script>
+</head>
+<style>
+	input{
+		display: block;
+		width: 100%;
+		margin: 5px 0;
+		border: 1px solid #ccc;
+		padding: 5px;
+		box-sizing: border-box;
+		border-radius: 3px;
+	}
+</style>
+<body>
+	<input type="text" id="input"/>
+	<input type="text"  id="output" readonly="readonly" placeholder="md5ed result"/>
+	<button id="btn">md5一下</button>
+	<script>
+		var input = document.getElementById('input')
+		var output = document.getElementById('output')
+		var btn = document.getElementById('btn')
+		btn.addEventListener('click',function () {
+			var val = input.value
+			if(val){
+//				output.value = md5(val)
+				var oVal = md5(val)
+				;(function setOutputValue (idx) {
+					if(idx < oVal.length){
+						output.value = oVal.substr(0,idx)
+//						requestAnimationFrame(function(){
+//							setOutputValue(++idx)
+//						})
+						setTimeout(function () {
+							setOutputValue(++idx)
+						},32)
+					}
+				})(0)
+			} else {
+				alert('input error')
+			}
+		}, false)
+	</script>
+</body>
+</html>
