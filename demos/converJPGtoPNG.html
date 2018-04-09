@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>图片转换-jpg图片转化成png图片</title>
+		<meta name="keywords" content="图片转换,jpg图片转化成png图片,jpg变成png,js将jpg图片变成png" />
+		<meta name="description" content="前端js把jpg格式的图片变成png格式" />
+	</head>
+	<style>
+		.img-contian {
+			border: 1px solid #ccc;
+			padding: 5px;
+			border-radius: 3px;
+			background-color: #eee;
+			min-height: 100px;
+			max-height: 300px;
+		}
+		
+		img,
+		canvas {
+			display: block;
+			margin: 0 auto;
+			max-width: 100%;
+			max-height: 300px;
+		}
+		input{
+			display: block;
+			width: 100%;
+			-webkit-appearance: none;
+			appearance: none;
+			border: 1px solid #ccc;
+			margin: 10px 0;
+			line-height: 35px;
+			border-radius: 5px;
+			padding: 5px;
+			box-sizing: border-box;
+			outline: none;
+			-webkit-transition-duration: .3s;
+			transition-duration: .3s;
+		}
+		input:focus{
+			-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
+		    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
+		    border-color: #66afe9;
+		}
+	</style>
+
+	<body>
+		<input type="file" id="input-file" accept="image/jpeg,image/jpg" />
+		
+		<input type="number" id="critical" placeholder="输入容错值(rgb 都大于这个值这个点就会变透明，建议200 以上)"/>
+
+		<h3>之前的jpg图片</h3>
+		<div class="img-contian" id="img-contian-input">
+			<!--<img src="//10.18.200.188:8889/uploads/gqs_1523242241586_39791052512294556.png" alt="" />-->
+		</div>
+		<hr />
+		<h3>转变后的png图片,用时 <span id="time" style="color: red;">0s</span></h3>
+		<div class="img-contian" id="img-contian-output">
+
+		</div>
+		<script>
+			//让canvas支持 toBlob
+			if(!HTMLCanvasElement.prototype.toBlob) {
+				Object.defineProperty(HTMLCanvasElement.prototype, 'toBlob', {
+					value: function(callback, type, quality) {
+						var binStr = atob(this.toDataURL(type, quality).split(',')[1]),
+							len = binStr.length,
+							arr = new Uint8Array(len);
+						for(var i = 0; i < len; i++) {
+							arr[i] = binStr.charCodeAt(i);
+						}
+						callback(new Blob([arr], {
+							type: type || 'image/png'
+						}));
+					}
+				});
+			};
+			(function() {
+				// .container 设置了 overflow 属性, 导致 Android 手机下输入框获取焦点时, 输入法挡住输入框的 bug
+				// 相关 issue: https://github.com/weui/weui/issues/15
+				// 解决方法:
+				// 0. .container 去掉 overflow 属性, 但此 demo 下会引发别的问题
+				// 1. 参考 http://stackoverflow.com/questions/23757345/android-does-not-correctly-scroll-on-input-focus-if-not-body-element
+				//    Android 手机下, input 或 textarea 元素聚焦时, 主动滚一把
+				if(/Android/gi.test(navigator.userAgent)) {
+					window.addEventListener('resize', function() {
+						if(document.activeElement.tagName == 'INPUT' || document.activeElement.tagName == 'TEXTAREA') {
+							window.setTimeout(function() {
+								document.activeElement.scrollIntoViewIfNeeded();
+							}, 0);
+						}
+					})
+				}
+			})();
+		</script>
+		<script>
+			var inputFile = document.getElementById('input-file')
+			var imgContianInput = document.getElementById('img-contian-input')
+			var imgContianOutput = document.getElementById('img-contian-output')
+			var Url = URL || window.webkitURL
+			inputFile.addEventListener('change', function() {
+				var startTime = +new Date()
+				var file = this.files[0]
+				console.log(file)
+				var img = document.createElement('img')
+				var canvas = document.createElement('canvas')
+				var can2d = canvas.getContext('2d')
+				img.addEventListener('load', function() {
+					console.log(this.naturalWidth)
+					console.log(this.naturalHeight)
+					canvas.width = this.naturalWidth
+					canvas.height = this.naturalHeight
+					console.log(canvas)
+					can2d.drawImage(this, 0, 0)
+//					imgContianOutput.appendChild(canvas)
+					var imgData = can2d.getImageData(0,0,canvas.width,canvas.height)
+					var data = imgData.data
+					console.log(imgData)
+					var critical = 250
+					var critical = (function () {
+						var criVal = document.getElementById('critical').value
+						if(criVal){
+							var criVal = criVal * 1
+							return criVal > 255 ? 255:criVal < 1 ? 1 : criVal
+						}
+						return 250
+					})();
+					for (var i = 0,len = data.length; i<len;i+=4) {
+						if(data[i]>critical && data[i+1]>critical && data[i+2]>critical){
+							data[i+3] = 0
+						}
+					}
+					can2d.putImageData(imgData,0, 0)
+					canvas.toBlob(function (blob){
+						imgContianOutput.innerHTML = ''
+						imgContianOutput.appendChild((function (src){
+							var img = document.createElement('img')
+							img.src = src
+							return img
+						})(Url.createObjectURL(blob)))
+						document.getElementById('time').innerHTML = (function () {
+							return ((+new Date() - startTime) / 1000).toFixed(2) + 's'
+						})()
+					})
+
+				}, false)
+				img.src = Url.createObjectURL(file)
+				imgContianInput.innerHTML = ''
+				imgContianInput.appendChild(img)
+			}, false)
+		</script>
+	</body>
+
+</html>
