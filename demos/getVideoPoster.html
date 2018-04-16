@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<title>js 获取视频中的一帧 getVideoPoster</title>
+	<meta name="Description" content="js 获取视频中的一帧,取视频一帧做视频的海报(只能兼容现代浏览器)"/>
+	<meta name="keywords" content="js获取视频一帧,只能兼容现代浏览器"/>
+</head>
+<style>
+	img,video{
+		display: block;
+		max-width: 90%;
+		margin: 0 auto;
+	}
+</style>
+<body>
+	<input type="file" id="file-v" accept="video/mp4"/>
+	<input type="button" id="file-btn" value="获取Poster" />
+	<div id="video-contianer">
+		
+	</div>
+	<div id="poster-contianer">
+		
+	</div>
+	<script>
+		var $fileEle = document.getElementById('file-v')
+		var $file = null
+		var btn = document.getElementById('file-btn')
+		var videoContianer = document.getElementById('video-contianer')
+		var posterContianer = document.getElementById('poster-contianer')
+		
+		var video = document.createElement('video')
+		var poster = document.createElement('img')
+		var canvas = document.createElement('canvas')
+		var canvas2d = canvas.getContext('2d')
+		
+		btn.addEventListener('click',function () {
+			$file = $fileEle.files[0]
+			if($file){
+				video.addEventListener('canplay',function(){
+					canvas.height = video.videoHeight
+					canvas.width = video.videoWidth
+					canvas2d.drawImage(video,0,0)
+					canvas.toBlob(function (b){
+						poster.setAttribute('src',URL.createObjectURL(b))
+						posterContianer.appendChild(poster)
+					})
+				},false)
+				video.setAttribute('src',URL.createObjectURL($file))
+				videoContianer.appendChild(video)
+				video.play()
+			}
+		} ,false)
+	</script>
+</body>
+</html>
