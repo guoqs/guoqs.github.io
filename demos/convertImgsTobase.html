@@ -56,6 +56,8 @@
 	<input type="button" id="copy" value="复制以上JSON"/>
 	<input type="button" id="copy-part" value="复制以上JSON内容"/>
 	<input type="button" id="clear" value="清空内容"/>
+	<input type="button" id="convertTocss" value="转化成css文本"/>
+	<textarea id="cssTexts"></textarea>
 </body>
 <script>
 	var imgs = document.getElementById('imgs')
@@ -64,6 +66,8 @@
 	var copy = document.getElementById('copy')
 	var copyPart = document.getElementById('copy-part')
 	var clear = document.getElementById('clear')
+	var convertTocss = document.getElementById('convertTocss')
+	var cssTexts = document.getElementById('cssTexts')
 	// 绑定转换按钮
 	convert.addEventListener('click', function () {
 		if (!imgs.files.length) {
@@ -101,6 +105,24 @@
 	clear.addEventListener('click',function(){
 		imgs.value = ''
 		baseres.value = ''
+	},false)
+	convertTocss.addEventListener('click',function(){
+		var jsVal = baseres.value
+		if(!jsVal){
+			alert('无可选文本内容')
+			return
+		}
+		try{
+//			cssTexts.value = JSON.parse(JSON.stringify(jsVal))
+			var objVal = JSON.parse(jsVal)
+			var cssVal = ''
+			for(ky in objVal) {
+				cssVal += '.' + ky +'{background-image: url('+objVal[ky]+');}'
+			}
+			cssTexts.value = cssVal
+		}catch(e){
+			alert('文本必须是自动转换的文本,不得自行修改(或者不按套路修改)')
+		}
 	},false)
 	//主要转换函数
 	/**
