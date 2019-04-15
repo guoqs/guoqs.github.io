@@ -201,7 +201,12 @@
                 var clipHeight = 130
                 ctx.drawImage(mobanImg,0,820,inutImg.naturalWidth,clipHeight,0,820,inutImg.naturalWidth,clipHeight)
                 outputPreview.innerHTML = ''
-                outputPreview.appendChild(canvas)
+                //outputPreview.appendChild(canvas)
+                let uImg = document.createElement('img');
+                canvas.toBlob(blob => {
+                    uImg.setAttribute('src', URL.createObjectURL(blob))
+                    outputPreview.appendChild(uImg)
+                })
             }).catch(err => {
                 alert(err.message||'出bug了')
             })
