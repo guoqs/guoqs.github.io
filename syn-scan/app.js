@@ -312,7 +312,21 @@
 							let pageBar = $data.pageBar
 							ctx.drawImage(pageBar,0,canvas.height - pageBar.height,pageBar.width,pageBar.height)
 							document.body.appendChild(canvas)
-							app.slice(canvas)
+							//app.slice(canvas)
+							canvas.toBlob(blob=>{
+								var img = document.createElement('img')
+								img.setAttribute('src', URL.createObjectURL(blob))
+								var h1 = document.createElement('h1')
+								h1.innerHTML="长屏原图"
+								document.body.appendChild(h1)
+								document.body.appendChild(img)
+								app.slice(canvas)
+							})
+							
+							
+							
+							
+							
 						}
 					})
 				},
