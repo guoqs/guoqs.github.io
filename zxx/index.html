@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Document</title>
+	</head>
+	<style type="text/css">
+		.test {
+			position: relative;
+			height: 442px;
+			width: 300px;
+			/*box-shadow: 3px 3px 3px #ccc;*/
+		}
+		
+		.test img {
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+	</style>
+
+	<body>
+		<div style="display: flex;">
+		<div>
+			<h2>这个 是 纯色盖上去修改透明度的   </h2>
+			<input type="range" min='0' max="1" value='0.7' id='range-id' defaultValue='0.7' step='0.01' />
+			<span id="range-val">
+				0.7
+			</span>
+			<div class="test">
+				<img src="back.jpg" id="back"/>
+				<img src="front.jpg" id="front" />
+			</div>
+		</div>
+		<div style="width: 5px;background-color: #ccc;margin:0 5px;"></div>
+		<div>
+			<h2>这个 是按网上 图层叠加的 </h2>
+			<div>
+				<button onclick="laymer.normal()">正常 normal</button>
+				<button onclick="laymer.dissolve()">溶解 dissolve</button>
+				<button onclick="laymer.darken()">变暗 darken</button>
+				<button onclick="laymer.multiply()">正片叠底 multiply</button>
+				<button onclick="laymer.overlay()">叠加  overlay</button>
+				<button onclick="laymer.colorBurn()">颜色加深  colorBurn</button>
+				<button onclick="laymer.linearBurn()">线性加深  linearBurn</button>
+				<button onclick="laymer.darkerColor()">深色  darkerColor</button>
+				<button onclick="laymer.lighten()">变亮  lighten</button>
+				<button onclick="laymer.screen()">滤色  screen</button>
+				
+				<button onclick="laymer.colorDodge()">颜色减淡  colorDodge</button>
+				<button onclick="laymer.linearDodge()">线性减淡  linearDodge</button>
+				<button onclick="laymer.lighterColor()">滤色  lighterColor</button>
+				<button onclick="laymer.softLight()">柔光  softLight</button>
+				<button onclick="laymer.hardLight()">强光  hardLight</button>
+				<button onclick="laymer.vividLight()">亮光  vividLight</button>
+				<button onclick="laymer.linearLight()">线性光  linearLight</button>
+				<!-- <button onclick="laymer.pinLight()">点光  pinLight</button> -->
+				<button onclick="laymer.hardMix()">实色混合  hardMix</button>
+				<button onclick="laymer.difference()">差值  difference</button>
+				<button onclick="laymer.exclusion()">排除  exclusion</button>
+				<button onclick="laymer.subtract()">减去  subtract</button>
+				<button onclick="laymer.divide()">划分  divide</button>
+				
+				
+				
+				
+				
+			</div>
+			<div class="test">
+				<canvas id="t-canvas" width="300" height="442"></canvas>
+			</div>
+		</div>
+		</div>
+	</body>
+	<script src="script.js"></script>
+	<script>
+		var ranger = document.getElementById('range-id')
+		var rangeVal = document.getElementById('range-val')
+		var front = document.getElementById('front')
+		front.style.opacity = ranger.value
+		function rangerChange() {
+			front.style.opacity = rangeVal.innerText = ranger.value
+		}
+		ranger.addEventListener('input', rangerChange, false)
+		//图层叠加代码
+		var laymer = null
+		setTimeout(()=>{
+			laymer = new LayerMerge(document.getElementById('t-canvas'),[document.getElementById('back'),document.getElementById('front')])
+			console.log(laymer)
+			laymer.xx()
+		})
+	</script>
+
+</html>
