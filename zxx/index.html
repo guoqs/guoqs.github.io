@@ -37,7 +37,7 @@
 		</div>
 		<div style="width: 5px;background-color: #ccc;margin:0 5px;"></div>
 		<div>
-			<h2>这个 是按网上 图层叠加的 </h2>
+			<h2>这个 是按网上 图层叠加的  <button onclick=saveImg()>保存图片</button></h2>
 			<div>
 				<button onclick="laymer.normal()">正常 normal</button>
 				<button onclick="laymer.dissolve()">溶解 dissolve</button>
@@ -49,7 +49,6 @@
 				<button onclick="laymer.darkerColor()">深色  darkerColor</button>
 				<button onclick="laymer.lighten()">变亮  lighten</button>
 				<button onclick="laymer.screen()">滤色  screen</button>
-				
 				<button onclick="laymer.colorDodge()">颜色减淡  colorDodge</button>
 				<button onclick="laymer.linearDodge()">线性减淡  linearDodge</button>
 				<button onclick="laymer.lighterColor()">滤色  lighterColor</button>
@@ -63,11 +62,6 @@
 				<button onclick="laymer.exclusion()">排除  exclusion</button>
 				<button onclick="laymer.subtract()">减去  subtract</button>
 				<button onclick="laymer.divide()">划分  divide</button>
-				
-				
-				
-				
-				
 			</div>
 			<div class="test">
 				<canvas id="t-canvas" width="300" height="442"></canvas>
@@ -91,7 +85,20 @@
 			laymer = new LayerMerge(document.getElementById('t-canvas'),[document.getElementById('back'),document.getElementById('front')])
 			console.log(laymer)
 			laymer.xx()
-		},1000)
+		}, 300)
+		// 保存图片
+		function saveImg () {
+			let a = document.createElement('a')
+			document.getElementById('t-canvas').toBlob(b=>{
+				a.setAttribute('href', URL.createObjectURL(b))
+				a.setAttribute('download', '图片.png')
+				a.style.position='absolute'
+				a.style.opacity=0
+				a.style.zIndex=-99
+				document.body.appendChild(a)
+				a.click()
+			})
+		}
 	</script>
 
 </html>
