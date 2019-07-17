@@ -22,6 +22,7 @@
 		<!--<a href="订单1180620932200026电子发票mi6x.pdf" download="发票.pdf">发票</a>-->
 		<canvas id="the-canvas"></canvas>
 		<script type="text/javascript" src="pdf.min.js"></script>
+		<div style="font-size: 40px; text-align: center; color: #ccc;" id="tip"> demo 加载中...</div>
 		<script type="text/javascript">
 			//			var loadingTask = pdfjsLib.getDocument('订单1180620932200026电子发票mi6x.pdf');
 //			var loadingTask = pdfjsLib.getDocument('JavaScript.pdf');
@@ -69,6 +70,7 @@
 						} else {
 							console.log(divContent)
 							document.body.appendChild(divContent)
+							document.body.removeChild(document.getElementById('tip'))
 						}
 					});
 				})(pdf.numPages, 1)
