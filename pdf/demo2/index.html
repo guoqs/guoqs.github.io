@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+		<meta charset="UTF-8">
+		<title>打开pdf</title>
+	</head>
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+		}
+		canvas{
+			display: block;
+	margin: 0 auto;
+	max-width: 100%;
+		}
+	</style>
+
+	<body>
+		<!--<a href="订单1180620932200026电子发票mi6x.pdf" download="发票.pdf">发票</a>-->
+		<canvas id="the-canvas"></canvas>
+		<script type="text/javascript" src="pdf.min.js"></script>
+		<script type="text/javascript">
+			//			var loadingTask = pdfjsLib.getDocument('订单1180620932200026电子发票mi6x.pdf');
+//			var loadingTask = pdfjsLib.getDocument('JavaScript.pdf');
+			var loadingTask = pdfjsLib.getDocument('sql-lan.pdf');
+			loadingTask.promise.then(function(pdf) {
+				// you can now use *pdf* here
+				console.log(pdf);
+//				pdf.getPage(400).then(function(page) {
+//					var scale = 1;
+//					var viewport = page.getViewport({
+//						scale: scale,
+//					});
+//					console.log(viewport)
+//					var canvas = document.getElementById('the-canvas');
+//					var context = canvas.getContext('2d');
+//					canvas.height = viewport.height;
+//					canvas.width = viewport.width;
+//					var renderContext = {
+//						canvasContext: context,
+//						viewport: viewport
+//					};
+//					page.render(renderContext);
+//				});
+				let divContent = document.createElement('div');
+				(function getPages (numPages, curPage) {
+					console.log(curPage)
+					pdf.getPage(curPage).then(function(page) {
+						var scale = 1.5;
+						var viewport = page.getViewport({
+							scale: scale,
+						});
+						console.log(viewport)
+						var canvas = document.createElement('canvas');
+						var context = canvas.getContext('2d');
+						canvas.height = viewport.height;
+						canvas.width = viewport.width;
+						var renderContext = {
+							canvasContext: context,
+							viewport: viewport
+						};
+						page.render(renderContext);
+						divContent.appendChild(canvas)
+						if(curPage < numPages){
+							getPages(numPages, ++curPage)
+						} else {
+							console.log(divContent)
+							document.body.appendChild(divContent)
+						}
+					});
+				})(pdf.numPages, 1)
+			});
+		</script>
+	</body>
+
+</html>
