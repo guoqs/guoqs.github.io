@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>签名</title>
+  </head>
+  <style>
+    #qm {
+      border: 1px solid #ccc;
+      display: block;
+      margin: 0 auto;
+    }
+  </style>
+
+  <body>
+    <canvas id="qm" width="280" height="800"></canvas>
+    <div id="res"></div>
+  </body>
+  <script>
+    let qm = document.getElementById('qm')
+    qm.height = window.innerHeight - 20
+    let ctx = qm.getContext('2d')
+    ctx.lineWidth = 5
+    ctx.strokeStyle = '#000'
+//  ctx.moveTo(50,50)
+//  ctx.lineTo(100,100)
+//  ctx.stroke()
+    console.log(ctx)
+    let startPos = {
+      x: 0,
+      y: 0
+    }
+    let getRect = function(x, y) {
+      var cRect = qm.getBoundingClientRect();
+      console.log(cRect)
+      console.log(x)
+      console.log(y)
+      return {
+        x: Math.round(x - cRect.left),
+        y: Math.round(y - cRect.top)
+      }
+    }
+    qm.addEventListener('touchstart', function(ev) {
+      let ct = ev.changedTouches[0]
+      startPos = getRect(ct.clientX, ct.clientY);
+      ctx.moveTo(startPos.x, startPos.y)
+    }, false)
+    qm.addEventListener('touchmove', function(ev) {
+      ev.preventDefault()
+      ev.stopPropagation()
+      let ct = ev.changedTouches[0]
+      console.log(ct)
+      let movePos = getRect(ct.clientX, ct.clientY);
+      ctx.lineTo(movePos.x, movePos.y)
+      ctx.stroke()
+      //  let p = document.createElement('p')
+      //  p.innerHTML = `radiusX: ${ct.radiusX} ************* radiusY:${ct.radiusY}`
+      //  document.getElementById('res').appendChild(p)
+    }, false)
+  </script>
+
+</html>
