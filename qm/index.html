@@ -8,65 +8,113 @@
     <title>签名</title>
   </head>
   <style>
-    *{
+    * {
       margin: 0;
       padding: 0;
       border: 0;
     }
+    
     #qm {
       border: 1px solid #ccc;
       display: block;
       margin: 0 auto;
       margin-top: 5px;
     }
+    
+    .re-draw-contain {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      height: 40px;
+      margin: 0 5px;
+    }
+    
+    #re-draw,#save {
+      padding: 5px 10px;
+      margin: 5px 0 5px 5px;
+      color: #fff;
+      border-radius: 3px;
+      background-color: red;
+      outline: none;
+    }
   </style>
 
   <body>
     <canvas id="qm" width="280" height="800"></canvas>
-    <div id="res"></div>
+    <div class="re-draw-contain">
+      <button id="save">保存</button>
+      <button id="re-draw">重绘</button>
+    </div>
   </body>
   <script>
-    let qm = document.getElementById('qm')
-    qm.height = window.innerHeight - 10
-    qm.width = window.innerWidth - 10
-    let ctx = qm.getContext('2d')
-    ctx.lineWidth = 5
-    ctx.strokeStyle = '#000'
-//  ctx.moveTo(50,50)
-//  ctx.lineTo(100,100)
-//  ctx.stroke()
-    console.log(ctx)
-    let startPos = {
-      x: 0,
-      y: 0
-    }
-    let getRect = function(x, y) {
-      var cRect = qm.getBoundingClientRect();
-      console.log(cRect)
-      console.log(x)
-      console.log(y)
-      return {
-        x: Math.round(x - cRect.left),
-        y: Math.round(y - cRect.top)
-      }
-    }
-    qm.addEventListener('touchstart', function(ev) {
-      let ct = ev.changedTouches[0]
-      startPos = getRect(ct.clientX, ct.clientY);
-      ctx.moveTo(startPos.x, startPos.y)
-    }, false)
-    qm.addEventListener('touchmove', function(ev) {
-      ev.preventDefault()
-      ev.stopPropagation()
-      let ct = ev.changedTouches[0]
-      console.log(ct)
-      let movePos = getRect(ct.clientX, ct.clientY);
-      ctx.lineTo(movePos.x, movePos.y)
-      ctx.stroke()
-      //  let p = document.createElement('p')
-      //  p.innerHTML = `radiusX: ${ct.radiusX} ************* radiusY:${ct.radiusY}`
-      //  document.getElementById('res').appendChild(p)
-    }, false)
+    ! function() {
+      let qm = document.getElementById('qm')
+      qm.height = window.innerHeight - 10 - 40
+      qm.width = window.innerWidth - 10
+      let ctx = qm.getContext('2d')
+      ctx.fillStyle="#ffffff"
+      ctx.fillRect(0,0,qm.width, qm.height)
+      let reDraw = document.getElementById('re-draw')
+      let save = document.getElementById('save')
+      //清空重新绘制
+      reDraw.addEventListener('click', function() {
+        if(confirm('确定清空')) {
+          ctx.clearRect(0, 0, qm.width, qm.height)
+          ctx.beginPath()
+        }
+      }, false);
+      save.addEventListener('click', function () {
+        let ua = navigator.userAgent.toLowerCase()
+        if (ua.indexOf('micromessenger') > -1||ua.indexOf('alipayclient') > -1) {
+          alert('请使用浏览器做下载操作，谢谢！')
+          return
+        }
+         let a = document.createElement('a')
+         qm.toBlob(blob => {
+           let href = URL.createObjectURL(blob)
+           a.setAttribute('href', href)
+           a.setAttribute('download','签名.png')
+           document.body.appendChild(a)
+           a.click()
+           URL.revokeObjectURL(href)
+           document.body.removeChild(a)
+         })
+      },false);
+      ! function() {
+        ctx.lineWidth = 5
+        ctx.strokeStyle = '#000'
+        let startPos = {
+          x: 0,
+          y: 0
+        }
+        let getRect = function(x, y) {
+          var cRect = qm.getBoundingClientRect();
+          return {
+            x: Math.round(x - cRect.left),
+            y: Math.round(y - cRect.top)
+          }
+        }
+        qm.addEventListener('touchstart', function(ev) {
+          let ct = ev.changedTouches[0]
+          startPos = getRect(ct.clientX, ct.clientY);
+          ctx.moveTo(startPos.x, startPos.y)
+        }, false)
+        qm.addEventListener('touchmove', function(ev) {
+          ev.preventDefault()
+          ev.stopPropagation()
+          let ct = ev.changedTouches[0]
+          //      console.log(ct)
+          let movePos = getRect(ct.clientX, ct.clientY);
+          ctx.lineTo(movePos.x, movePos.y)
+          ctx.stroke()
+        }, false)
+        qm.addEventListener('touchend', function(ev) {
+          ev.preventDefault()
+          ev.stopPropagation()
+          ctx.stroke()
+        }, false)
+      }()
+    }()
   </script>
 
 </html>
