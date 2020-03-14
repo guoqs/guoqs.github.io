@@ -17,7 +17,6 @@
   #file-input {
     display: block;
     margin: 10px auto;
-    ;
   }
 
   img,
@@ -43,7 +42,9 @@
     align-items: center;
     margin: 10px;
   }
-
+  .input-area [type="checkbox"]{
+    flex: 35px 0 0;
+  }
   .input-area>* {
     width: 0;
     flex: 1;
@@ -106,8 +107,9 @@
     </div>
   </fieldset>
   <fieldset>
-    <legend>输入价格</legend>
+    <legend>输入价格(前面勾选表示手机底部有虚拟按键)</legend>
     <div class="input-area">
+      <input type="checkbox" checked id="has-footer">
       <input type="number" placeholder="价格" id="price"/>
       <button onclick="creatResult()">生成</button>
     </div>
@@ -167,7 +169,6 @@
       alert('请输入要写入的价格')
       return
     }
-    console.log(1222)
     let canvas = document.createElement('canvas')
     canvas.width = 1080
     canvas.height = 2160
@@ -176,8 +177,10 @@
     let lineDown = (selects[0].value > selects[1].value ? selects[0].value : selects[1].value) * 1
     ctx.drawImage(imgInput, 0, 0, 1080, lineUp + 20, 0, 0, 1080, lineUp + 20)
     ctx.drawImage(imgInput, 0, lineDown - 110, 1080, imgInput.naturalHeight - lineDown, 0, lineUp + 20, 1080, imgInput.naturalHeight - lineDown)
-    // 这个是底部的东西 
-    ctx.drawImage(imgInput,0,imgInput.naturalHeight - 142,1080,142, 0,canvas.height-142,1080,142)
+    // 这个是底部的东西 有些手机有有些手机没有 默认有
+    if (document.getElementById('has-footer').checked) {
+      ctx.drawImage(imgInput,0,imgInput.naturalHeight - 130,1080,130, 0,canvas.height-130,1080,130)
+    }
     // 清除原来的价格
     ctx.fillStyle = '#fff';
     ctx.fillRect(700, lineUp + 10, 1080-700, 100)
@@ -210,6 +213,11 @@
       tepCanvas.setAttribute('id', 'tep-canvas')
       let ctx = canvas.getContext('2d')
       canvas.height = this.naturalHeight
+      if (this.naturalHeight<=2160+10) {
+        if (!confirm('确定截图是长的？')) {
+          return
+        }
+      }
       canvas.width = this.naturalWidth
       tepCanvas.height = this.naturalHeight
       tepCanvas.width = this.naturalWidth
