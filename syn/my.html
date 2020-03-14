@@ -174,7 +174,7 @@
     let lineUp = selects[0].value * 1
     let imgTpl = document.createElement('img')
     imgTpl.addEventListener('load', function () {
-      ctx.drawImage(this, 0, lineUp - 1)
+      ctx.drawImage(this, 0, lineUp - 1 + cfg.selectMove1)
       canvas.toBlob(blob => {
         let img = document.createElement('img')
         img.setAttribute('src', URL.createObjectURL(blob))
