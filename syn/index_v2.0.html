@@ -50,11 +50,11 @@
     .btns label,
     .btns button {
         background-color: #ccc;
-        padding: 10px 15px;
-        ;
+        padding: 10px 10px;
         box-sizing: content-box;
         font-size: 16px;
         transition-duration: .3s;
+        font-size: 12px;
     }
 
     .btns label:active,
@@ -64,6 +64,8 @@
 
     .btns label:nth-of-type(1) {
         border-radius: 6px 0 0 6px;
+            display: flex;
+        align-items: center;
     }
 
     .btns button {
@@ -130,6 +132,7 @@
                 <button>模板24</button>
                 <button>自定义</button>
                 <button>生成</button> -->
+            <label><input type="checkbox" checked id="is-three">三个</label>
             <input type="radio" id="radio-1" name="moban" value="1-3" checked>
             <label for="radio-1">模板13</label>
             <input type="radio" id="radio-2" name="moban" value="2-4">
@@ -146,17 +149,14 @@
             <div id="self-define-preview">
             </div> -->
         <div class="moban-imgs">
-            <img src="moban-1-3.png">
-            <img src="moban-2-4.png">
+            <img src="./tpl/moban-1-3.png">
+            <img src="./tpl/moban-2-4.png">
         </div>   
     </div>
     <script>
         var input = document.getElementById('file-input')
         var mobanInput = document.getElementById('moban-input')
-        // var fileClip = document.getElementById('file-clip')
         var outputPreview = document.getElementById('output-preview')
-        // var inputPreview = document.getElementById('input-preview')
-        // var selfDefinePreview = document.getElementById('self-define-preview')
         function loadImg(src) {
             return new Promise(function (resolve, reject) {
                 var img = document.createElement('img')
@@ -186,7 +186,7 @@
                 }
                 mobanFileSrc = URL.createObjectURL(mobanFile)
             }else{
-                mobanFileSrc = 'moban-'+type+'.png'
+                mobanFileSrc = './tpl/moban-'+type+'.png'
             }
             var inutImg = null
             loadImg(URL.createObjectURL(inputFile)).then(inputRes =>{
@@ -199,13 +199,12 @@
                 var ctx = canvas.getContext('2d')
                 ctx.drawImage(inutImg,0,0)
                 var clipHeight = 130
-//                 ctx.drawImage(mobanImg,0,820,inutImg.naturalWidth,clipHeight,0,820,inutImg.naturalWidth,clipHeight)
-                ctx.drawImage(mobanImg,0,820,inutImg.naturalWidth,clipHeight,0,1005,inutImg.naturalWidth,clipHeight) 
-                // ddd
-                // ctx.drawImage(mobanImg,0,820,inutImg.naturalWidth,clipHeight,0,640,inutImg.naturalWidth,clipHeight)
-                //ctx.drawImage(mobanImg,0,820,inutImg.naturalWidth,clipHeight,0,770,inutImg.naturalWidth,clipHeight)
+                if(document.getElementById('is-three').checked){
+                 ctx.drawImage(mobanImg,0,0,mobanImg.naturalWidth,mobanImg.naturalHeight,0,815,mobanImg.naturalWidth,mobanImg.naturalHeight)
+                }else{
+                ctx.drawImage(mobanImg,0,0,mobanImg.naturalWidth,mobanImg.naturalHeight,0,985,mobanImg.naturalWidth,mobanImg.naturalHeight)
+                }
                 outputPreview.innerHTML = ''
-                //outputPreview.appendChild(canvas)
                 let uImg = document.createElement('img');
                 canvas.toBlob(blob => {
                     uImg.setAttribute('src', URL.createObjectURL(blob))
@@ -227,33 +226,6 @@
                 pe.querySelector('span').style.opacity = 1;
             }
         }
-        // input.addEventListener('change', function () {
-        //     var file = input.files[0]
-        //     if (file) {
-        //         var img = document.createElement('img')
-        //         img.addEventListener('load',function () {
-        //             console.log(this)
-        //             var nw = this.naturalWidth
-        //             var nh = this.naturalHeight
-        //             var canvas = document.createElement('canvas')
-        //             canvas.width = nw
-        //             canvas.height = nh
-        //             var ctx = canvas.getContext('2d')
-        //             ctx.drawImage(this,0,0)
-        //             ctx.drawImage(fileClip,0,802)
-        //             console.log(ctx)
-        //             console.log(canvas)
-        //             canvas.toBlob(function (blob) {
-        //                 var outImg = document.createElement('img')
-        //                 outImg.setAttribute('src', URL.createObjectURL(blob))
-        //                 outputPreview.appendChild(outImg)
-        //             })
-        //         },false)
-        //         img.setAttribute('src', URL.createObjectURL(file))
-        //         inputPreview.innerHTML = ''
-        //         inputPreview.appendChild(img)
-        //     }
-        // }, false)
     </script>
 </body>
 
