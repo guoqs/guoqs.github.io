@@ -42,9 +42,11 @@
     align-items: center;
     margin: 10px;
   }
-  .input-area [type="checkbox"]{
+
+  .input-area [type="checkbox"] {
     flex: 35px 0 0;
   }
+
   .input-area>* {
     width: 0;
     flex: 1;
@@ -83,7 +85,8 @@
     ;
     color: #999;
   }
-  .img-output{
+
+  .img-output {
     box-shadow: 0 0 3px #000;
   }
 </style>
@@ -110,7 +113,7 @@
     <legend>输入价格(前面勾选表示手机底部有虚拟按键)</legend>
     <div class="input-area">
       <input type="checkbox" checked id="has-footer">
-      <input type="number" placeholder="价格" id="price"/>
+      <input type="number" placeholder="价格" id="price" />
       <button onclick="creatResult()">生成</button>
     </div>
   </fieldset>
@@ -173,35 +176,93 @@
     canvas.width = 1080
     canvas.height = 2160
     let ctx = canvas.getContext('2d')
-    let lineUp = (selects[0].value < selects[1].value ? selects[0].value : selects[1].value) * 1
-    let lineDown = (selects[0].value > selects[1].value ? selects[0].value : selects[1].value) * 1
-    ctx.drawImage(imgInput, 0, 0, 1080, lineUp + 20, 0, 0, 1080, lineUp + 20)
-    ctx.drawImage(imgInput, 0, lineDown - 110, 1080, imgInput.naturalHeight - lineDown, 0, lineUp + 20, 1080, imgInput.naturalHeight - lineDown)
+    let select1 = selects[0].value * 1 + cfg.selectMove1 * 1
+    let select2 = selects[1].value * 1 + cfg.selectMove2 * 1
+    let lineUp = select1 < select2 ? select1 : select2
+    let lineDown = select1 > select2 ? select1 : select2
+    ctx.drawImage(imgInput, 0, 0, 1080, lineUp + 15, 0, 0, 1080, lineUp + 15)
+    ctx.drawImage(imgInput, 0, lineDown - 115, 1080, imgInput.naturalHeight - lineDown, 0, lineUp + 15, 1080, imgInput.naturalHeight - lineDown)
     // 这个是底部的东西 有些手机有有些手机没有 默认有
     if (document.getElementById('has-footer').checked) {
-      ctx.drawImage(imgInput,0,imgInput.naturalHeight - 130,1080,130, 0,canvas.height-130,1080,130)
+      ctx.drawImage(imgInput, 0, imgInput.naturalHeight - 130, 1080, 130, 0, canvas.height - 130, 1080, 130)
     }
     // 清除原来的价格
     ctx.fillStyle = '#fff';
-    ctx.fillRect(700, lineUp + 10, 1080-700, 100)
-    ctx.fillStyle = '#FC611F';
+    ctx.fillRect(700, lineUp + 10, 1080 - 700, 100)
+    // ctx.fillStyle = '#FC611F';
+    // let priceArr = price.toFixed(2).split('.')
+    // ctx.textBaseline  = 'bottom'
+    // ctx.textAlign   = 'right'
+    // ctx.font = ' 36px "Microsoft YaHei"'
+    // let y = lineUp + 78
+    // let x = 1080 - 84
+    // ctx.fillText('.' + priceArr[1],1080 - 35, y)
+    // ctx.font = ' 42px "Microsoft YaHei"'
+    // ctx.fillText(priceArr[0],x, y + 2)
+    // let mt = ctx.measureText(priceArr[0]).width
+    // ctx.font = 'bold 32px "Microsoft YaHei"'
+    // ctx.fillText('￥',x - mt + 1, y)
+
+    // 绘制价格
+    let priceTpl = [
+      '0.png',
+      '1.png',
+      '2.png',
+      '3.png',
+      '4.png',
+      '5.png',
+      '6.png',
+      '7.png',
+      '8.png',
+      '9.png',
+      '00.png'
+    ]
+    function loadImg(src) {
+      return new Promise(function (resolve, reject) {
+        var img = document.createElement('img')
+        img.addEventListener('load', function () {
+          resolve(img)
+        }, false)
+        img.addEventListener('error', function () {
+          reject(new Error(src + '加载出错'))
+        }, false)
+        img.src = src
+      })
+    }
     let priceArr = price.toFixed(2).split('.')
-    ctx.textBaseline  = 'bottom'
-    ctx.textAlign   = 'right'
-    ctx.font = ' 36px "Microsoft YaHei"'
-    let y = lineUp + 78
-    let x = 1080 - 84
-    ctx.fillText('.' + priceArr[1],1080 - 35, y)
-    ctx.font = ' 42px "Microsoft YaHei"'
-    ctx.fillText(priceArr[0],x, y + 2)
-    let mt = ctx.measureText(priceArr[0]).width
-    ctx.font = 'bold 32px "Microsoft YaHei"'
-    ctx.fillText('￥',x - mt + 1, y)
-    canvas.toBlob(blob =>{
-      let img = document.createElement('img')
-      img.setAttribute('src', URL.createObjectURL(blob))
-      img.setAttribute('class', 'img-output')
-      document.body.appendChild(img)
+    
+    // 第一个 处理小数位
+    Promise.resolve().then(() => {
+      if (priceArr[1] === '00') {
+        return loadImg('./tpl/'+ priceTpl[10])
+      }
+      return false
+    }).then((dec) => {
+      if(!dec){
+        throw new Error('小数位不是00，目前不支持啊老婆大人')
+      }
+      ctx.drawImage(dec,0,0,52,40, 1080-32-52,lineUp+40,52,40)
+      let intTpls = priceArr[0].split('').reduce((res, tpl) => {
+        res.push(loadImg('./tpl/'+ priceTpl[tpl]))
+        return res
+      }, [])
+      // 加上人名币符号
+      intTpls.unshift(loadImg('./tpl/s.png'))
+      return Promise.all(intTpls)
+    }).then((ints) => {
+      let move = 0
+      ints.reverse().forEach((int,idx) => {
+        move+=int.naturalWidth
+        ctx.drawImage(int,0,0,int.naturalWidth,40, 1080-32-52 - move,lineUp+40,int.naturalWidth,40)
+      })
+      canvas.toBlob(blob => {
+        let img = document.createElement('img')
+        img.setAttribute('src', URL.createObjectURL(blob))
+        img.setAttribute('class', 'img-output')
+        document.body.appendChild(img)
+      })
+    }).catch(err => {
+      alert(err.message)
     })
   };
   function imgInit(src) {
@@ -213,7 +274,7 @@
       tepCanvas.setAttribute('id', 'tep-canvas')
       let ctx = canvas.getContext('2d')
       canvas.height = this.naturalHeight
-      if (this.naturalHeight<=2160+10) {
+      if (this.naturalHeight <= 2160 + 10) {
         if (!confirm('确定截图是长的？')) {
           return
         }
