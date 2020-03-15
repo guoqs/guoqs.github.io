@@ -135,4 +135,202 @@
   let drawTempCanvas = function () {
     let tepCanvas = document.getElementById('tep-canvas')
     let tepCtx = tepCanvas.getContext('2d')
-    tepCtx.cle
+    tepCtx.clearRect(0, 0, tepCanvas.width, tepCanvas.height)
+    selects.forEach((sel, idx) => {
+      tepCtx.beginPath()
+      tepCtx.moveTo(0, sel.value * 1 + cfg['selectMove' + (idx + 1)])
+      tepCtx.lineTo(800, sel.value * 1 + cfg['selectMove' + (idx + 1)])
+      tepCtx.closePath()
+      tepCtx.stroke()
+    })
+  }
+  //线条上移动
+  let moveUp = function (lineNo) {
+    //  console.log(`line ${lineNo} move up`)
+    cfg['selectMove' + lineNo] -= 1
+    drawTempCanvas()
+  }
+  //线条 下移动
+  let moveDown = function (lineNo) {
+    cfg['selectMove' + lineNo] += 1
+    drawTempCanvas()
+  }
+  // 线条变动
+  let selectsChange = function (lineNo) {
+    console.log(`line ${lineNo} change`)
+    cfg['selectMove' + lineNo] = 0
+    drawTempCanvas()
+  }
+  // 做结果图
+  let creatResult = function () {
+    if (!imgInput) {
+      alert('请选择文件')
+      return
+    }
+    let price = document.getElementById('price').value * 1
+    if (!price) {
+      alert('请输入要写入的价格')
+      return
+    }
+    let canvas = document.createElement('canvas')
+    canvas.width = 1080
+    canvas.height = 2160
+    let ctx = canvas.getContext('2d')
+    let select1 = selects[0].value * 1 + cfg.selectMove1 * 1
+    let select2 = selects[1].value * 1 + cfg.selectMove2 * 1
+    let lineUp = select1 < select2 ? select1 : select2
+    let lineDown = select1 > select2 ? select1 : select2
+    ctx.drawImage(imgInput, 0, 0, 1080, lineUp + 15, 0, 0, 1080, lineUp + 15)
+    ctx.drawImage(imgInput, 0, lineDown - 115, 1080, imgInput.naturalHeight - lineDown, 0, lineUp + 15, 1080, imgInput.naturalHeight - lineDown)
+    // 这个是底部的东西 有些手机有有些手机没有 默认有
+    if (document.getElementById('has-footer').checked) {
+      ctx.drawImage(imgInput, 0, imgInput.naturalHeight - 130, 1080, 130, 0, canvas.height - 130, 1080, 130)
+    }
+    // 清除原来的价格
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(700, lineUp + 10, 1080 - 700, 100)
+    // ctx.fillStyle = '#FC611F';
+    // let priceArr = price.toFixed(2).split('.')
+    // ctx.textBaseline  = 'bottom'
+    // ctx.textAlign   = 'right'
+    // ctx.font = ' 36px "Microsoft YaHei"'
+    // let y = lineUp + 78
+    // let x = 1080 - 84
+    // ctx.fillText('.' + priceArr[1],1080 - 35, y)
+    // ctx.font = ' 42px "Microsoft YaHei"'
+    // ctx.fillText(priceArr[0],x, y + 2)
+    // let mt = ctx.measureText(priceArr[0]).width
+    // ctx.font = 'bold 32px "Microsoft YaHei"'
+    // ctx.fillText('￥',x - mt + 1, y)
+
+    // 绘制价格
+    let priceTpl = [
+      '0.png',
+      '1.png',
+      '2.png',
+      '3.png',
+      '4.png',
+      '5.png',
+      '6.png',
+      '7.png',
+      '8.png',
+      '9.png',
+      '00.png'
+    ]
+    function loadImg(src) {
+      return new Promise(function (resolve, reject) {
+        var img = document.createElement('img')
+        img.addEventListener('load', function () {
+          resolve(img)
+        }, false)
+        img.addEventListener('error', function () {
+          reject(new Error(src + '加载出错'))
+        }, false)
+        img.src = src
+      })
+    }
+    let priceArr = price.toFixed(2).split('.')
+    
+    // 第一个 处理小数位
+    Promise.resolve().then(() => {
+      if (priceArr[1] === '00') {
+        return loadImg('./tpl/'+ priceTpl[10])
+      }
+      return false
+    }).then((dec) => {
+      if(!dec){
+        throw new Error('小数位不是00，目前不支持啊老婆大人')
+      }
+      ctx.drawImage(dec,0,0,52,40, 1080-32-52,lineUp+40,52,40)
+      let intTpls = priceArr[0].split('').reduce((res, tpl) => {
+        res.push(loadImg('./tpl/'+ priceTpl[tpl]))
+        return res
+      }, [])
+      // 加上人名币符号
+      intTpls.unshift(loadImg('./tpl/s.png'))
+      return Promise.all(intTpls)
+    }).then((ints) => {
+      let move = 0
+      ints.reverse().forEach((int,idx) => {
+        move+=int.naturalWidth
+        ctx.drawImage(int,0,0,int.naturalWidth,40, 1080-32-52 - move,lineUp+40,int.naturalWidth,40)
+      })
+      canvas.toBlob(blob => {
+        let img = document.createElement('img')
+        img.setAttribute('src', URL.createObjectURL(blob))
+        img.setAttribute('class', 'img-output')
+        document.body.appendChild(img)
+      })
+    }).catch(err => {
+      alert(err.message)
+    })
+  };
+  function imgInit(src) {
+    imgInput = document.createElement('img')
+    imgInput.addEventListener('load', function () {
+      //     document.body.appendChild(img)
+      let canvas = document.createElement('canvas')
+      let tepCanvas = document.createElement('canvas')
+      tepCanvas.setAttribute('id', 'tep-canvas')
+      let ctx = canvas.getContext('2d')
+      canvas.height = this.naturalHeight
+      if (this.naturalHeight <= 2160 + 10) {
+        if (!confirm('确定截图是长的？')) {
+          return
+        }
+      }
+      canvas.width = this.naturalWidth
+      tepCanvas.height = this.naturalHeight
+      tepCanvas.width = this.naturalWidth
+      ctx.drawImage(this, 0, 0)
+      ctx.strokeStyle = '#f00'
+      ctx.fillStyle = '#f00'
+      ctx.font = '30px ddd'
+      let selector1 = document.createElement('select')
+      let selector2 = document.createElement('select')
+      for (let idx = cfg.start; idx < 2160; idx += cfg.step) {
+        ctx.moveTo(0, idx)
+        ctx.lineTo(cfg.lineWidth, idx)
+        let tag = `tag${idx / cfg.step - (cfg.start / cfg.step) + 1}`
+        ctx.fillText(tag, cfg.lineWidth + 10, idx)
+        let opt1 = document.createElement('option')
+        opt1.setAttribute('value', idx)
+        opt1.innerText = tag
+        let opt2 = document.createElement('option')
+        opt2.setAttribute('value', idx)
+        opt2.innerText = tag
+        selector1.setAttribute('onchange', 'selectsChange(1)')
+        selector1.appendChild(opt1)
+        selector2.setAttribute('onchange', 'selectsChange(2)')
+        selector2.appendChild(opt2)
+      }
+      ctx.stroke();
+      let line1 = document.getElementById('line-1')
+      line1.insertBefore(selector1, line1.children[0]);
+      let line2 = document.getElementById('line-2')
+      line2.insertBefore(selector2, line2.children[0]);
+      selects = [
+        selector1,
+        selector2
+      ]
+      let imgContent = document.getElementById('img-content')
+      imgContent.appendChild(canvas)
+      imgContent.appendChild(tepCanvas)
+      // let tp = tepCanvas.getContext('2d')
+      // tp.fillRect(0,0,100,100)
+      // tp.moveTo(0,0)
+      // tp.lineTo(1080,1080)
+      // tp.stroke()
+    }, false)
+    imgInput.setAttribute('src', src)
+  }
+  document.getElementById('file-input').addEventListener('change', function () {
+    console.log(this.files)
+    if (!this.files.length) {
+      return
+    }
+    imgInit(URL.createObjectURL(this.files[0]))
+  }, false)
+</script>
+
+</html>
