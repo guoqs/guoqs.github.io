@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>syn 支付宝</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        border: 0;
+    }
+
+    #file-input {
+        display: block;
+        margin: 10px auto;
+    }
+
+    img,
+    canvas {
+        display: block;
+        width: calc(100% - 20px);
+        margin: 0 auto 10px auto;
+    }
+
+    #file-input {
+        display: block;
+        margin: 10px auto;
+    }
+
+    .input-area {
+        display: flex;
+        padding: 10px;
+    }
+
+    .input-area>* {
+        width: 0;
+        flex: 1;
+        border: 1px solid #ccc;
+        margin: 0 3px;
+        height: 35px;
+        padding: 3px;
+        box-sizing: border-box;
+        outline: none;
+        border-radius: 3px;
+        background-color: transparent;
+    }
+
+    .input-area>button {
+        flex: 3.5em 0 0;
+        text-align: center;
+        background-color: #369;
+        color: #fff;
+        border-color: #369;
+        transition-duration: .3s;
+    }
+
+    .input-area>button:active {
+        opacity: .7;
+    }
+
+    fieldset {
+        margin: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    legend {
+        margin-left: 10px;
+        padding: 0 5px;
+        ;
+        color: #999;
+    }
+</style>
+
+<body>
+
+    <input type="file" id="file-input">
+
+    <fieldset>
+        <legend>输入价格</legend>
+        <div class="input-area">
+            <input type="number" placeholder="价格" id="price" />
+            <button onclick="creatResult()">生成</button>
+        </div>
+    </fieldset>
+</body>
+<script>
+    function creatResult() {
+        let inputFile = document.getElementById('file-input').files[0]
+        if (!inputFile) {
+            alert('请选择文件')
+            return
+        }
+        let price = document.getElementById('price').value * 1
+        function loadImg(src) {
+            return new Promise(function (resolve, reject) {
+                var img = document.createElement('img')
+                img.addEventListener('load', function () {
+                    resolve(img)
+                }, false)
+                img.addEventListener('error', function () {
+                    reject(new Error(src + '加载出错'))
+                }, false)
+                img.src = src
+            })
+        }
+        if (!price) {
+            alert('请输入价格')
+            return
+        }
+        price = price.toFixed(2)
+        let pArr = price.split('.')
+        let ints = pArr[0].split('')
+        let intsCopy = JSON.parse(JSON.stringify(ints))
+        for (let i = 1; i < intsCopy.length; i++) {
+            if (!(i % 3)) {
+                ints.splice(intsCopy.length - i, 0, 'dh')
+            }
+        }
+        console.log()
+        let tplArr = ints.concat(['dian']).concat(pArr[1].split(''))
+        tplArr.unshift('minus')
+        console.log(tplArr)
+        let ps = []
+        tplArr.forEach(tpl => {
+            console.log()
+            let src = './tplz/' + tpl + '.png'
+            console.log(src)
+            ps.push(loadImg(src))
+        })
+        let canvas = document.createElement('canvas')
+        Promise.all(ps).then(imgs => {
+            console.log(imgs)
+            let cw = 0
+            imgs.forEach(img => {
+                cw += img.naturalWidth
+            })
+            canvas.width = cw
+            canvas.height = 76
+            let ctx = canvas.getContext('2d')
+            let cx = 0
+            imgs.forEach(img => {
+                ctx.drawImage(img, cx, 0)
+                cx += img.naturalWidth
+            })
+            // document.body.appendChild(canvas)
+            return loadImg(URL.createObjectURL(inputFile))
+        }).then(img => {
+            let canTpl = document.createElement('canvas')
+            canTpl.width = img.naturalWidth
+            canTpl.height = img.naturalHeight
+            let ctx = canTpl.getContext('2d')
+            ctx.drawImage(img, 0, 0)
+            let dx = (img.naturalWidth - canvas.width) / 2
+            ctx.drawImage(canvas, 0, 0, canvas.width, canvas.height, dx, 350, canvas.width, canvas.height)
+            canTpl.toBlob(blob => {
+                let img = document.createElement('img')
+                img.setAttribute('src', URL.createObjectURL(blob))
+                document.body.appendChild(img)
+            })
+        }).catch(err => {
+            alert(err.message)
+        })
+    }
+</script>
+
+</html>
