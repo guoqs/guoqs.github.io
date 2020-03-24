@@ -1,0 +1,303 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>syn订单详情</title>
+</head>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  #file-input {
+    display: block;
+    margin: 10px auto;
+  }
+
+  img,
+  canvas {
+    display: block;
+    width: calc(100% - 20px);
+    margin: 0 auto 10px auto;
+  }
+
+  #img-content {
+    position: relative;
+  }
+
+  #img-content canvas:nth-child(2) {
+    position: absolute;
+    top: 0;
+    left: 10px;
+  }
+
+  .input-area {
+    display: flex;
+    ;
+    align-items: center;
+    margin: 10px;
+  }
+
+  .input-area [type="checkbox"] {
+    flex: 35px 0 0;
+  }
+
+  .input-area>* {
+    width: 0;
+    flex: 1;
+    border: 1px solid #ccc;
+    margin: 0 3px;
+    height: 35px;
+    padding: 3px;
+    box-sizing: border-box;
+    outline: none;
+    border-radius: 3px;
+    background-color: transparent;
+  }
+
+  .input-area>button {
+    flex: 3.5em 0 0;
+    text-align: center;
+    background-color: #369;
+    color: #fff;
+    border-color: #369;
+    transition-duration: .3s;
+  }
+
+  .input-area>button:active {
+    opacity: .7;
+  }
+
+  fieldset {
+    margin: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  legend {
+    margin-left: 10px;
+    padding: 0 5px;
+    ;
+    color: #999;
+  }
+
+  .img-output {
+    box-shadow: 0 0 3px #000;
+  }
+</style>
+
+<body>
+  <!--<img src="./syn.png" />-->
+  <input type="file" id="file-input">
+  <div id="img-content"></div>
+  <fieldset>
+    <legend>条线</legend>
+    <div class="input-area" id="line-1">
+      <button onclick="moveUp(1)">上移</button>
+      <button onclick="moveDown(1)">下移</button>
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend>输入价格(前面勾选表示手机底部有虚拟按键)</legend>
+    <div class="input-area">
+      <input type="number" placeholder="价格" id="price" />
+      <button onclick="creatResult()">生成</button>
+    </div>
+  </fieldset>
+  <h1 style="text-align: center;">要输出的图在下面</h1>
+</body>
+<script>
+  //一些配置信息
+  let cfg = {
+    start: 1200,
+    step: 50,
+    lineWidth: 300,
+    tagLineWidth: 500,
+    selectMove1: 0,
+    selectMove2: 0
+  }
+  let selects = [];
+  let imgInput = null
+  // 画辅助参考线条
+  let drawTempCanvas = function () {
+    let tepCanvas = document.getElementById('tep-canvas')
+    let tepCtx = tepCanvas.getContext('2d')
+    tepCtx.clearRect(0, 0, tepCanvas.width, tepCanvas.height)
+    selects.forEach((sel, idx) => {
+      tepCtx.beginPath()
+      tepCtx.moveTo(0, sel.value * 1 + cfg['selectMove' + (idx + 1)])
+      tepCtx.lineTo(800, sel.value * 1 + cfg['selectMove' + (idx + 1)])
+      tepCtx.closePath()
+      tepCtx.stroke()
+    })
+  }
+  //线条上移动
+  let moveUp = function (lineNo) {
+    //  console.log(`line ${lineNo} move up`)
+    cfg['selectMove' + lineNo] -= 1
+    drawTempCanvas()
+  }
+  //线条 下移动
+  let moveDown = function (lineNo) {
+    cfg['selectMove' + lineNo] += 1
+    drawTempCanvas()
+  }
+  // 线条变动
+  let selectsChange = function (lineNo) {
+    console.log(`line ${lineNo} change`)
+    cfg['selectMove' + lineNo] = 0
+    drawTempCanvas()
+  }
+  // 做结果图
+  let creatResult = function () {
+    if (!imgInput) {
+      alert('请选择文件')
+      return
+    }
+    let price = document.getElementById('price').value * 1
+    if (!price) {
+      alert('请输入要写入的价格')
+      return
+    }
+    let canvas = document.createElement('canvas')
+    canvas.width = 1080
+    canvas.height = 2160
+    let ctx = canvas.getContext('2d')
+    ctx.drawImage(imgInput, 0, 0)
+    let lineUp = selects[0].value * 1 + cfg.selectMove1 * 1
+    // 清除原来的价格
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(700, lineUp - 100, 1080 - 75 - 700, 100)
+
+    // 绘制价格
+    let priceTpl = [
+      '0.png',
+      '1.png',
+      '2.png',
+      '3.png',
+      '4.png',
+      '5.png',
+      '6.png',
+      '7.png',
+      '8.png',
+      '9.png',
+      '00.png'
+    ]
+    function loadImg(src) {
+      return new Promise(function (resolve, reject) {
+        var img = document.createElement('img')
+        img.addEventListener('load', function () {
+          resolve(img)
+        }, false)
+        img.addEventListener('error', function () {
+          reject(new Error(src + '加载出错'))
+        }, false)
+        img.src = src
+      })
+    }
+    let priceArr = price.toFixed(2).split('.')
+    
+    let prePath = 'https://guoqs.github.io/syn/tpl/'
+    if (location.origin === 'https://guoqs.github.io') {
+      prePath = './tpl/'
+    }
+    // 第一个 处理小数位
+    Promise.resolve().then(() => {
+      if (priceArr[1] === '00') {
+        return loadImg(prePath+ priceTpl[10])
+      }
+      return false
+    }).then((dec) => {
+      if(!dec){
+        throw new Error('小数位不是00，目前不支持啊老婆大人')
+      }
+      ctx.drawImage(dec,0,0,52,40, 1080-85-52,lineUp-80,52,40)
+      let intTpls = priceArr[0].split('').reduce((res, tpl) => {
+        res.push(loadImg(prePath+ priceTpl[tpl]))
+        return res
+      }, [])
+      // 加上人名币符号
+      intTpls.unshift(loadImg(prePath + 's.png'))
+      return Promise.all(intTpls)
+    }).then((ints) => {
+      let move = 0
+      ints.reverse().forEach((int,idx) => {
+        move+=int.naturalWidth + 2
+        ctx.drawImage(int,0,0,int.naturalWidth,40, 1080-85-52 - move,lineUp-80,int.naturalWidth,40)
+      })
+//    document.body.appendChild(canvas)
+      canvas.toBlob(blob => {
+        let img = document.createElement('img')
+        img.setAttribute('src', URL.createObjectURL(blob))
+        img.setAttribute('class', 'img-output')
+        document.body.appendChild(img)
+      })
+    }).catch(err => {
+      alert(err.message)
+    })
+  };
+  function imgInit(src) {
+    imgInput = document.createElement('img')
+    imgInput.addEventListener('load', function () {
+      //     document.body.appendChild(img)
+      let canvas = document.createElement('canvas')
+      let tepCanvas = document.createElement('canvas')
+      tepCanvas.setAttribute('id', 'tep-canvas')
+      let ctx = canvas.getContext('2d')
+      canvas.height = this.naturalHeight
+      canvas.width = this.naturalWidth
+      tepCanvas.height = this.naturalHeight
+      tepCanvas.width = this.naturalWidth
+      ctx.drawImage(this, 0, 0)
+      ctx.strokeStyle = '#f00'
+      ctx.fillStyle = '#f00'
+      ctx.font = '30px ddd'
+      let selector1 = document.createElement('select')
+      for (let idx = cfg.start; idx < 1680; idx += cfg.step) {
+        ctx.moveTo(0, idx)
+        ctx.lineTo(cfg.lineWidth, idx)
+        let tag = `tag${idx / cfg.step - (cfg.start / cfg.step) + 1}`
+        ctx.fillText(tag, cfg.lineWidth + 10, idx)
+        let opt1 = document.createElement('option')
+        opt1.setAttribute('value', idx)
+        opt1.innerText = tag
+        let opt2 = document.createElement('option')
+        opt2.setAttribute('value', idx)
+        opt2.innerText = tag
+        selector1.setAttribute('onchange', 'selectsChange(1)')
+        selector1.appendChild(opt1)
+      }
+      ctx.stroke();
+      let line1 = document.getElementById('line-1')
+      line1.insertBefore(selector1, line1.children[0]);
+      let line2 = document.getElementById('line-2')
+      selects = [
+        selector1
+      ]
+      let imgContent = document.getElementById('img-content')
+      imgContent.appendChild(canvas)
+      imgContent.appendChild(tepCanvas)
+      // let tp = tepCanvas.getContext('2d')
+      // tp.fillRect(0,0,100,100)
+      // tp.moveTo(0,0)
+      // tp.lineTo(1080,1080)
+      // tp.stroke()
+    }, false)
+    imgInput.setAttribute('src', src)
+  }
+  document.getElementById('file-input').addEventListener('change', function () {
+    console.log(this.files)
+    if (!this.files.length) {
+      return
+    }
+    imgInit(URL.createObjectURL(this.files[0]))
+  }, false)
+</script>
+
+</html>
