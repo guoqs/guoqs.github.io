@@ -186,11 +186,11 @@
     if (document.getElementById('has-footer').checked) {
       ctx.drawImage(imgInput, 0, imgInput.naturalHeight - 130, 1080, 130, 0, canvas.height - 130, 1080, 130)
     }
-    // 清除原来的价格
-//     ctx.fillStyle = '#fff';
+    清除原来的价格
+    ctx.fillStyle = '#fff';
 //     ctx.fillRect(700, lineUp + 10, 1080 - 700, 100)
-    ctx.fillStyle = '#fff';    
-    ctx.fillRect(700, lineUp + 10, 1080 - 700 - 80, 100)
+//     ctx.fillStyle = '#fff';    
+//     ctx.fillRect(700, lineUp + 10, 1080 - 700 - 80, 100)
     // ctx.fillStyle = '#FC611F';
     // let priceArr = price.toFixed(2).split('.')
     // ctx.textBaseline  = 'bottom'
@@ -234,18 +234,17 @@
     let priceArr = price.toFixed(2).split('.')
     
     // 第一个 处理小数位
-    Promise.resolve().then(() => {
-//       目的是加 .00  现在看来 不需要了 一般红包没有几毛几分的
-//       if (priceArr[1] === '00') {
-//         return loadImg('./tpl/'+ priceTpl[10])
-//       }
-//       return false
+    Promise.resolve().then(() => 
+      if (priceArr[1] === '00') {
+        return loadImg('./tpl/'+ priceTpl[10])
+      }
+      return false
       return true
     }).then((dec) => {
-//       if(!dec){
-//         throw new Error('小数位不是00，目前不支持啊老婆大人')
-//       }
-//       ctx.drawImage(dec,0,0,52,40, 1080-32-52,lineUp+40,52,40)
+      if(!dec){
+        throw new Error('小数位不是00，目前不支持啊老婆大人')
+      }
+      ctx.drawImage(dec,0,0,52,40, 1080-32-52,lineUp+40,52,40)
       let intTpls = priceArr[0].split('').reduce((res, tpl) => {
         res.push(loadImg('./tpl/'+ priceTpl[tpl]))
         return res
