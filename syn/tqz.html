@@ -137,7 +137,6 @@
             })
         }
         let tqzUrl = './tpl/'+price+'.png'
-        alert(tqzUrl)
         let ps = [loadImg(tqzUrl)]
         let canvas = null
         Promise.all(ps).then(imgs => {
