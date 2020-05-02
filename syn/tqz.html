@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>syn 支付宝</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        border: 0;
+    }
+
+    #file-input {
+        display: block;
+        margin: 10px auto;
+    }
+
+    img,
+    canvas {
+        display: block;
+        width: calc(100% - 20px);
+        margin: 0 auto 10px auto;
+    }
+
+    #file-input {
+        display: block;
+        margin: 10px auto;
+    }
+
+    .input-area {
+        display: flex;
+        padding: 10px;
+    }
+    .input-area label{
+        position: relative;
+    }
+    .input-area input{
+        display: none;
+    }
+    .input-area input:checked + span{
+        background-color: #369;
+        color: #fff;
+    }
+    .input-area span{
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        padding-left: 3px;
+    }
+    
+
+    .input-area>* {
+        width: 0;
+        flex: 1;
+        border: 1px solid #ccc;
+        margin: 0 3px;
+        height: 35px;
+        padding: 3px;
+        box-sizing: border-box;
+        outline: none;
+        border-radius: 3px;
+        background-color: transparent;
+    }
+
+    .input-area>button {
+        flex: 3.5em 0 0;
+        text-align: center;
+        background-color: #369;
+        color: #fff;
+        border-color: #369;
+        transition-duration: .3s;
+    }
+
+    .input-area>button:active {
+        opacity: .7;
+    }
+
+    fieldset {
+        margin: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    legend {
+        margin-left: 10px;
+        padding: 0 5px;
+        ;
+        color: #999;
+    }
+</style>
+
+<body>
+
+    <input type="file" id="file-input">
+
+    <fieldset>
+        <legend>选择淘气值</legend>
+        <div class="input-area">
+            <label>
+                <input type="radio" name="tqz" value="728" checked>
+                <span>淘气值728</span>
+            </label>
+            <label>
+                <input type="radio" name="tqz" value="728">
+                <span>淘气值728</span>
+            </label>
+            <button onclick="creatResult()">生成</button>
+        </div>
+    </fieldset>
+</body>
+<script>
+    function creatResult() {
+        let inputFile = document.getElementById('file-input').files[0]
+        if (!inputFile) {
+            alert('请选择文件')
+            return
+        }
+        let price = document.querySelector('[name="tqz"]:checked').value
+        function loadImg(src) {
+            return new Promise(function (resolve, reject) {
+                var img = document.createElement('img')
+                img.addEventListener('load', function () {
+                    resolve(img)
+                }, false)
+                img.addEventListener('error', function () {
+                    reject(new Error(src + '加载出错'))
+                }, false)
+                img.src = src
+            })
+        }
+        let tqzUrl = './tpl/'+price+'.png'
+        alert(tqzUrl)
+        let ps = [loadImg(tqzUrl)]
+        let canvas = null
+        Promise.all(ps).then(imgs => {
+            canvas = imgs[0]
+            // document.body.appendChild(canvas)
+            return loadImg(URL.createObjectURL(inputFile))
+        }).then(img => {
+            let canTpl = document.createElement('canvas')
+            canTpl.width = img.naturalWidth
+            canTpl.height = img.naturalHeight
+            let ctx = canTpl.getContext('2d')
+            ctx.drawImage(img, 0, 0)
+            ctx.drawImage(canvas, 25, 358)
+            canTpl.toBlob(blob => {
+                let img = document.createElement('img')
+                img.setAttribute('src', URL.createObjectURL(blob))
+                document.body.appendChild(img)
+            })
+        }).catch(err => {
+            alert(err.message)
+        })
+    }
+</script>
+
+</html>
