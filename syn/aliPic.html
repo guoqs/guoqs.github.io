@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>aliPic-headImg</title>
+    <title>aliPic</title>
   </head>
   <style>
     * {
@@ -28,27 +28,44 @@
       box-sizing: border-box;
       word-break: break-all;
       margin: 10px auto;
+      flex-direction: column;
     }
     
-    #input {
+    .input {
       display: block;
       width: 80%;
-      margin: 100px auto;
+      margin: 10px auto;
       height: 40px;
       text-align: center;
     }
   </style>
 
   <body>
-    <div id="content"></div>
-    <input type="text" id="input" style="margin-top:100px;" />
+    <div id="content">
+      <p id="content-name"></p>
+      <p id="content-email"></p>
+    </div>
+    <input type="text" class="input" id="input-name" placeholder="name" />
+    <input type="text" class="input" id="input-email" placeholder="email" />
   </body>
   <script>
-    let inputEL = document.getElementById('input')
-    let content = document.getElementById('content')
-    inputEL.addEventListener('input', function() {
-      console.log(this.value)
-      content.innerText = this.value
+    //  let inputnName = document.getElementById('input')
+    //  let contentname = document.getElementById('content')
+    //  inputEL.addEventListener('input', function() {
+    //    console.log(this.value)
+    //    content.innerText = this.value
+    //  }, false)
+    //  
+    //  let inputnName = document.getElementById('input')
+    //  let inputnName = document.getElementById('input')
+    function inputHander(elId) {
+      document.getElementById(elId).innerText = this.value
+    }
+    document.getElementById('input-name').addEventListener('input', function() {
+      inputHander.call(this, 'content-name')
+    }, false)
+    document.getElementById('input-email').addEventListener('input', function() {
+      inputHander.call(this, 'content-email')
     }, false)
   </script>
 
