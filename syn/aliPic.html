@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>aliPic-headImg</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+    }
+    
+    #content {
+      font-size: 50px;
+      line-height: 1.35;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: calc(100vw - 10px);
+      height: calc(100vw - 10px);
+      max-height: 600px;
+      max-width: 600px;
+      border: 1px solid #CCCCCC;
+      border-radius: 5px;
+      box-sizing: border-box;
+      word-break: break-all;
+      margin: 10px auto;
+    }
+    
+    #input {
+      display: block;
+      width: 80%;
+      margin: 100px auto;
+      height: 40px;
+      text-align: center;
+    }
+  </style>
+
+  <body>
+    <div id="content"></div>
+    <input type="text" id="input" style="margin-top:100px;" />
+  </body>
+  <script>
+    let inputEL = document.getElementById('input')
+    let content = document.getElementById('content')
+    inputEL.addEventListener('input', function() {
+      console.log(this.value)
+      content.innerText = this.value
+    }, false)
+  </script>
+
+</html>
