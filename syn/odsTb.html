@@ -116,7 +116,7 @@
   //一些配置信息
   let cfg = {
     start: 1200,
-    step: 100,
+    step: 50,
     lineWidth: 300,
     tagLineWidth: 500,
     selectMove1: 0,
@@ -260,7 +260,7 @@ canvas.height = document.querySelector('#img-content canvas').height
       ctx.fillStyle = '#f00'
       ctx.font = '30px ddd'
       let selector1 = document.createElement('select')
-      for (let idx = cfg.start; idx < 1680; idx += cfg.step) {
+      for (let idx = cfg.start; idx < 1880; idx += cfg.step) {
         ctx.moveTo(0, idx)
         ctx.lineTo(cfg.lineWidth, idx)
         let tag = `tag${idx / cfg.step - (cfg.start / cfg.step) + 1}`
