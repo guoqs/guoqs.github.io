@@ -167,7 +167,8 @@
     }
     let canvas = document.createElement('canvas')
     canvas.width = 1080
-    canvas.height = 2160
+//    canvas.height = 2160
+canvas.height = document.querySelector('#img-content canvas').height 
     let ctx = canvas.getContext('2d')
     ctx.drawImage(imgInput, 0, 0)
     let lineUp = selects[0].value * 1 + cfg.selectMove1 * 1
