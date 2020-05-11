@@ -144,13 +144,13 @@
   //线条上移动
   let moveUp = function (lineNo) {
     //  console.log(`line ${lineNo} move up`)
-    var step = document.getElementById('#s-step').value * 1
+    var step = document.getElementById('s-step').value * 1
     cfg['selectMove' + lineNo] -= step
     drawTempCanvas()
   }
   //线条 下移动
   let moveDown = function (lineNo) {
-    var step = document.getElementById('#s-step').value * 1
+    var step = document.getElementById('s-step').value * 1
     cfg['selectMove' + lineNo] += step
     drawTempCanvas()
   }
