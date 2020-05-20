@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>gqsyntbs</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+    
+    body {
+      padding: 0 10px;
+    }
+    
+    fieldset {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    
+    legend {
+      margin-left: 20px;
+      padding: 0 5px;
+      color: #999;
+      font-weight: 900;
+    }
+    
+    li {
+      display: flex;
+      height: 28px;
+      /*margin-left: 10px;*/
+      padding: 5px 0;
+    }
+    
+    li:not(:last-child) {
+      border-bottom: 1px solid #f0f0f0;
+    }
+    
+    input,
+    button {
+      width: 0;
+      border: 1px solid #f0f0f0;
+      font-size: 13px;
+      margin-left: 3px;
+      background-color: transparent;
+      padding: 0 2px;
+    }
+    
+    input:nth-child(1) {
+      flex: 85px 0 0;
+    }
+    
+    input:nth-child(2) {
+      flex: 98px 0 0;
+    }
+    
+    input:nth-child(3) {
+      flex: 1;
+    }
+    
+    input:nth-child(4) {
+      flex: 20px 0 0;
+      text-align: center;
+      font-weight: 900;
+    }
+    
+    button {
+      flex: 3em 0 0;
+      align-self: center;
+      padding: 5px 0;
+      margin: 5px;
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    
+    .btns {
+      display: flex;
+      margin-top: 10px;
+      justify-content: flex-end;
+    }
+    
+    .btns button {
+      padding: 6px 0;
+      flex: 3.5em 0 0;
+      border-radius: 5px;
+      color: #fff;
+    }
+  </style>
+
+  <body>
+    <div class="content" id="content">
+      <!--<fieldset>
+        <legend>5565</legend>
+        <ul>
+          <li>
+            <input value="18617140482" />
+            <input value="" type="date" />
+            <input value="青菜不不菜" />
+            <input value="44" />
+            <button ontouchstart="btnClick(this, event)" ontouchend="btnDbClick(this, event)">复制</button>
+          </li>
+          <li>
+            <input value="33" />
+            <input value="" type="date" />
+            <input value="51561" />
+            <input value="" />
+            <button ontouchstart="btnClick(this, event)" ontouchend="btnDbClick(this, event)">复制</button>
+          </li>
+        </ul>
+      </fieldset>
+      <div class="btns">
+        <button style="background-color: #11f;" onclick="saveInfo()">保存</button>
+        <button style="background-color: #dc1605;" onclick="clearInfo()">清除</button>
+      </div>-->
+    </div>
+    <script>
+      var tbs1 = [{
+        mobile: '17097218607',
+        tbName: '若木繁华兮',
+        date: '',
+        dateSpace: '',
+        isOthers: false
+      }, {
+        mobile: '18866674206',
+        tbName: 'tb164917929',
+        date: '',
+        dateSpace: '',
+        isOthers: true
+      }, {
+        mobile: '18617140482',
+        tbName: 't_',
+        date: '',
+        dateSpace: '',
+        isOthers: false
+      }]
+      //******************************************
+      var tbs2 = [{
+        mobile: '18866478849',
+        tbName: '带丫看世界',
+        date: '',
+        dateSpace: '',
+        isOthers: true
+      }, {
+        mobile: '18866674203',
+        tbName: 'tb164928929',
+        date: '',
+        dateSpace: '',
+        isOthers: true
+      }, {
+        mobile: '13377892273',
+        tbName: '太阳当空照555666',
+        date: '',
+        dateSpace: '',
+        isOthers: false
+      }, {
+        mobile: '18664358649',
+        tbName: 'shi亚男',
+        date: '',
+        dateSpace: '',
+        isOthers: false
+      }, {
+        mobile: '13068715586',
+        tbName: '和风散步',
+        date: '',
+        dateSpace: '',
+        isOthers: false
+      }]
+      var tbs3 = [{
+        mobile: '18866674208',
+        tbName: 'qingsong_guo',
+        date: '',
+        dateSpace: '',
+        isOthers: true
+      }, {
+        mobile: '18866674223',
+        tbName: '青菜不不菜',
+        date: '',
+        dateSpace: '',
+        isOthers: true
+      }, {
+        mobile: '153********',
+        tbName: 'ghs',
+        date: '',
+        dateSpace: '',
+        isOthers: false
+      }]
+      var tbsArr = [tbs1, tbs2, tbs3]
+      try {
+        var tbsStore = localStorage.getItem('gqsyntbs')
+        if(tbsStore) {
+          tbsArr = JSON.parse(tbsStore)
+        }
+      } catch(err) {
+        console.errot(err)
+      }
+      var contentStr = ''
+      tbsArr.forEach((tbs, idx) => {
+        contentStr += `
+                      <fieldset>
+                          <legend>${idx + 1}</legend>
+                      <ul>
+                      `
+        tbs.forEach((tb, sIdx) => {
+          contentStr += `
+                <li>
+                  <input value="${tb.mobile}" readonly style="${tb.isOthers?'color:red':''}"/>
+                  <input value="${tb.date}" type="date" onchange="dateChagne(${idx},${sIdx},this)"/>
+                  <input value="${tb.tbName}" readonly/>
+                  <input value="${tb.dateSpace}" onchange="dateSpaceChagne(${idx},${sIdx},this)"/>
+                  <button ontouchstart="btnClick(this, event)" ontouchend="btnDbClick(this, event)">复制</button>
+                </li>
+          `
+        })
+        contentStr += '</ul></fieldset>'
+      })
+      contentStr += `
+              <div class="btns">
+                 <button style="background-color: #11f;" onclick="saveInfo()">保存</button>
+                 <button style="background-color: #dc1605;" onclick="clearInfo()">清除</button>
+              </div>
+              `
+      document.getElementById('content').innerHTML = contentStr
+      //
+      var touchStartTime = 1
+
+      function btnClick(ele, ev) {
+        touchStartTime = ev.timeStamp
+      }
+
+      function btnDbClick(ele, ev) {
+        var divTime = ev.timeStamp - touchStartTime
+        var parent = ele.parentNode || ele.parentElement
+        let inputEL = null
+        if(divTime < 350) {
+          inputEL = parent.querySelector('input:nth-child(1)')
+        } else {
+          inputEL = parent.querySelector('input:nth-child(3)')
+        }
+        if(!inputEL) {
+          alert('浏览器有问题')
+          return
+        }
+        inputEL.select()
+        document.execCommand('copy');
+      }
+
+      function dateChagne(idx, sIdx, el) {
+        tbsArr[idx][sIdx].date = el.value
+      }
+
+      function dateSpaceChagne(idx, sIdx, el) {
+        tbsArr[idx][sIdx].dateSpace = el.value
+      }
+
+      function saveInfo() {
+        localStorage.setItem('gqsyntbs', JSON.stringify(tbsArr))
+      }
+
+      function clearInfo() {
+        if(confirm('危险操作')) {
+          localStorage.removeItem('gqsyntbs')
+        }
+      }
+    </script>
+  </body>
+
+</html>
