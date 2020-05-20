@@ -73,7 +73,7 @@
       flex: 3em 0 0;
       align-self: center;
       padding: 5px 0;
-      margin: 5px;
+      margin: 3px;
       -moz-user-select: none;
       -webkit-user-select: none;
       user-select: none;
@@ -90,6 +90,14 @@
       flex: 3.5em 0 0;
       border-radius: 5px;
       color: #fff;
+    }
+    textarea{
+      flex: 1;
+      resize: none;
+      height: 50px;
+      border: 1px solid #ccc;
+      padding: 3px;
+      border-radius: 3px;
     }
   </style>
 
@@ -221,6 +229,9 @@
       })
       contentStr += `
               <div class="btns">
+                 <textarea id="textarea"></textarea>
+                 <button style="background-color: #11f;" onclick="copyJson()">复制</button>
+                 <button style="background-color: #11f;" onclick="updateJson()">更新</button>
                  <button style="background-color: #11f;" onclick="saveInfo()">保存</button>
                  <button style="background-color: #dc1605;" onclick="clearInfo()">清除</button>
               </div>
@@ -265,6 +276,25 @@
       function clearInfo() {
         if(confirm('危险操作')) {
           localStorage.removeItem('gqsyntbs')
+        }
+      }
+      function copyJson () {
+        var ttarea = document.getElementById('textarea')
+        ttarea.value = JSON.stringify(tbsArr)
+        ttarea.select()
+        document.execCommand('copy');
+      }
+      function updateJson () {
+        let jsonStr = document.getElementById('textarea').value.trim()
+        if (!jsonStr) {
+           alert('请输入值')
+           return
+        }
+        try{
+          JSON.parse(jsonStr)
+          localStorage.setItem('gqsyntbs', jsonStr)
+        }catch(err){
+          alert('数据有误')
         }
       }
     </script>
