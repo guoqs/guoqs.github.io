@@ -171,14 +171,16 @@
       alert('请输入要写入的价格')
       return
     }
-    let canvas = document.createElement('canvas')
-    canvas.width = 1080
-    canvas.height = 2160
+    
     let ctx = canvas.getContext('2d')
     let select1 = selects[0].value * 1 + cfg.selectMove1 * 1
     let select2 = selects[1].value * 1 + cfg.selectMove2 * 1
     let lineUp = select1 < select2 ? select1 : select2
     let lineDown = select1 > select2 ? select1 : select2
+    let canvas = document.createElement('canvas')
+    canvas.width = 1080
+    // canvas.height = 2160
+    canvas.height = imgInput.naturalHeight - (lineDown - lineUp)
     ctx.drawImage(imgInput, 0, 0, 1080, lineUp + 15, 0, 0, 1080, lineUp + 15)
     ctx.drawImage(imgInput, 0, lineDown - 115, 1080, imgInput.naturalHeight - lineDown, 0, lineUp + 15, 1080, imgInput.naturalHeight - lineDown)
     // 这个是底部的东西 有些手机有有些手机没有 默认有
