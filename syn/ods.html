@@ -172,12 +172,12 @@
       return
     }
     
-    let ctx = canvas.getContext('2d')
     let select1 = selects[0].value * 1 + cfg.selectMove1 * 1
     let select2 = selects[1].value * 1 + cfg.selectMove2 * 1
     let lineUp = select1 < select2 ? select1 : select2
     let lineDown = select1 > select2 ? select1 : select2
-    let canvas = document.createElement('canvas')
+    let canvas = document.createElement('canvas')    
+    let ctx = canvas.getContext('2d')
     canvas.width = 1080
     // canvas.height = 2160
     canvas.height = imgInput.naturalHeight - (lineDown - lineUp)
