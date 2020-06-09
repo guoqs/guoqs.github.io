@@ -184,9 +184,9 @@
     ctx.drawImage(imgInput, 0, 0, 1080, lineUp + 15, 0, 0, 1080, lineUp + 15)
     ctx.drawImage(imgInput, 0, lineDown - 115, 1080, imgInput.naturalHeight - lineDown, 0, lineUp + 15, 1080, imgInput.naturalHeight - lineDown)
     // 这个是底部的东西 有些手机有有些手机没有 默认有
-//     if (document.getElementById('has-footer').checked) {
-//       ctx.drawImage(imgInput, 0, imgInput.naturalHeight - 130, 1080, 130, 0, canvas.height - 130, 1080, 130)
-//     }
+    if (document.getElementById('has-footer').checked) {
+      ctx.drawImage(imgInput, 0, imgInput.naturalHeight - 130, 1080, 130, 0, canvas.height - 130, 1080, 130)
+    }
     // 清除原来的价格
     ctx.fillStyle = '#fff';
     ctx.fillRect(700, lineUp + 10, 1080 - 700, 100)
