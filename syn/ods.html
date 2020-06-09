@@ -180,7 +180,7 @@
     let ctx = canvas.getContext('2d')
     canvas.width = 1080
     // canvas.height = 2160
-    canvas.height = imgInput.naturalHeight - (lineDown - lineUp)
+    canvas.height = imgInput.naturalHeight - (lineDown - lineUp) + 130
     ctx.drawImage(imgInput, 0, 0, 1080, lineUp + 15, 0, 0, 1080, lineUp + 15)
     ctx.drawImage(imgInput, 0, lineDown - 115, 1080, imgInput.naturalHeight - lineDown, 0, lineUp + 15, 1080, imgInput.naturalHeight - lineDown)
     // 这个是底部的东西 有些手机有有些手机没有 默认有
