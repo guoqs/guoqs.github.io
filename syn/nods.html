@@ -202,7 +202,7 @@ canvas.height = iw  - 70
     function loadImg(src) {
       return new Promise(function (resolve, reject) {
         var img = document.createElement('img')
-        img.setAttribute('crossOrigin ','anonymous')
+        // img.setAttribute('crossorigin ','anonymous')
         img.addEventListener('load', function () {
           resolve(img)
         }, false)
