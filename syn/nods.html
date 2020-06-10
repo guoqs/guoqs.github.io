@@ -228,7 +228,7 @@ canvas.height = iw  - 70
       if(!dec){
         throw new Error('小数位不是00，目前不支持啊老婆大人')
       }
-      ctx.drawImage(dec,0,0,52,40, 1080-85-52,lineUp-80,52,40)
+      ctx.drawImage(dec,0,0,52,40, 1080-85,lineUp-80 - 70,52,40)
       let intTpls = priceArr[0].split('').reduce((res, tpl) => {
         res.push(loadImg(prePath+ priceTpl[tpl]))
         return res
@@ -240,7 +240,7 @@ canvas.height = iw  - 70
       let move = 0
       ints.reverse().forEach((int,idx) => {
         move+=int.naturalWidth + 2
-        ctx.drawImage(int,0,0,int.naturalWidth,40, 1080-85-52 - move,lineUp-80,int.naturalWidth,40)
+        ctx.drawImage(int,0,0,int.naturalWidth,40, 1080-85 - move,lineUp-80 - 70,int.naturalWidth,40)
       })
 //    document.body.appendChild(canvas)
       canvas.toBlob(blob => {
