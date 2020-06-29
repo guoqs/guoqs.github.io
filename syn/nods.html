@@ -111,6 +111,7 @@
   <fieldset>
     <legend>输入价格(前面勾选表示同时使用了天猫券和红包)</legend>
     <div class="input-area">
+      <input type="checkbox" id="double-flag" />
       <input type="number" placeholder="价格" id="price" />
       <button onclick="creatResult()">生成</button>
     </div>
@@ -175,15 +176,27 @@
     let canvas = document.createElement('canvas')
     canvas.width = 1080
 //    canvas.height = 2160
-let iw = document.querySelector('#img-content canvas').height
-canvas.height = iw  - 70
+	let iw = document.querySelector('#img-content canvas').height
+	// 标识是否同时使用红包和天猫券
+	let isDoubled =  document.getElementById('double-flag').checked
+	if(isDoubled){
+		canvas.height = iw  - 70 - 50
+	}else{
+		canvas.height = iw  - 70
+	}
     let ctx = canvas.getContext('2d')
     ctx.drawImage(imgInput, 0, 0)
     let lineUp = selects[0].value * 1 + cfg.selectMove1 * 1
-    ctx.drawImage(imgInput, 0, lineUp - 100, 1080, iw - lineUp + 100, 0, lineUp - 170,1080, iw - lineUp + 100)
+	let moveUp = 0
+	if(isDoubled){
+		moveUp = 150
+	}else{
+		moveUp = 100
+	}
+    ctx.drawImage(imgInput, 0, lineUp - moveUp, 1080, iw - lineUp + moveUp, 0, lineUp - 170,1080, iw - lineUp + moveUp)
     // 清除原来的价格
     ctx.fillStyle = '#fff';
-    ctx.fillRect(700, lineUp - 100 - 75, 1080 - 75 - 700, 100)
+    ctx.fillRect(700, lineUp - moveUp - 75, 1080 - 75 - 700, moveUp)
 
     // 绘制价格
     let priceTpl = [
