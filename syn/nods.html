@@ -194,7 +194,7 @@
 	}
     // 清除原来的价格
     ctx.fillStyle = '#fff';
-    ctx.fillRect(700, lineUp - 100 - 75 - 50, 1080 - 50 - 700, 100)
+    ctx.fillRect(700, lineUp - 100 - 75 - 50, 1080 - 35 - 700, 100)
 
     // 绘制价格
     let priceTpl = [
@@ -239,7 +239,11 @@
       if(!dec){
         throw new Error('小数位不是00，目前不支持啊老婆大人')
       }
+	if(isDoubled){
+      ctx.drawImage(dec,0,0,52,40, 1080-85,lineUp-80 - 80 - 50,52,40)
+	}else{
       ctx.drawImage(dec,0,0,52,40, 1080-85,lineUp-80 - 80,52,40)
+	}
       let intTpls = priceArr[0].split('').reduce((res, tpl) => {
         res.push(loadImg(prePath+ priceTpl[tpl]))
         return res
@@ -251,7 +255,11 @@
       let move = 0
       ints.reverse().forEach((int,idx) => {
         move+=int.naturalWidth + 2
-        ctx.drawImage(int,0,0,int.naturalWidth,40, 1080-85 - move,lineUp-80 - 80,int.naturalWidth,40)
+		if(isDoubled){
+			ctx.drawImage(int,0,0,int.naturalWidth,40, 1080-85 - move,lineUp-80 - 80 - 50,int.naturalWidth,40)
+		}else{
+			ctx.drawImage(int,0,0,int.naturalWidth,40, 1080-85 - move,lineUp-80 - 80,int.naturalWidth,40)
+		}
       })
 //    document.body.appendChild(canvas)
       canvas.toBlob(blob => {
