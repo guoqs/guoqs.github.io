@@ -187,16 +187,14 @@
     let ctx = canvas.getContext('2d')
     ctx.drawImage(imgInput, 0, 0)
     let lineUp = selects[0].value * 1 + cfg.selectMove1 * 1
-	let moveUp = 0
 	if(isDoubled){
-		moveUp = 150
+		ctx.drawImage(imgInput, 0, lineUp - 100, 1080, iw - lineUp + 100, 0, lineUp - 170 - 50,1080, iw - lineUp + 100)
 	}else{
-		moveUp = 100
+		ctx.drawImage(imgInput, 0, lineUp - 100, 1080, iw - lineUp + 100, 0, lineUp - 170,1080, iw - lineUp + 100)
 	}
-    ctx.drawImage(imgInput, 0, lineUp - moveUp, 1080, iw - lineUp + moveUp, 0, lineUp - 170,1080, iw - lineUp + moveUp)
     // 清除原来的价格
     ctx.fillStyle = '#fff';
-    ctx.fillRect(700, lineUp - moveUp - 75, 1080 - 75 - 700, moveUp)
+    ctx.fillRect(700, lineUp - 100 - 75, 1080 - 75 - 700, 100)
 
     // 绘制价格
     let priceTpl = [
