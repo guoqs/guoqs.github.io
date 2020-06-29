@@ -195,6 +195,11 @@
     // 清除原来的价格
     ctx.fillStyle = '#fff';
     ctx.fillRect(700, lineUp - 100 - 75 - 50, 1080 - 35 - 700, 100)
+	if(isDoubled){
+		ctx.fillRect(700, lineUp - 100 - 75 - 50, 1080 - 35 - 700, 100)
+	}else{
+		ctx.fillRect(700, lineUp - 100 - 75, 1080 - 35 - 700, 100)
+	}
 
     // 绘制价格
     let priceTpl = [
