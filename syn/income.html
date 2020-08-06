@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>计算</title>
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.10/vue.min.js"></script>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+    #app{
+      max-width: 750px;
+      margin: 0 auto;
+      background-color: #f6f6f6;
+      padding: 10px;
+    }
+    #copy{
+      position: absolute;
+      left: -1000px;
+      top: 0;
+    }
+    .income-detail{
+      display: flex;
+      padding: 3px 0;
+      color: #333;
+      justify-content: space-between;
+    }
+    ul{
+      list-style: none;
+    }
+    fieldset{
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 5px;
+    }
+    legend {
+      margin: 0 20px;
+      padding: 5px;
+      font-size: 18px;
+      font-weight: 900;
+    }
+    li {
+      display: flex;
+    }
+    h1 {
+      display: flex;
+      align-items: baseline;
+    }
+    h1 sub{
+      font-size: 12px;
+      color: #666;
+    }
+    h1 .btns{
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+    h4 {
+      align-self: flex-start;
+      flex: 110px 0 0;
+      text-align: right;
+      margin-top: 5px;
+      padding-top: 3px;
+      font-size: 13px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .item-list {
+      flex: 1;
+    }
+    button {
+      flex: 3em 0 0;
+      margin-left: 5px;
+      cursor: pointer;
+      align-self: center;
+      height: 30px;
+      border-radius: 3px;
+      background-color: #ff7200;
+      color: #fff;
+    }
+    .item-list div{
+      display: flex;
+      margin-left: 5px;
+    }
+    .item-list div{
+      display: flex;
+    }
+    .item-list input {
+      width: 50px;
+      flex: 1;
+      height: 30px;
+      margin: 2px 2px;
+      padding: 0 3px;
+      border-radius: 3px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" style="display: none;" :style="'display: block;'">
+    <div>
+      <h1 style="font-size: 24px; ">
+        <sub>{{totaled.totalUsed}}/{{totaled.totalNum}}</sub>
+        <span>合计</span>
+        <span>:{{totaled.totalIncome}}</span>
+        <div class="btns">
+          <button @click="save()" >保存</button>
+          <button  @click="clear()" style="background: red;">清除</button>
+        </div>
+      </h1>
+      <h3 style="font-size: 13px;" class="income-detail">
+        <span>佣金:{{totaled.totolCommission}}</span>
+        <span>红包/券:{{totaled.totolPacket}} </span>
+        <span>平均:{{((totaled.totalIncome / totaled.totalUsed) || 0).toFixed(2)}} </span>
+        <span>总平均:{{((totaled.totalIncome / totaled.totalNum) || 0).toFixed(2)}} </span>
+      </h3>
+    </div>
+    <fieldset v-for="(user,idx) in users" :key="`${user.uName}-${idx}`">
+      <legend>{{user.uName}}</legend>
+      <ul>
+        <li v-for="(tb,sidx) in user.tbs" :key="`${tb.tbName}-${sidx}`">
+          <h4 @click="copyName(tb.tbName)">{{tb.tbName}}</h4>
+          <div class="item-list">
+            <div v-for="(inc,ssidx) in tb.income" :key="`${ssidx}`">
+              <input type="number" placeholder="佣" v-model.number="inc.commission">
+              <input type="number" placeholder="红" v-model.number="inc.packet">
+            </div>
+          </div>
+          <button @click="addIncome(tb)">新增</button>
+        </li>
+      </ul>
+    </fieldset>
+    <input type="text" ref='copy' readonly id="copy">
+  </div>
+</body>
+<script>
+  if((new URLSearchParams(location.search)).get('s') !== 'gqs'){alert('代码有问题，不要访问了');throw new Error('我顶你个肺')}
+  let uk = 'user_svae_key'
+  new Vue({
+    el: '#app',
+    methods: {
+      copyName (name) {
+        let copy = this.$refs.copy
+        copy.value = name
+        copy.select()
+        document.execCommand('copy')
+      },
+      addIncome (tb) {
+        console.log(tb)
+        tb.income.push({
+          commission: '',
+          packet: ''
+        })
+      },
+      save () {
+        localStorage.setItem(uk, JSON.stringify(this.users))
+      },
+      clear () {
+        if(confirm('确定清空，数据不可恢复')){
+          localStorage.removeItem(uk)
+          location.reload()
+        }
+      }
+    },
+    computed: {
+      totaled () {
+        let users = this.users
+        let totalNum = 0
+        let totalUsed = 0
+        // let totalIncome = 0
+        let totolPacket = 0
+        let totolCommission = 0
+        users.forEach(user => {
+          user.tbs.forEach(tb=>{
+            totalNum += 1
+            let isUsed = false
+            tb.income.forEach(inc=>{
+              if(inc.commission || inc.packet){
+                totolPacket += inc.packet || 0
+                totolCommission += inc.commission || 0
+                isUsed = true
+              }
+            })
+            if (isUsed) {
+              totalUsed+=1
+            }
+          })
+        })
+        let totalIncome = totolPacket + totolCommission
+        return {
+          totalNum,
+          totalUsed,
+          totalIncome,
+          totolPacket,
+          totolCommission
+        }
+      }
+    },
+    data () {
+      let usersVoid = [
+          {
+            uName: 'syn',
+            tbs: [{
+              tbName: 'SYN',
+              income: [
+                {
+                  commission: '',
+                  packet: ''
+                }
+              ]
+            },{
+              tbName: '和风散步行',
+              income: [
+                {
+                  commission: '',
+                  packet: ''
+                }
+              ]
+            },{
+              tbName: '靓妞加油',
+              income: [
+                {
+                  commission: '',
+                  packet: ''
+                }
+              ]
+            },{
+              tbName: '带丫看世界',
+              income: [
+                {
+                  commission: '',
+                  packet: ''
+                }
+              ]
+            },{
+              tbName: 'li18106655890',
+              income: [
+                {
+                  commission: '',
+                  packet: ''
+                }
+              ]
+            }]
+          },
+          {
+            uName: 'gqs',
+            tbs: [{
+              tbName: 'qingsong_guo',
+              income: [
+                {
+                  commission: '',
+                  packet: ''
+                }
+              ]
+            }, {
+              tbName: 'tb118888585',
+              income: [
+                {
+                  commission: '',
+                  packet: ''
+                }
+              ]
+            }, {
+              tbName: '阿咦阿卜',
+              income: [
+                {
+                  commission: '',
+                  packet: ''
+                }
+              ]
+            }, {
+              tbName: '和风散步',
+              income: [
+                {
+                  commission: '',
+                  packet: ''
+                }
+              ]
+            }, {
+              tbName: '青菜不不猜菜',
+              income: [
+                {
+                  commission: '',
+                  packet: ''
+                }
+              ]
+            }, {
+              tbName: '太阳当空照555666',
+              income: [
+                {
+                  commission: '',
+                  packet: ''
+                }
+              ]
+            }, {
+              tbName: '花儿对我笑666555',
+              income: [
+                {
+                  commission: '',
+                  packet: ''
+                }
+              ]
+            }]
+          },
+          {
+            uName: 'ghs',
+            tbs: [{
+              tbName: 'ghg718541014',
+              income: [
+                {
+                  commission: '',
+                  packet: ''
+                }
+              ]
+            }, {
+              tbName: 't_1514866745086_0921',
+              income: [
+                {
+                  commission: '',
+                  packet: ''
+                }
+              ]
+            }, {
+              tbName: '从小就善良yao',
+              income: [
+                {
+                  commission: '',
+                  packet: ''
+                }
+              ]
+            }]
+          },
+          {
+            uName: 'lr',
+            tbs: [{
+              tbName: 'li15058258191',
+              income: [
+                {
+                  commission: '',
+                  packet: ''
+                }
+              ]
+            }, {
+              tbName: '靓妞妞加油',
+              income: [
+                {
+                  commission: '',
+                  packet: ''
+                }
+              ]
+            }]
+          },
+          {
+            uName: 'gys',
+            tbs: [{
+              tbName: 'tb164917929',
+              income: [
+                {
+                  commission: '',
+                  packet: ''
+                }
+              ]
+            },{
+              tbName: '葡摆磕稼tib',
+              income: [
+                {
+                  commission: '',
+                  packet: ''
+                }
+              ]
+            }]
+          },
+          {
+            uName: 'zz',
+            tbs: [{
+              tbName: '若木繁华兮',
+              income: [
+                {
+                  commission: '',
+                  packet: ''
+                }
+              ]
+            }]
+          }
+          /*,
+          {
+            uName: 'gqs',
+            tbs: [{
+              tbName: 'qingsong_guo',
+              income: [
+                {
+                  commission: '',
+                  packet: ''
+                }
+              ]
+            }]
+          }*/
+        ]
+      let users = (() => {
+        let userStr = localStorage.getItem(uk)
+        return userStr?JSON.parse(userStr):usersVoid
+      })()
+      return {
+        users
+      }
+    }
+  })
+</script>
+</html>
