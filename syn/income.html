@@ -128,9 +128,9 @@
             <div v-for="(inc,ssidx) in tb.income" :key="`${ssidx}`">
               <input type="number" placeholder="佣" v-model.number="inc.commission">
               <input type="number" placeholder="红" v-model.number="inc.packet">
+              <button @click="addIncome(tb, ssidx)" :style="ssidx!=0?'background-color:red':''">{{ssidx!=0?'删除':'新增'}}</button>
             </div>
           </div>
-          <button @click="addIncome(tb)">新增</button>
         </li>
       </ul>
     </fieldset>
@@ -149,12 +149,17 @@
         copy.select()
         document.execCommand('copy')
       },
-      addIncome (tb) {
-        console.log(tb)
-        tb.income.push({
-          commission: '',
-          packet: ''
-        })
+      addIncome (tb,idx) {
+        if(!idx){
+          tb.income.push({
+            commission: '',
+            packet: ''
+          })
+          return
+        }
+        if(confirm('确定删除该条目，删除后不可恢复')){
+          tb.income.splice(idx, 1)
+        }
       },
       save () {
         localStorage.setItem(uk, JSON.stringify(this.users))
