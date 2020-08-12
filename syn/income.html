@@ -44,6 +44,7 @@
     }
     li {
       display: flex;
+      margin-top: 5px;
     }
     h1 {
       display: flex;
@@ -61,9 +62,8 @@
     }
     h4 {
       align-self: flex-start;
-      flex: 110px 0 0;
+      flex: 128px 0 0;
       text-align: right;
-      margin-top: 5px;
       padding-top: 3px;
       font-size: 13px;
       overflow: hidden;
@@ -123,7 +123,12 @@
       <legend>{{user.uName}}</legend>
       <ul>
         <li v-for="(tb,sidx) in user.tbs" :key="`${tb.tbName}-${sidx}`">
-          <h4 @click="copyName(tb.tbName)">{{tb.tbName}}</h4>
+          <h4 @click="copyName(tb.tbName)">
+            <span>{{tb.tbName}}</span>
+            <p style="font-size: 8px; color: #999; font-weight: normal;">
+              {{tb.express?`每月${tb.express}号过期`:'暂无红包'}}
+            </p>
+          </h4>
           <div class="item-list">
             <div v-for="(inc,ssidx) in tb.income" :key="`${ssidx}`">
               <input type="number" placeholder="佣" v-model.number="inc.commission">
@@ -211,6 +216,7 @@
             uName: 'syn',
             tbs: [{
               tbName: 'SYN',
+              express: '18',
               income: [
                 {
                   commission: '',
@@ -219,6 +225,7 @@
               ]
             },{
               tbName: '和风散步行',
+              express: '05',
               income: [
                 {
                   commission: '',
@@ -227,6 +234,7 @@
               ]
             },{
               tbName: '靓妞加油',
+              express: '27',
               income: [
                 {
                   commission: '',
@@ -235,6 +243,7 @@
               ]
             },{
               tbName: '带丫看世界',
+              express: '03',
               income: [
                 {
                   commission: '',
@@ -243,6 +252,7 @@
               ]
             },{
               tbName: 'li18106655890',
+              express: '02',
               income: [
                 {
                   commission: '',
@@ -255,6 +265,7 @@
             uName: 'gqs',
             tbs: [{
               tbName: 'qingsong_guo',
+              express: '31',
               income: [
                 {
                   commission: '',
@@ -263,6 +274,7 @@
               ]
             }, {
               tbName: 'tb118888585',
+              express: '21',
               income: [
                 {
                   commission: '',
@@ -271,6 +283,7 @@
               ]
             }, {
               tbName: '阿咦阿卜',
+              express: '27',
               income: [
                 {
                   commission: '',
@@ -279,6 +292,7 @@
               ]
             }, {
               tbName: '和风散步',
+              express: '31',
               income: [
                 {
                   commission: '',
@@ -287,6 +301,7 @@
               ]
             }, {
               tbName: '青菜不不猜菜',
+              express: '',
               income: [
                 {
                   commission: '',
@@ -295,6 +310,7 @@
               ]
             }, {
               tbName: '太阳当空照555666',
+              express: '',
               income: [
                 {
                   commission: '',
@@ -303,6 +319,7 @@
               ]
             }, {
               tbName: '花儿对我笑666555',
+              express: '28',
               income: [
                 {
                   commission: '',
@@ -314,7 +331,8 @@
           {
             uName: 'ghs',
             tbs: [{
-              tbName: 'ghg718541014',
+              tbName: 'ghs718541014',
+              express: '26',
               income: [
                 {
                   commission: '',
@@ -323,6 +341,7 @@
               ]
             }, {
               tbName: 't_1514866745086_0921',
+              express: '02',
               income: [
                 {
                   commission: '',
@@ -331,6 +350,7 @@
               ]
             }, {
               tbName: '从小就善良yao',
+              express: '16',
               income: [
                 {
                   commission: '',
@@ -343,6 +363,7 @@
             uName: 'lr',
             tbs: [{
               tbName: 'li15058258191',
+              express: '15',
               income: [
                 {
                   commission: '',
@@ -351,6 +372,7 @@
               ]
             }, {
               tbName: '靓妞妞加油',
+              express: '14',
               income: [
                 {
                   commission: '',
@@ -363,6 +385,7 @@
             uName: 'gys',
             tbs: [{
               tbName: 'tb164917929',
+              express: '15',
               income: [
                 {
                   commission: '',
@@ -371,6 +394,7 @@
               ]
             },{
               tbName: '葡摆磕稼tib',
+              express: '07',
               income: [
                 {
                   commission: '',
@@ -383,6 +407,7 @@
             uName: 'zz',
             tbs: [{
               tbName: '若木繁华兮',
+              express: '20',
               income: [
                 {
                   commission: '',
@@ -393,9 +418,10 @@
           }
           /*,
           {
-            uName: 'gqs',
+            uName: 'yzf',
             tbs: [{
-              tbName: 'qingsong_guo',
+              tbName: '123987',
+              express: '',
               income: [
                 {
                   commission: '',
