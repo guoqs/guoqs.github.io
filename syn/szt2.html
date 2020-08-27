@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>计算</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.10/vue.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      
+      #app {
+        max-width: 640px;
+        margin: 0 auto;
+      }
+      
+      .input-area {
+        display: flex;
+        margin: 10px;
+        border-radius: 5px;
+        overflow: hidden;
+        border: 1px solid #aaa;
+      }
+      
+      input,
+      select {
+        display: block;
+        height: 40px;
+        box-sizing: border-box;
+        outline: none;
+        padding: 10px;
+        outline: none;
+        border: 0;
+      }
+      
+      select {
+        border-right: 1px solid #aaa;
+      }
+      .result{
+        display: flex;
+        align-items: baseline;
+        justify-content: center;
+        font-size: 12px;
+      }
+      .result strong{
+        color: red;
+        font-size: 1.8em;
+      }
+      .result span + strong{
+        margin-right: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="app" style="display: none;" :style="'display: block;'">
+      <div class="input-area">
+        <select v-model="waste">
+          <option v-for="aw in acceptWaste" :key="aw" :value="aw">{{aw}}</option>
+        </select>
+        <input type="number" placeholder="过滤数据" v-model="balance" />
+      </div>
+      <div class="result">
+      	<template v-if="!computedRes">
+      	  <strong style="color: red;">不要指望了，一年还达不到要求</strong>
+      	</template>
+        <template v-else>
+          <span>充值次数 </span>
+          <strong>{{computedRes.rechargeNum}}</strong>
+          <span>乘车次数 </span>
+          <strong>{{computedRes.ridingNum}}</strong>
+          <span>浪费金额 </span>
+          <strong>{{computedRes.waste}}</strong>
+        </template>
+      </div>
+    </div>
+  </body>
+  <script>
+    new Vue({
+      el: '#app',
+      computed: {
+        computedRes() {
+          let {
+            balance,
+            waste
+          } = this
+          waste = waste * 100
+          balance = balance * 100
+          console.log(balance)
+          for(let idx = 0; idx <= 365; idx++) {
+            console.log(idx)
+            console.log(balance)
+            console.log('-------------------------------')
+            if(balance % 665 <= waste){
+              return {
+                rechargeNum: idx,
+                ridingNum:Math.floor(balance / 665),
+                waste: balance % 665 / 100
+              }
+            }
+            balance += 10 * 100
+          }
+          return null
+        }
+      },
+      data() {
+        let arr = []
+        return {
+          acceptWaste: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 1, 2],
+          waste: 0,
+          balance: '',
+        }
+      }
+    })
+  </script>
+
+</html>
