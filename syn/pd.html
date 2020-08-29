@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>频道红包链接生成</title>
+</head>
+<style>
+    body{
+        max-width: 640px;
+        margin: 0 auto;
+        padding: 10px;
+    }
+    .input-area{
+        display: flex;
+        margin: 10px 0;
+    }
+    #btn{
+        flex: 6em 0 0;
+        margin-left: 5px;
+        align-self: flex-end;
+        line-height: 3;
+        font-size: 12px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        outline: none;
+        box-sizing: border-box;
+    }
+    textarea{
+        flex: 1;
+        height: 100px;
+        resize: none;
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        outline: none;
+        box-sizing: border-box;
+    }
+    #output{
+        /* height: 30px; */
+        display: block;
+        width: 100%;
+        padding: 10px;
+        font-size: 12px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        outline: none;
+        box-sizing: border-box;
+    }
+</style>
+<body>
+    <div class="input-area">
+        <textarea placeholder="输入商品详情长连接" id="input"></textarea>
+        <button id="btn">点击生成</button>
+    </div>
+    <input type="text" id="output" placeholder="输出内容">
+<script>
+    let input = document.getElementById('input')
+    let output = document.getElementById('output')
+    let btn = document.getElementById('btn')
+    btn.addEventListener('click', function () {
+        let iVal = input.value
+        if(!iVal){
+            alert('没输入')
+            // input.focus()
+            // document.execCommand('Paste')
+            // console.log(document.execCommand('Paste'))
+            return
+        }
+        copyLink()
+        function copyLink () {
+            let match  = iVal.match(/id=\d{4,}/)
+            if(!match){
+                alert('输入可能不对，请检查输入')
+                return
+            }
+            let id = match[0].split('=')[1]
+            output.value = `http://item.taobao.com/item.htm?id=${id}&fpChannel=28`
+            output.select()
+            document.execCommand('copy')
+        }
+    },false)
+</script>
+</body>
+</html>
