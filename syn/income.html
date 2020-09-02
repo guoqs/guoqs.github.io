@@ -126,7 +126,7 @@
           <h4 @click="copyName(tb.tbName)">
             <span>{{tb.tbName}}</span>
             <p style="font-size: 8px; color: #999; font-weight: normal;">
-              {{tb.express?`每月${tb.express}号过期`:'暂无红包'}}
+              {{tb.expressText?`${tb.expressText}号过期`:'暂无红包'}}
             </p>
           </h4>
           <div class="item-list">
@@ -216,7 +216,7 @@
             uName: 'syn',
             tbs: [{
               tbName: 'SYN',
-              express: '18',
+              express: '8-18',
               income: [
                 {
                   commission: '',
@@ -225,7 +225,7 @@
               ]
             },{
               tbName: '和风散步行',
-              express: '05',
+              express: '9-05',
               income: [
                 {
                   commission: '',
@@ -234,7 +234,7 @@
               ]
             },{
               tbName: '靓妞加油',
-              express: '27',
+              express: '8-27',
               income: [
                 {
                   commission: '',
@@ -243,7 +243,7 @@
               ]
             },{
               tbName: '带丫看世界',
-              express: '03',
+              express: '9-03',
               income: [
                 {
                   commission: '',
@@ -252,7 +252,7 @@
               ]
             },{
               tbName: 'li18106655890',
-              express: '02',
+              express: '9-02',
               income: [
                 {
                   commission: '',
@@ -265,7 +265,7 @@
             uName: 'gqs',
             tbs: [{
               tbName: 'qingsong_guo',
-              express: '31',
+              express: '8-31',
               income: [
                 {
                   commission: '',
@@ -274,7 +274,7 @@
               ]
             }, {
               tbName: 'tb118888585',
-              express: '21',
+              express: '8-21',
               income: [
                 {
                   commission: '',
@@ -283,7 +283,7 @@
               ]
             }, {
               tbName: '阿咦阿卜',
-              express: '27',
+              express: '8-27',
               income: [
                 {
                   commission: '',
@@ -292,7 +292,7 @@
               ]
             }, {
               tbName: '和风散步',
-              express: '31',
+              express: '8-31',
               income: [
                 {
                   commission: '',
@@ -300,7 +300,7 @@
                 }
               ]
             }, {
-              tbName: '青菜不不猜菜',
+              tbName: '青菜不不菜',
               express: '',
               income: [
                 {
@@ -319,7 +319,7 @@
               ]
             }, {
               tbName: '花儿对我笑666555',
-              express: '28',
+              express: '8-28',
               income: [
                 {
                   commission: '',
@@ -332,7 +332,7 @@
             uName: 'ghs',
             tbs: [{
               tbName: 'ghs718541014',
-              express: '26',
+              express: '8-26',
               income: [
                 {
                   commission: '',
@@ -341,7 +341,7 @@
               ]
             }, {
               tbName: 't_1514866745086_0921',
-              express: '02',
+              express: '9-02',
               income: [
                 {
                   commission: '',
@@ -350,7 +350,7 @@
               ]
             }, {
               tbName: '从小就善良yao',
-              express: '16',
+              express: '8-16',
               income: [
                 {
                   commission: '',
@@ -363,7 +363,7 @@
             uName: 'lr',
             tbs: [{
               tbName: 'li15058258191',
-              express: '15',
+              express: '8-15',
               income: [
                 {
                   commission: '',
@@ -372,7 +372,7 @@
               ]
             }, {
               tbName: '靓妞妞加油',
-              express: '14',
+              express: '8-14',
               income: [
                 {
                   commission: '',
@@ -385,7 +385,7 @@
             uName: 'gys',
             tbs: [{
               tbName: 'tb164917929',
-              express: '15',
+              express: '8-15',
               income: [
                 {
                   commission: '',
@@ -394,7 +394,7 @@
               ]
             },{
               tbName: '葡摆磕稼tib',
-              express: '07',
+              express: '9-07',
               income: [
                 {
                   commission: '',
@@ -407,7 +407,7 @@
             uName: 'zz',
             tbs: [{
               tbName: '若木繁华兮',
-              express: '20',
+              express: '8-20',
               income: [
                 {
                   commission: '',
@@ -432,7 +432,22 @@
         ]
       let users = (() => {
         let userStr = localStorage.getItem(uk)
-        return userStr?JSON.parse(userStr):usersVoid
+        userStr = userStr?JSON.parse(userStr):usersVoid
+        userStr.forEach(user => {
+          user.tbs.forEach(tb => {
+            let exp = tb.express
+            if (exp) {
+              let expArr = exp.split('-')
+              let regDate = new Date(2020, expArr[0] *1 - 1, expArr[1] *1)
+              let regTime = regDate.getTime()
+              let tiemToNow = +new Date() - regTime
+              let loop = Math.ceil(tiemToNow / (24 * 3600 * 1000 * 30))
+              regDate.setDate(regDate.getDate() + loop*30)
+              tb.expressText = `${regDate.getMonth() + 1}月${regDate.getDate()}`
+            }
+          })
+        })
+        return userStr
       })()
       return {
         users
