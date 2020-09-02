@@ -438,6 +438,9 @@
             let exp = tb.express
             if (exp) {
               let expArr = exp.split('-')
+              if(expArr.length != 2){
+                 return
+              }
               let regDate = new Date(2020, expArr[0] *1 - 1, expArr[1] *1)
               let regTime = regDate.getTime()
               let tiemToNow = +new Date() - regTime
