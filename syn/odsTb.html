@@ -210,10 +210,11 @@ canvas.height = document.querySelector('#img-content canvas').height
     }
     let priceArr = price.toFixed(2).split('.')
     
-    let prePath = 'https://guoqs.github.io/syn/tpl/'
-    if (location.origin === 'https://guoqs.github.io') {
-      prePath = './tpl/'
-    }
+    // let prePath = 'https://guoqs.github.io/syn/tpl/'
+    // if (location.origin === 'https://guoqs.github.io') {
+    //   prePath = './tpl/'
+    // }
+    prePath = './tpl/'
     // 第一个 处理小数位
     Promise.resolve().then(() => {
       if (priceArr[1] === '00') {
