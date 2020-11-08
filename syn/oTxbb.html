@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>niubility</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.10/vue.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #app {
+            max-width: 640px;
+            margin: 0 auto;
+            margin: 10px;
+        }
+
+        h3 {
+            text-align: center;
+            line-height: 5;
+        }
+
+        #app * {
+            font-size: 12px;
+        }
+
+        fieldset {
+            border: 1px solid #eee;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        legend {
+            margin: 0 15px;
+            color: #999;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        li {
+            margin: 10px;
+            display: flex;
+            height: 34px;
+        }
+
+        li span {
+            flex: 1;
+            align-self: center;
+            overflow: hidden;
+        }
+
+        li input {
+            flex: 120px 0 0;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            font-weight: 900;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" style="display: none;" :style="'display: block !important;'">
+        <h3 @click="clear()">niubility</h3>
+        <fieldset v-for="(user,idx) in users" :key="idx">
+            <legend>{{user.mobile}} [{{user.card}}]</legend>
+            <ul>
+                <li v-for="(tb,sIdx) in user.tbs" :key="idx + sIdx">
+                    <span>
+                        {{tb.name}}
+                    </span>
+                    <input type="date" v-model="tb.usedDate" @change="save()">
+                </li>
+            </ul>
+        </fieldset>
+    </div>
+</body>
+<script>
+    if ((new URLSearchParams(location.search)).get('s') !== 'gqs') { alert('代码有问题，不要访问了'); throw new Error('我顶你个肺') }
+
+    let users = [{
+        mobile: '186****0482',
+        card: '兴业',
+        tbs: [{
+            name: 'qings**g_guo',
+            usedDate: ''
+        }, {
+            name: 'tb118**8585',
+            usedDate: ''
+        }, {
+            name: 't*151486*745086*0921',
+            usedDate: ''
+        }]
+    }, {
+        mobile: '133****2273',
+        card: '邮政GHS',
+        tbs: [{
+            name: '士*男',
+            usedDate: '2020-11-04'
+        }]
+    }, {
+        mobile: '130****5586',
+        card: '农业',
+        tbs: [{
+            name: '和风*步',
+            usedDate: ''
+        }, {
+            name: '阿*阿*',
+            usedDate: ''
+        }, {
+            name: '将往事**饮尽',
+            usedDate: ''
+        }]
+    }, {
+        mobile: '153****9611',
+        card: '邮政SYN',
+        tbs: [{
+            name: '带丫*世界',
+            usedDate: ''
+        }]
+    }, {
+        mobile: '186****8649',
+        card: '工商',
+        tbs: [{
+            name: '花儿对我*666555',
+            usedDate: ''
+        }, {
+            name: '太阳当空*555666',
+            usedDate: ''
+        }]
+    }, {
+        mobile: '176****4034',
+        card: '邮政YZF',
+        tbs: [{
+            name: '若木**兮',
+            usedDate: ''
+        }, {
+            name: '青菜*不菜',
+            usedDate: ''
+        }]
+    }].sort((u1, u2) => {
+        return u2.tbs.length - u1.tbs.length
+    })
+    new Vue({
+        el: '#app',
+        data() {
+            let localUserStr = localStorage.getItem('users_loacl_key')
+            if (localUserStr) {
+                return {
+                    users: JSON.parse(localUserStr)
+                }
+            }
+            return {
+                users
+            }
+        },
+        methods: {
+            save() {
+                localStorage.setItem('users_loacl_key', JSON.stringify(this.users))
+            },
+            clear() {
+                if (confirm('niubility')) {
+                    localStorage.removeItem('users_loacl_key')
+                }
+            }
+        },
+    })
+</script>
+
+</html>
