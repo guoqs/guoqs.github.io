@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>tb my 2021</title>
+</head>
+<style>
+  div,
+  body,
+  label,
+  input {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  input[type="file"] {
+    opacity: 0;
+  }
+
+  .my-content {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 10px;
+    background-color: #ccc;
+  }
+
+  .user-option {
+    display: flex;
+    height: 40px;
+  }
+
+  .user-option select {
+    flex: 1;
+  }
+
+  .user-option label {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+  }
+
+  .user-option label input {
+    display: none;
+  }
+
+  canvas,
+  img {
+    display: block;
+    margin: 10px auto;
+    max-width: 100%;
+  }
+</style>
+
+<body>
+  <div class="my-content" id='my-content'>
+    <img id="img-10" src='./my2021/1-0.jpg'>
+    <img id="img-12" src='./my2021/1-2.jpg'>
+    <img id="img-13" src='./my2021/1-3.jpg'>
+    <div class="user-option">
+      <select id="img-select">
+        <option value="img-10">1-0</option>
+        <option value="img-12">1-2</option>
+        <option value="img-13">1-3</option>
+      </select>
+      <label>
+        <input type="file" id='input'>
+        <span>选择图片</span>
+      </label>
+      <button id="btn">生成</button>
+    </div>
+
+  </div>
+  <script>
+    let input = document.getElementById('input')
+    let myContent = document.getElementById('my-content')
+    let imgSelect = document.getElementById('img-select')
+    let btn = document.getElementById('btn')
+    btn.addEventListener('click', function () {
+      let sFile = input.files[0]
+      if (!sFile) {
+        alert('选图片')
+        return
+      }
+      let img = document.createElement('img')
+      img.addEventListener('load', function () {
+        let muban = document.getElementById(imgSelect.value)
+        if (!muban.complete) {
+          alert('等一下')
+          return
+        }
+        let canvas = document.createElement('canvas')
+        canvas.height = img.naturalHeight
+        canvas.width = img.naturalWidth
+        let ctx = canvas.getContext('2d')
+        ctx.drawImage(img, 0, 0)
+        ctx.drawImage(muban, 0, 1004)
+        // myContent.append(canvas)
+        canvas.toBlob(function (blob) {
+          let output = document.createElement('img')
+          output.setAttribute('src', URL.createObjectURL(blob))
+          myContent.append(output)
+        // }, 'image/jpeg', 0.95)
+        })
+      }, false)
+      img.setAttribute('src', URL.createObjectURL(sFile))
+      console.log(img)
+    }, false)
+  </script>
+</body>
+
+</html>
