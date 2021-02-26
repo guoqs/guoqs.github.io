@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>tmall & tb</title>
+</head>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 12px;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+    /* background-color: #f00; */
+  }
+
+  #file {
+    margin: 10px 0;
+    display: block;
+    width: 100%;
+  }
+
+  #input-priview {
+    display: flex;
+  }
+
+  #input-priview img {
+    flex: 1;
+    display: block;
+    width: 0;
+  }
+
+  #input-priview canvas {
+    flex: 150px 0 0;
+    border-top: 1px solid #000;
+    display: block;
+    align-self: flex-end;
+  }
+
+  #output-priview img {
+    max-width: 100%;
+  }
+
+  .fun-container {
+    display: flex;
+    padding:  5px;
+  }
+
+  .fun-container label {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+  }
+
+  .fun-container button,
+  .fun-container input {
+    padding: 5px;
+    margin: 0 2px;
+    outline: none;
+    transition-duration: .3s;
+  }
+
+  .fun-container button:active,
+  .fun-container input:active {
+    background-color: #44f;
+  }
+
+  .fun-container > input {
+    max-width: 8em;
+    width: 20px;
+    color: #333;
+    letter-spacing: 1px;
+    flex: 1;
+    display: block;
+  }
+  .fun-container select {
+    border: 1px solid #ccc;
+    flex: 1;
+  }
+
+  .fun-container button,
+  .fun-container label {
+    background-color: #00f;
+    border-radius: 5px;
+    color: #fff;
+  }
+  .fun-container button{
+    flex: 3em 0 0;
+  }
+</style>
+
+<body>
+  <div class="container">
+    <input type="file" id="file">
+    <div id="input-priview">
+      <!-- <img src="./718b614a206ad64e0a80f3f0db63dda.jpg">
+      <canvas></canvas> -->
+    </div>
+    <div class="fun-container">
+      <select id='step'>
+        <option value="1">移1px</option>
+        <option value="10">移10px</option>
+        <option value="30">移30px</option>
+      </select>
+      <button id="move-up">上移</button>
+      <button  id="move-down">下移</button>
+    </div>
+    <div class="fun-container">
+      <label>红色 <input type="checkbox"></label>
+      <input type="number" placeholder="数值" id="input-number">
+      <button id="confirm">确定</button>
+    </div>
+    
+    <div id="output-priview">
+      <!-- <img src="./718b614a206ad64e0a80f3f0db63dda.jpg" id=gqs> -->
+    </div>
+  </div>
+</body>
+<script>
+  let cfg = {
+    defpos: 1000,
+    step:1
+  }
+  let ifile = document.getElementById('file')
+  let ipriview = document.getElementById('input-priview')
+  let opriview = document.getElementById('output-priview')
+  let moveu = document.getElementById('move-up')
+  let moved = document.getElementById('move-down')
+  let step = document.getElementById('step')
+  let iconfirm = document.getElementById('confirm')
+  let inumber = document.getElementById('input-number')
+  let ctx = null
+  let iimg = null
+  function inputInit() {
+    if (!ctx || !iimg ) {
+      return
+    }
+    let canvas = ctx.canvas
+    let cw = canvas.width
+    let ch = canvas.height
+    ctx.clearRect(0,0,cw,ch)
+    ctx.drawImage(iimg,iimg.naturalWidth - cw,cfg.defpos,cw,ch,0,0,cw,ch)
+  }
+  iconfirm.addEventListener('click', function () {
+    let vals= inumber.value.trim().split('.')[0]
+    console.log(vals)
+    if(!vals){
+      return
+    }
+    let valsArr = vals.split('')
+    valsArr = ['sfk','pre'].concat(valsArr)
+    let drawResult = function (vimgs) {
+      // 价格 canvas
+      let canvas = document.createElement('canvas')
+      let cw = 0
+      vimgs.forEach((vi,idx) => {
+        if (idx===0) {
+          canvas.height = vi.naturalHeight
+        }
+        cw += vi.naturalWidth
+      })
+      canvas.width = cw
+      let pos = 0
+      let ctx = canvas.getContext('2d')
+      vimgs.forEach((vi,idx) => {
+        ctx.drawImage(vi,pos,0)
+        pos += vi.naturalWidth
+      })
+      // opriview.appendChild(canvas)
+      // 输出需要的图片
+      let ocanvas = document.createElement('canvas')
+      ocanvas.width=iimg.naturalWidth
+      ocanvas.height=iimg.naturalHeight
+      let octx = ocanvas.getContext('2d')
+      octx.drawImage(iimg,0,0)
+      octx.drawImage(canvas,0,0,canvas.width,canvas.height,  iimg.naturalWidth - canvas.width - 116,cfg.defpos-40-canvas.height,canvas.width,canvas.height)
+      ocanvas.toBlob(blob => {
+       let oimg = document.createElement('img')
+       oimg.setAttribute('src',URL.createObjectURL(blob))
+        opriview.appendChild(oimg)
+      })
+    }
+    let vimgs= [];
+    (function imgLoad (vas,idx) {
+      let va = vas[idx]
+      if(va){
+        let img = document.createElement('img')
+        img.addEventListener('load',function () {
+          vimgs.push(img)
+          imgLoad(vas, ++idx)
+        }, false)
+        img.addEventListener('error', function () {
+          alert(va + '加载出错')
+        }, false)
+        img.setAttribute('src', `./images/${va}.jpg`)
+      }else{
+        drawResult(vimgs)
+      }
+    })(valsArr,0)
+
+    console.log(valsArr)
+  }, false)
+  step.addEventListener('change', function () {
+    console.log(this.value)
+    cfg.step = this.value * 1
+  }, false)
+  moveu.addEventListener('click', function(){
+    cfg.defpos -= cfg.step
+    inputInit()
+  }, false)
+  moved.addEventListener('click', function(){
+    cfg.defpos += cfg.step
+    inputInit()
+  }, false)
+  ifile.addEventListener('change', function () {
+    let sfile = ifile.files[0]
+    if (!sfile) {
+      alert('没有文件')
+      return
+    }
+    let img = document.createElement('img')
+    let canvas = document.createElement('canvas')
+    canvas.height = 300
+    canvas.width = 150
+    ipriview.appendChild(img)
+    ipriview.appendChild(canvas)
+    ctx = canvas.getContext('2d')
+    iimg = img
+    img.addEventListener('load',inputInit, false )
+    img.setAttribute('src', URL.createObjectURL(sfile))
+}, false)
+</script>
+
+</html>
