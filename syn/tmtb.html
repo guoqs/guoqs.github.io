@@ -12,20 +12,20 @@
     margin: 0;
     padding: 0;
     border: 0;
-    font-size: 12px;
+    font-size: 14px;
   }
-
+  body{
+    padding-bottom: 50px;
+  }
   .container {
     width: 100%;
     max-width: 640px;
     margin: 0 auto;
     /* background-color: #f00; */
   }
-
-  #file {
-    margin: 10px 0;
+  #label-file{
+    padding: 10px 5px;
     display: block;
-    width: 100%;
   }
 
   #input-priview {
@@ -63,7 +63,7 @@
 
   .fun-container button,
   .fun-container input {
-    padding: 5px;
+    padding: 8px;
     margin: 0 2px;
     outline: none;
     transition-duration: .3s;
@@ -81,29 +81,35 @@
     letter-spacing: 1px;
     flex: 1;
     display: block;
+    border: 1px solid #f1f1f1;
+    border-radius: 3px;
   }
   .fun-container select {
-    border: 1px solid #ccc;
     flex: 1;
+    border: 1px solid #f1f1f1;
+    border-radius: 3px;
+    background-color: transparent;
   }
 
   .fun-container button,
   .fun-container label {
-    background-color: #00f;
+    background-color: #008AD3;
     border-radius: 5px;
     color: #fff;
   }
   .fun-container button{
-    flex: 3em 0 0;
+    flex: 4em 0 0;
   }
 </style>
 
 <body>
   <div class="container">
-    <input type="file" id="file">
+    <label id="label-file">
+      <input type="file" id="file">
+    </label>
     <div id="input-priview">
       <!-- <img src="./718b614a206ad64e0a80f3f0db63dda.jpg">
-      <canvas></canvas> -->
+      <canvas width="150" height="300"></canvas> -->
     </div>
     <div class="fun-container">
       <select id='step'>
@@ -115,7 +121,7 @@
       <button  id="move-down">下移</button>
     </div>
     <div class="fun-container">
-      <label>红色 <input type="checkbox"></label>
+      <label>黑色 <input type="checkbox" id="is-black" ></label>
       <input type="number" placeholder="数值" id="input-number">
       <button id="confirm">确定</button>
     </div>
@@ -127,7 +133,7 @@
 </body>
 <script>
   let cfg = {
-    defpos: 1000,
+    defpos: 1100,
     step:1
   }
   let ifile = document.getElementById('file')
@@ -149,6 +155,11 @@
     let ch = canvas.height
     ctx.clearRect(0,0,cw,ch)
     ctx.drawImage(iimg,iimg.naturalWidth - cw,cfg.defpos,cw,ch,0,0,cw,ch)
+    let dataArr = [].slice.call(ctx.getImageData(10,0,1,1).data)
+    console.log(dataArr)
+    if ('250250250255' == dataArr.join('')) {
+      alert('可以了，输入价格点确定吧')
+    }
   }
   iconfirm.addEventListener('click', function () {
     let vals= inumber.value.trim().split('.')[0]
@@ -182,13 +193,15 @@
       ocanvas.height=iimg.naturalHeight
       let octx = ocanvas.getContext('2d')
       octx.drawImage(iimg,0,0)
-      octx.drawImage(canvas,0,0,canvas.width,canvas.height,  iimg.naturalWidth - canvas.width - 116,cfg.defpos-40-canvas.height,canvas.width,canvas.height)
+      
+      octx.drawImage(canvas,0,0,canvas.width,canvas.height,  iimg.naturalWidth - canvas.width - 116 + (document.getElementById('is-black').checked?8:0),cfg.defpos-40-canvas.height,canvas.width,canvas.height)
       ocanvas.toBlob(blob => {
        let oimg = document.createElement('img')
        oimg.setAttribute('src',URL.createObjectURL(blob))
         opriview.appendChild(oimg)
       })
     }
+    let isBlack = document.getElementById('is-black').checked?'t':''
     let vimgs= [];
     (function imgLoad (vas,idx) {
       let va = vas[idx]
@@ -201,7 +214,9 @@
         img.addEventListener('error', function () {
           alert(va + '加载出错')
         }, false)
-        img.setAttribute('src', `./images/${va}.jpg`)
+        // img.setAttribute('src', `./images/${isBlack}${va}.jpg`)
+        img.setAttribute('src', `./images/${va==='sfk'?va: (isBlack+va) }.jpg`)
+
       }else{
         drawResult(vimgs)
       }
