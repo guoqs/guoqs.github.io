@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>vue-drag</title>
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.8/vue.min.js"></script>
+</head>
+<style>
+  ul {
+    list-style: none;
+  }
+
+  li {
+    margin: 10px;
+    background-color: #F2F2F2;
+    padding: 5px;
+    cursor: pointer;
+  }
+
+  li.dragging {
+    background-color: #f00;
+    border: 1px solid #f00;
+  }
+</style>
+
+<body>
+  <div id=app>
+    <ul @drag="dragParent($event)">
+      <li v-for="(item,idx) in items" :key="item" :idx="idx" draggable="true" @drop="drop($event,idx)"
+        @dragstart="dragstart($event,idx)" @dragover.prevent="">{{item}}</li>
+    </ul>
+  </div>
+</body>
+<script>
+  new Vue({
+    el: '#app',
+    data() {
+      let items = new Array(10).fill('正品GQS').reduce((res, cur, idx) => {
+        res.push(`${cur} * ${idx}`)
+        return res
+      }, [])
+      return {
+        items
+      }
+    },
+    methods: {
+      dragstart(ev, idx) {
+        ev.dataTransfer.setData('dragStartIdx', idx)
+        console.log('dragstart')
+        console.log(ev)
+        console.log(idx)
+        let target = ev.target || ev.srcElement
+        target.classList.add('dragging')
+      },
+      // dragover (ev) {
+      //   console.log('dragover')
+      //   console.log(ev)
+      // },
+      // 父元素  drag =把样式移除
+      dragParent() {
+        console.log(122)
+        let eldragging = [].slice.call(document.querySelectorAll('.dragging'))
+        eldragging.forEach(el => {
+          el.classList.remove('dragging')
+        })
+      },
+      drop(ev, idx) {
+        console.log('drop')
+        // console.log(ev)
+        // console.log(idx)
+        // console.log(ev.dataTransfer.getData('dragStartIdx'))
+        let sIdx = ev.dataTransfer.getData('dragStartIdx')
+        let dropItem = this.items.splice(sIdx, 1)
+        console.log(dropItem)
+        this.items.splice(idx, 0, dropItem[0])
+      }
+    }
+  })
+</script>
+
+</html>
