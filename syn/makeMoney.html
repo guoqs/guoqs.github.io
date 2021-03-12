@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>假设一波</title>
+  </head>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      font-size: 16px;
+    }
+    #app{
+      padding: 10px;
+    }
+    .el-input{
+      display: flex;
+      height: 35px;
+    }
+    .el-input select{
+      flex: 1;
+      margin: 0 3px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+    .el-input button{
+      flex: 4em 0 0;
+      margin: 0 3px;
+      border-radius: 3px;
+      border: 1px solid #f00;
+      background-color: #f00;
+      color: #fff;
+      transition-duration: .3s;
+    }
+    .el-input button:active{
+      opacity: .3;
+    }
+    .output-item{
+      margin: 5px 0;
+      /*display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;*/
+     text-align: right;
+      font-weight: 900;
+    }
+    
+    .output-item span:nth-child(2){
+      font-size: 1.35em;
+      vertical-align: -1px;
+    }
+    .output-item span:nth-child(1){
+      font-size: .8em;
+    }
+  </style>
+  <body>
+    <div id="app">
+      <div class="el-input">
+        <select id="base">
+          <option value="50">50</option>
+          <option value="100" selected>100</option>
+          <option value="150">150</option>
+          <option value="200">200</option>
+          <option value="250">250</option>
+          <option value="300">300</option>
+          <option value="500">500</option>
+          <option value="1000">1000</option>
+        </select>
+        <select id="year">
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10" selected>10</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+          <option value="25">25</option>
+          <option value="30">30</option>
+        </select>
+        <select id="rate">
+          <option value="2">2</option>
+          <option value="4">4</option>
+          <option value="6">6</option>
+          <option value="8">8</option>
+          <option value="10" selected>10</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+        </select>
+        <button id="doit">计算</button>
+      </div>
+      <div id="output">
+        <div class="output-item">
+          <span>预计获得:</span>
+          <span id="output-item-mm"></span>
+        </div>
+        <div class="output-item">
+          <span>投入本金:</span>
+          <span id="output-item-bj"></span>
+        </div>
+      </div>
+    </div>
+    <script>
+      let getById = document.getElementById.bind(document)
+
+      function doMoney() {
+        base = getById('base').value * 1 || 100
+        year = getById('year').value * 1 || 10
+        rate = getById('rate').value * 1 || 10
+        let sum = 0
+        let sum2 = 0
+        for(let idx = 0; idx < year; idx++) {
+          sum *= (1 + rate / 100)
+          sum += base * 12
+          sum2 += base * 12
+        }
+        getById('output-item-mm').innerText = sum.toFixed(2)
+        getById('output-item-bj').innerText = sum2.toFixed(2)
+        console.log(`月存${base},存${year}年,假设年收益${rate},到期预计获得:${sum.toFixed(2)}(本金)${sum2}`)
+      }
+      doMoney()
+      getById('doit').addEventListener('click',doMoney, false)
+    </script>
+  </body>
+
+</html>
