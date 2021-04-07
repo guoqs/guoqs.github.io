@@ -237,7 +237,8 @@
     if (target.tagName.toLowerCase() == 'button') {
       let moveVal = target.dataset.val * 1
       cfg.movex += moveVal
-      console.log(cfg)
+      
+      opriview.innerHTML = ''
       iconfirmCallback()
     }
   },false)
