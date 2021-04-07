@@ -54,6 +54,18 @@
     margin: 10px auto;
     max-width: 100%;
   }
+  .micro-adjust{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+  }
+  .micro-adjust button{
+    height: 40px;
+    margin-left: 10px;
+  }
+  .micro-adjust select{
+    flex: 1;
+  }
 </style>
 
 <body>
@@ -73,14 +85,24 @@
       </label>
       <button id="btn">生成</button>
     </div>
-
+    <div class="micro-adjust" id="micro-adjust">
+      <select id='adjust-base'>
+        <option value="1">1px</option>
+        <option value="10">10px</option>
+        <option value="30">30px</option>
+      </select>
+      <button data-val="-1">上移</button>
+      <button data-val="1">下移</button>
+    </div>
   </div>
   <script>
     let input = document.getElementById('input')
     let myContent = document.getElementById('my-content')
     let imgSelect = document.getElementById('img-select')
     let btn = document.getElementById('btn')
-    btn.addEventListener('click', function () {
+    let adjust = document.getElementById('micro-adjust')
+    let adjustY = 0
+    let funcCallback = function () {
       let sFile = input.files[0]
       if (!sFile) {
         alert('选图片')
@@ -98,19 +120,35 @@
         canvas.width = img.naturalWidth
         let ctx = canvas.getContext('2d')
         ctx.drawImage(img, 0, 0)
-        ctx.drawImage(muban, 0, 1004)        
-//         ctx.drawImage(muban, 0, 1004 + 364)
+        ctx.drawImage(muban, 0, 1004 +  adjustY)
+        //         ctx.drawImage(muban, 0, 1004 + 364)
         // myContent.append(canvas)
         canvas.toBlob(function (blob) {
+          let img = myContent.querySelector('.out-img')
+          if (img) {
+            img.parentElement.removeChild(img)
+          }
           let output = document.createElement('img')
+          output.classList.add('out-img')
           output.setAttribute('src', URL.createObjectURL(blob))
           myContent.append(output)
-        // }, 'image/jpeg', 0.95)
+          // }, 'image/jpeg', 0.95)
         })
       }, false)
       img.setAttribute('src', URL.createObjectURL(sFile))
       console.log(img)
+    }
+    btn.addEventListener('click', funcCallback, false)
+    adjust.addEventListener('click', ev => {
+    let target = ev.target
+    if (target.tagName.toLowerCase() == 'button') {
+      let moveVal = target.dataset.val * 1
+      let ab = document.getElementById('adjust-base')
+      adjustY += moveVal * ab.value
+      iconfirmCallback()
+    }
     }, false)
+    
   </script>
 </body>
 
