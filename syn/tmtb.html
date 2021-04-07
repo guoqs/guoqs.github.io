@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -125,6 +126,11 @@
       <input type="number" placeholder="数值" id="input-number">
       <button id="confirm">确定</button>
     </div>
+    <div class="fun-container" id="movex">
+      <label>点了也没用</label>
+      <button data-val="-1">左边</button>
+      <button data-val="1">右边</button>
+    </div>
     
     <div id="output-priview">
       <!-- <img src="./718b614a206ad64e0a80f3f0db63dda.jpg" id=gqs> -->
@@ -134,7 +140,8 @@
 <script>
   let cfg = {
     defpos: 1100,
-    step:1
+    step:1,
+    movex: 0
   }
   let ifile = document.getElementById('file')
   let ipriview = document.getElementById('input-priview')
@@ -144,6 +151,7 @@
   let step = document.getElementById('step')
   let iconfirm = document.getElementById('confirm')
   let inumber = document.getElementById('input-number')
+  let movex = document.getElementById('movex')
   let ctx = null
   let iimg = null
   function inputInit() {
@@ -161,7 +169,7 @@
       alert('可以了，输入价格点确定吧')
     }
   }
-  iconfirm.addEventListener('click', function () {
+  let iconfirmCallback = function () {
     let vals= inumber.value.trim().split('.')[0]
     console.log(vals)
     if(!vals){
@@ -194,7 +202,7 @@
       let octx = ocanvas.getContext('2d')
       octx.drawImage(iimg,0,0)
       
-      octx.drawImage(canvas,0,0,canvas.width,canvas.height,  iimg.naturalWidth - canvas.width - 116 + (document.getElementById('is-black').checked?8:0),cfg.defpos-40-canvas.height,canvas.width,canvas.height)
+      octx.drawImage(canvas,0,0,canvas.width,canvas.height,  cfg.movex + iimg.naturalWidth - canvas.width - 116 + (document.getElementById('is-black').checked?8:0),cfg.defpos-40-canvas.height,canvas.width,canvas.height)
       ocanvas.toBlob(blob => {
        let oimg = document.createElement('img')
        oimg.setAttribute('src',URL.createObjectURL(blob))
@@ -221,11 +229,19 @@
         drawResult(vimgs)
       }
     })(valsArr,0)
-
     console.log(valsArr)
-  }, false)
+  }
+  iconfirm.addEventListener('click', iconfirmCallback, false)
+  movex.addEventListener('click', ev => {
+    let target = ev.target
+    if (target.tagName.toLowerCase() == 'button') {
+      let moveVal = target.dataset.val * 1
+      cfg.movex += moveVal
+      console.log(cfg)
+      iconfirmCallback()
+    }
+  },false)
   step.addEventListener('change', function () {
-    console.log(this.value)
     cfg.step = this.value * 1
   }, false)
   moveu.addEventListener('click', function(){
