@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh">
 
@@ -109,7 +110,28 @@
     </div>
     <script>
       let getById = document.getElementById.bind(document)
-
+      function creatArr (num, start = 0, isPlus = true) {
+      	 return (bases => {
+         let srt = ''
+         bases.forEach(base => {
+           srt += `<option value="${base}">${base}</option>`
+         })
+         return srt;
+       })((times => {
+         let arr = []
+         for (let idx = 1;idx<=times;idx++) {
+           if(isPlus){
+            arr.push(start + idx)
+           }else{
+            arr.push(start * idx)
+           }
+         }
+         return arr
+       })(num))
+      }
+       getById('base').innerHTML = creatArr(45, 100, false)
+       getById('year').innerHTML = creatArr(18, 2, true)
+       getById('rate').innerHTML = creatArr(30, 1, true)
       function doMoney() {
         base = getById('base').value * 1 || 100
         year = getById('year').value * 1 || 10
