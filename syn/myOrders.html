@@ -1,100 +1,144 @@
-
 <!DOCTYPE html>
 <html lang="zh">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>换头</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>换头</title>
 </head>
 
 <body>
-  <input type="file" id="file" />
-  <div id="demo">
-    <img src="./images/rmfhx.png" id="rmfhx" />
-  </div>
-  <br>
-  <select id="select">
-    <option value="rmfhx">若木繁华兮</option>
-  </select>
-  <button id="btn">生成</button>
+    <input type="file" id="file" />
+    <div id="demo">
+        <img src="./images/rmfhx.png" id="rmfhx" />
+    </div>
+    <br>
+    <select id="select">
+        <option value="rmfhx">若木繁华兮</option>
+    </select>
+    <button id="btn">生成</button>
 </body>
 <style>
-  img {
-    display: block;
-    max-width: 100%;
-  }
+    img {
+        display: block;
+        max-width: 100%;
+    }
 </style>
 <script>
-  let btn = document.getElementById('btn')
-  let sel = document.getElementById('select')
-  let file = document.getElementById('file')
-  let demo = document.getElementById('demo')
-  document.addEventListener('DOMContentLoaded', function () {
-    let selHtml = ''
-    let demoHtml = '';
-    [
-      { syn_02: 'syn' },
-      { lnjy_02: '靓妞加油' },
-      { hfsbx_02: '和风散步行' },
-      
-      { tb11888: 'tb118888585' },
-      { ayab: '阿咦阿卜' },
-      
-      { tb164_02: 'tb164917929' },
-      { pb_tib: '葡摆磕稼tib' },
-      { li181_02: 'li18106655890' },
-      
-      { li_02: 'li150' },
-      { lnnjy_02: '靓妞妞加油' },
-      
-      { hrdwx_02: '花儿对我笑' },
-      
-      { cxjsly_02: '从小就善良yao' },
-      
-      { rmfhx: '若木繁华兮' }
-    ].forEach(item => {
-      let key = Object.keys(item)[0]
-      selHtml += `<option value="${key}">${item[key]}</option>`
-      demoHtml += `<img src="./images/${key}.png" id="${key}" />`
-    })
-    demo.innerHTML = demoHtml
-    sel.innerHTML = selHtml
-  }, false)
-  btn.addEventListener('click', function () {
-    let img = document.getElementById(sel.value)
-    if (!img) {
-      alert('选目标昵称')
-      return
-    }
-    let sFile = file.files[0]
-    if (!sFile) {
-      alert('上传图片')
-      return
-    }
-    console.log(sFile)
-    console.log(img)
+    let btn = document.getElementById('btn')
+    let sel = document.getElementById('select')
+    let file = document.getElementById('file')
+    let demo = document.getElementById('demo')
+    document.addEventListener('DOMContentLoaded', function () {
+        let selHtml = ''
+        let demoHtml = '';
+        // [
+        //   { syn_02: 'syn' },
+        //   { lnjy_02: '靓妞加油' },
+        //   { hfsbx_02: '和风散步行' },
 
-    let inputImg = document.createElement('img')
-    inputImg.addEventListener('load', function () {
-      let canvas = document.createElement('canvas')
-      canvas.height = inputImg.naturalHeight
-      canvas.width = inputImg.naturalWidth
-      let ctx = canvas.getContext('2d')
-      console.log(ctx)
-      ctx.drawImage(inputImg, 0, 0)
-      // 换旺旺
-      ctx.drawImage(img, 0, 201)
-      console.log(canvas)
-      canvas.toBlob(blob => {
-        let outImg = document.createElement('img')
-        outImg.setAttribute('src', URL.createObjectURL(blob))
-        document.body.appendChild(outImg)
-      })
+        //   { tb11888: 'tb118888585' },
+        //   { ayab: '阿咦阿卜' },
+
+        //   { tb164_02: 'tb164917929' },
+        //   { pb_tib: '葡摆磕稼tib' },
+        //   { li181_02: 'li18106655890' },
+
+        //   { li_02: 'li150' },
+        //   { lnnjy_02: '靓妞妞加油' },
+
+        //   { hrdwx_02: '花儿对我笑' },
+
+        //   { cxjsly_02: '从小就善良yao' },
+
+        //   { rmfhx: '若木繁华兮' }
+        // ].forEach(item => {
+        //   let key = Object.keys(item)[0]
+        //   selHtml += `<option value="${key}">${item[key]}</option>`
+        //   demoHtml += `<img src="./images/${key}.png" id="${key}" />`
+        // })
+        let objTbs = {
+            syn: [
+                { syn_02: 'syn' },
+                { lnjy_02: '靓妞加油' },
+                { hfsbx_02: '和风散步行' }
+            ],
+            lr: [
+                { li_02: 'li150' },
+                { lnnjy_02: '靓妞妞加油' }
+            ],
+            yzf: [
+                { hrdwx_02: '花儿对我笑' }
+            ],
+            gys: [
+                { tb164_02: 'tb164917929' },
+                { pb_tib: '葡摆磕稼tib' },
+                { li181_02: 'li18106655890' }
+            ],
+            gqs: [
+                { tb11888: 'tb118888585' },
+                { ayab: '阿咦阿卜' }
+            ],
+            ghs: [
+                { ghs_7185: 'ghs718541014' },
+                { cxjsly_02: '从小就善良yao' },
+                { ghs_t: 't_' }
+            ],
+            zz: [
+                { rmfhx: '若木繁华兮' }
+            ]
+        }
+        Object.keys(objTbs).forEach(ok => {
+            let fieldset = `<fieldset style="border: 1px solid #ccc;border-radius: 5px;"><legend>${ok}</legend>`
+            let optgrp = `<optgroup  label="${ok}">`
+            let obj = objTbs[ok]
+            obj.forEach(item => {
+                let key = Object.keys(item)[0]
+                optgrp += `<option value="${key}">${item[key]}</option>`
+                fieldset += `<img src="./images/${key}.png" id="${key}" />`
+            })
+            fieldset += `</fieldset>`
+            optgrp += `</optgroup >`
+            demoHtml += fieldset
+            selHtml += optgrp
+        })
+        demo.innerHTML = demoHtml
+        sel.innerHTML = selHtml
     }, false)
-    inputImg.setAttribute('src', URL.createObjectURL(sFile))
-  }, false)
+    btn.addEventListener('click', function () {
+        let img = document.getElementById(sel.value)
+        if (!img) {
+            alert('选目标昵称')
+            return
+        }
+        let sFile = file.files[0]
+        if (!sFile) {
+            alert('上传图片')
+            return
+        }
+        console.log(sFile)
+        console.log(img)
+
+        let inputImg = document.createElement('img')
+        inputImg.addEventListener('load', function () {
+            let canvas = document.createElement('canvas')
+            canvas.height = inputImg.naturalHeight
+            canvas.width = inputImg.naturalWidth
+            let ctx = canvas.getContext('2d')
+            console.log(ctx)
+            ctx.drawImage(inputImg, 0, 0)
+            // 换旺旺
+            ctx.drawImage(img, 0, 201)
+            console.log(canvas)
+            canvas.toBlob(blob => {
+                let outImg = document.createElement('img')
+                outImg.setAttribute('src', URL.createObjectURL(blob))
+                document.body.appendChild(outImg)
+            })
+        }, false)
+        inputImg.setAttribute('src', URL.createObjectURL(sFile))
+    }, false)
 </script>
 
 </html>
