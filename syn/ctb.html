@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>抄底</title>
+  </head>
+<style>
+  *{
+    margin: 0;
+    padding: 0;
+  }
+  .container{
+    margin: 10px;
+  }
+  .container input{
+    width: 100%;
+  }
+  .container  button,.container input{
+    height: 35px;
+    border: 1px solid #f3f3f3;
+    box-sizing: border-box;
+    display: block;
+    margin: 5px 0;
+    padding: 0 5px;
+    outline: none;
+    border-radius: 3px;
+    
+  }
+  .container button{
+    margin-left: auto;
+    width: 80px;
+    background-color: #f33;
+    color: #fff;
+  }
+  
+</style>
+  <body>
+    <div class="container">
+      <input type="number" placeholder="基数" id="base" value="1000"/>
+      <input type="number" placeholder="操作基准" id="threshold" value="3"/>
+      <input type="number" placeholder="假设最大回撤率" id="maxRetreat" value="30"/>
+      <button id="calculate">计算</button>
+    </div>
+    <pre id="result" style="background-color: #F6F6F6;padding: 5px; border: 1px solid #F2F2F2; border-radius: 8px;"></pre>
+  </body>
+  <script>
+    let getElementById = document.getElementById.bind(document)
+    getElementById('calculate').addEventListener('click',() => {
+      let result =getMoney(getElementById('base').valueAsNumber,getElementById('threshold').valueAsNumber,getElementById('maxRetreat').valueAsNumber)
+      console.log(result)
+      getElementById('result').innerHTML = JSON.stringify(result, null, ' ')
+      function getMoney(base = 1000, threshold = 4, maxRetreat = 0) {
+        let times = Math.floor(maxRetreat / threshold)
+        function getNum(times) {
+          if(times == 0) {
+            return base
+          }
+          if(times == 1) {
+            return base * 2
+          }
+          if(times == 2) {
+            return base * 3
+          }
+          return getNum(times - 1) * 2
+        }
+        let sum = 0;
+        (new Array(times)).fill(1).forEach((val, idx) => {
+          sum += getNum(idx + 1)
+        });
+  
+        return {
+          max: getNum(times),
+          sum: sum + getNum(0)
+        }
+      }
+      
+    }, false)
+  </script>
+
+</html>
