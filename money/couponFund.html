@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>薅羊毛-</title>
+</head>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    font-size: 15px;
+  }
+
+  ul {
+    margin: 10px;
+  }
+
+  li {
+    margin: 5px 0;
+  }
+
+  fieldset {
+    padding: 3px 10px;
+    border-radius: 5px;
+    border-color: #fff;
+  }
+
+  .li-funs {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .li-funs input {
+    width: 10px;
+    flex: 1;
+  }
+
+  button {
+    padding: 3px;
+    margin-left: 2px;
+  }
+
+  .coupon-items {
+    display: flex;
+  }
+
+  .coupon-items div {
+    display: flex;
+    align-items: center;
+    flex: 1;
+  }
+
+  .coupon-items div:nth-child(n + 2) {
+    margin-left: 10px;
+  }
+
+  .coupon-items input {
+    width: 10px;
+    flex: 1;
+    margin-left: 2px;
+    text-align: center;
+  }
+
+  .coupon-items button {
+    margin: 0;
+  }
+
+  .coupon-items fieldset {
+    padding: 0 10px;
+    margin: 0 2px;
+
+  }
+
+  .coupon-items span {
+    font-weight: 900;
+    text-align: center;
+    display: inline-block;
+    width: 100%;
+
+  }
+
+  legend {
+    font-size: 8px;
+    /* margin: 0 10px 0 3px; */
+  }
+</style>
+
+<body>
+  <div id="app">
+
+    <ul>
+      <li v-for="(item,key) in data">
+        <fieldset>
+          <legend>{{key}} <span style="color: #f00;font-weight: 900;">({{Object.keys(item).reduce((sum,ik) => {sum +=
+              item[ik]; return sum},0)}})</span></legend>
+          <div class="coupon-items">
+            <!-- <div v-for="(sItem,sKey) in item">
+              <span>{{sKey}}</span>
+              <button>-</button>
+              <input type="text"  v-model="sItem">
+              <button>+</button>
+            </div> -->
+            <div v-for="(sItem,sKey) in item">
+              <!-- <span>{{sKey}}</span> -->
+              <button @click="changeItemNum(item,sKey,-1)">-</button>
+              <fieldset>
+                <legend>{{sKey}}</legend>
+                <span>{{sItem}}</span>
+              </fieldset>
+              <button @click="changeItemNum(item,sKey,1)">+</button>
+            </div>
+          </div>
+        </fieldset>
+      </li>
+      <li class="li-funs">
+        <input type="text" v-if="isTplEdit" placeholder="输入模版" v-model="tpl" />
+        <button v-if="isTplEdit" @click="isTplEdit = false">取消</button>
+        <button v-if="isTplEdit" @click="saveTpl(true)">重置</button>
+        <button v-if="isTplEdit" @click="saveTpl()">保存</button>
+
+        <button v-if="!isTplEdit" @click="doTplEdit()">管理模版</button>
+        <button v-if="!isTplEdit" @click="clearLocalData()">清空数据</button>
+        <button v-if="!isTplEdit" @click="doCopayData()">{{totalNums}}</button>
+      </li>
+    </ul>
+  </div>
+</body>
+<!-- <script src="../vue.3.3.4.js"></script> -->
+<script src="https://cdn.bootcdn.net/ajax/libs/vue/3.3.4/vue.global.min.js"></script>
+<script>
+
+  let {
+    // watch
+    createApp,
+    ref,
+    reactive,
+    computed
+  } = Vue
+  // let str = '5W,1K,1W,2W,6w,6k,5w,4k,3w,9k'
+  // let srtarr = str.toUpperCase().split(',').sort((it1, it2) => {
+  //   let it1s = it1.split('')
+  //   let it2s = it2.split('')
+  //   return it1s[1] > it2s[1] ? -1 : 1
+  // }).sort((it1, it2) => {
+  //   let it1s = it1.split('')
+  //   let it2s = it2.split('')
+  //   return it1s[1] != it2s[1] ? 0 : it1s[0] > it2s[0] ? -1 : 1
+  // }).join(',')
+
+  // console.log(str)
+  // console.log(srtarr)
+  const app = createApp({
+    setup () {
+      const LOCAL_TPL = 'LOCAL_TPL'
+      const LOCAL_KEY = 'LOCAL_KEY'
+      let tpl = ref(localStorage.getItem(LOCAL_TPL) || ['2W', '1W', '1K'].join(','))
+      // console.log(tpl)
+      let isTplEdit = ref(false)
+      let data = reactive({})
+      let localData = localStorage.getItem(LOCAL_KEY)
+      /*
+      if (localData) {
+        Object.assign(data, JSON.parse(localData))
+      } else {
+        let items = tpl.value.split(',').reduce((res, item) => {
+          res[item] = 0
+          return res
+        }, {})
+        new Array(8).fill('').forEach((item, idx) => {
+          let date = new Date()
+          date.setDate(date.getDate() + idx)
+          data[date.toISOString().slice(0, 10)] = JSON.parse(JSON.stringify(items))
+        })
+      }
+      */
+      let items = tpl.value.split(',').reduce((res, item) => {
+        res[item] = 0
+        return res
+      }, {})
+      new Array(8).fill('').forEach((item, idx) => {
+        let date = new Date()
+        date.setDate(date.getDate() + idx)
+        data[date.toISOString().slice(0, 10)] = JSON.parse(JSON.stringify(items))
+      })
+      if (localData) {
+        localData = JSON.parse(localData)
+        console.log(localData)
+        Object.keys(data).forEach(dk => {
+          data[dk] = localData[dk] || JSON.parse(JSON.stringify(items))
+        })
+      }
+      // 保存数据
+      let saveTpl = (reset) => {
+        let tplvals = tpl.value.toUpperCase().split(',')
+        for (let idx = 0; idx < tplvals.length; idx++) {
+          if (!/^\d[wk]$/i.test(tplvals[idx])) {
+            alert('输入内容必须是一个数组+一个字母[w或者k],且以,(英文逗号)分开')
+            return
+          }
+        }
+        reset ? localStorage.removeItem(LOCAL_TPL) : localStorage.setItem(LOCAL_TPL, tplvals.reduce((res, item) => {
+          if (res.indexOf(item) == -1) {
+            res.push(item)
+          }
+          return res
+        }, []).sort((it1, it2) => {
+          let it1s = it1.split('')
+          let it2s = it2.split('')
+          return it1s[1] > it2s[1] ? -1 : 1
+        }).sort((it1, it2) => {
+          let it1s = it1.split('')
+          let it2s = it2.split('')
+          return it1s[1] != it2s[1] ? 0 : it1s[0] > it2s[0] ? -1 : 1
+        }).join(','))
+
+        isTplEdit.value = false
+      }
+      // 开始编辑
+      let doTplEdit = () => {
+        tpl.value = localStorage.getItem(LOCAL_TPL) || ['2W', '1W', '1K'].join(',')
+        isTplEdit.value = true
+      }
+      let changeItemNum = (item, sKey, delta) => {
+        // console.log(item)
+        // console.log(sKey)
+        // console.log(delta)
+        if (item[sKey] < 1 && delta < 1) {
+          return
+        }
+        item[sKey] += delta
+        // console.log(data)
+        localStorage.setItem(LOCAL_KEY, JSON.stringify(data))
+      }
+      let clearLocalData = () => {
+        if (!confirm('清除本地数据')) {
+          return
+        }
+        localStorage.removeItem(LOCAL_KEY)
+      }
+      let totalNums = computed(() => {
+        let nums = 0
+        let numsType = {}
+        Object.keys(data).forEach(dk => {
+          // console.log(dk)
+          // console.log(data[dk])
+          let sdata = data[dk]
+          let sdatakey = Object.keys(sdata)
+          sdatakey.forEach(sdk => {
+            if (!numsType[sdk]) {
+              numsType[sdk] = 0
+            }
+            numsType[sdk] += sdata[sdk]
+            nums += sdata[sdk]
+          })
+        })
+
+        return `合计${nums}个(${Object.keys(numsType).reduce((str, item) => { str += str ? (',' + numsType[item]) : numsType[item]; return str }, '')})`
+      })
+      let doCopayData = () => {
+        // const type = "text/plain";
+        // const blob = new Blob([JSON.stringify(data)], { type });
+        // navigator.clipboard.write([new ClipboardItem({ [type]: blob })]).then(() => {
+        //   console.log('复制成功')
+        // }).catch(() => {
+        //   alert('复制失败')
+        // })
+        navigator.clipboard.writeText(JSON.stringify(data)).then(() => {
+          console.log('复制成功')
+        }).catch(() => {
+          alert('复制失败')
+        })
+
+        setTimeout(() => {
+          navigator.clipboard.read().then(res => {
+            console.log(res)
+            console.log(res[0].toString())
+            console.log(res[0].toLocaleString())
+            console.log(res[0].valueOf())
+            navigator.clipboard.readText().then(res => {
+              console.log(res)
+            })
+          })
+          
+        }, 5000)
+      }
+      return {
+        tpl,
+        isTplEdit,
+        data,
+        totalNums,
+        saveTpl,
+        doTplEdit,
+        changeItemNum,
+        clearLocalData,
+        doCopayData
+      }
+    }
+  })
+  app.mount('#app')
+</script>
+
+</html>
