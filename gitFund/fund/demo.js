@@ -1,0 +1,12253 @@
+/** * 测试数据 * @type {arry} */ /*2023-10-19 15:43:25*/
+var ishb = false; /*基金或股票信息*/
+var fS_name = "易方达沪深300ETF联接C";
+var fS_code = "007339"; /*原费率*/
+var fund_sourceRate = "0.00"; /*现费率*/
+var fund_Rate = "0.00"; /*最小申购金额*/
+var fund_minsg = "10"; /*基金持仓股票代码*/
+var stockCodes = ["6005191", "3007500", "6013181", "6000361", "0008580",
+  "0003330", "6011661", "6009001", "6002761", "0025940"
+]; /*基金持仓债券代码*/
+var zqCodes = ""; /*基金持仓股票代码(新市场号)*/
+var stockCodesNew = ["1.600519", "0.300750", "1.601318", "1.600036", "0.000858",
+  "0.000333", "1.601166", "1.600900", "1.600276", "0.002594"
+]; /*基金持仓债券代码（新市场号）*/
+var zqCodesNew = ""; /*收益率*/ /*近一年收益率*/
+var syl_1n = "-3.6"; /*近6月收益率*/
+var syl_6y = "-10.83"; /*近三月收益率*/
+var syl_3y = "-5.73"; /*近一月收益率*/
+var syl_1y = "-2.97"; /*股票仓位测算图*/
+var Data_fundSharesPositions = [
+  [1695052800000, 1.700],
+  [1695139200000, 1.700],
+  [1695225600000, 1.700],
+  [1695312000000, 1.700],
+  [1695571200000, 1.700],
+  [1695657600000, 1.700],
+  [1695744000000, 1.700],
+  [1695830400000, 1.700],
+  [1696780800000, 1.700],
+  [1696867200000, 1.700],
+  [1696953600000, 1.700],
+  [1697040000000, 1.700],
+  [1697126400000, 1.700],
+  [1697385600000, 1.700],
+  [1697472000000, 1.700],
+  [1697558400000, 1.700]
+]; /*单位净值走势 equityReturn-净值回报 unitMoney-每份派送金*/
+var Data_netWorthTrend = [{
+  "x": 1556208000000,
+  "y": 1.3304,
+  "equityReturn": 0,
+  "unitMoney": ""
+}, {
+  "x": 1556467200000,
+  "y": 1.334,
+  "equityReturn": 0.2706,
+  "unitMoney": ""
+}, {
+  "x": 1556553600000,
+  "y": 1.338,
+  "equityReturn": 0.2999,
+  "unitMoney": ""
+}, {
+  "x": 1557072000000,
+  "y": 1.2652,
+  "equityReturn": -5.441,
+  "unitMoney": ""
+}, {
+  "x": 1557158400000,
+  "y": 1.2751,
+  "equityReturn": 0.7825,
+  "unitMoney": ""
+}, {
+  "x": 1557244800000,
+  "y": 1.2582,
+  "equityReturn": -1.3254,
+  "unitMoney": ""
+}, {
+  "x": 1557331200000,
+  "y": 1.2368,
+  "equityReturn": -1.7008,
+  "unitMoney": ""
+}, {
+  "x": 1557417600000,
+  "y": 1.2789,
+  "equityReturn": 3.4039,
+  "unitMoney": ""
+}, {
+  "x": 1557676800000,
+  "y": 1.2592,
+  "equityReturn": -1.5404,
+  "unitMoney": ""
+}, {
+  "x": 1557763200000,
+  "y": 1.2517,
+  "equityReturn": -0.5956,
+  "unitMoney": ""
+}, {
+  "x": 1557849600000,
+  "y": 1.2782,
+  "equityReturn": 2.1171,
+  "unitMoney": ""
+}, {
+  "x": 1557936000000,
+  "y": 1.2836,
+  "equityReturn": 0.4225,
+  "unitMoney": ""
+}, {
+  "x": 1558022400000,
+  "y": 1.2535,
+  "equityReturn": -2.345,
+  "unitMoney": ""
+}, {
+  "x": 1558281600000,
+  "y": 1.2435,
+  "equityReturn": -0.7978,
+  "unitMoney": ""
+}, {
+  "x": 1558368000000,
+  "y": 1.259,
+  "equityReturn": 1.2465,
+  "unitMoney": ""
+}, {
+  "x": 1558454400000,
+  "y": 1.2536,
+  "equityReturn": -0.4289,
+  "unitMoney": ""
+}, {
+  "x": 1558540800000,
+  "y": 1.2338,
+  "equityReturn": -1.5795,
+  "unitMoney": ""
+}, {
+  "x": 1558627200000,
+  "y": 1.2375,
+  "equityReturn": 0.2999,
+  "unitMoney": ""
+}, {
+  "x": 1558886400000,
+  "y": 1.252,
+  "equityReturn": 1.1717,
+  "unitMoney": ""
+}, {
+  "x": 1558972800000,
+  "y": 1.2639,
+  "equityReturn": 0.9505,
+  "unitMoney": ""
+}, {
+  "x": 1559059200000,
+  "y": 1.2613,
+  "equityReturn": -0.2057,
+  "unitMoney": ""
+}, {
+  "x": 1559145600000,
+  "y": 1.2547,
+  "equityReturn": -0.5233,
+  "unitMoney": ""
+}, {
+  "x": 1559232000000,
+  "y": 1.2519,
+  "equityReturn": -0.2232,
+  "unitMoney": ""
+}, {
+  "x": 1559491200000,
+  "y": 1.2532,
+  "equityReturn": 0.1038,
+  "unitMoney": ""
+}, {
+  "x": 1559577600000,
+  "y": 1.2424,
+  "equityReturn": -0.8618,
+  "unitMoney": ""
+}, {
+  "x": 1559664000000,
+  "y": 1.2422,
+  "equityReturn": -0.0161,
+  "unitMoney": ""
+}, {
+  "x": 1559750400000,
+  "y": 1.2322,
+  "equityReturn": -0.805,
+  "unitMoney": ""
+}, {
+  "x": 1560096000000,
+  "y": 1.2471,
+  "equityReturn": 1.2092,
+  "unitMoney": ""
+}, {
+  "x": 1560182400000,
+  "y": 1.2832,
+  "equityReturn": 2.8947,
+  "unitMoney": ""
+}, {
+  "x": 1560268800000,
+  "y": 1.2743,
+  "equityReturn": -0.6936,
+  "unitMoney": ""
+}, {
+  "x": 1560355200000,
+  "y": 1.2725,
+  "equityReturn": -0.1413,
+  "unitMoney": ""
+}, {
+  "x": 1560441600000,
+  "y": 1.2632,
+  "equityReturn": -0.7308,
+  "unitMoney": ""
+}, {
+  "x": 1560700800000,
+  "y": 1.2631,
+  "equityReturn": -0.0079,
+  "unitMoney": ""
+}, {
+  "x": 1560787200000,
+  "y": 1.2674,
+  "equityReturn": 0.3404,
+  "unitMoney": ""
+}, {
+  "x": 1560873600000,
+  "y": 1.2852,
+  "equityReturn": 1.4045,
+  "unitMoney": ""
+}, {
+  "x": 1560960000000,
+  "y": 1.3217,
+  "equityReturn": 2.84,
+  "unitMoney": ""
+}, {
+  "x": 1561046400000,
+  "y": 1.3236,
+  "equityReturn": 0.1438,
+  "unitMoney": ""
+}, {
+  "x": 1561305600000,
+  "y": 1.3258,
+  "equityReturn": 0.1662,
+  "unitMoney": ""
+}, {
+  "x": 1561392000000,
+  "y": 1.3128,
+  "equityReturn": -0.9805,
+  "unitMoney": ""
+}, {
+  "x": 1561478400000,
+  "y": 1.311,
+  "equityReturn": -0.1371,
+  "unitMoney": ""
+}, {
+  "x": 1561564800000,
+  "y": 1.3248,
+  "equityReturn": 1.0526,
+  "unitMoney": ""
+}, {
+  "x": 1561651200000,
+  "y": 1.3229,
+  "equityReturn": -0.1434,
+  "unitMoney": ""
+}, {
+  "x": 1561824000000,
+  "y": 1.3229,
+  "equityReturn": 0,
+  "unitMoney": ""
+}, {
+  "x": 1561910400000,
+  "y": 1.3588,
+  "equityReturn": 2.7137,
+  "unitMoney": ""
+}, {
+  "x": 1561996800000,
+  "y": 1.3592,
+  "equityReturn": 0.0294,
+  "unitMoney": ""
+}, {
+  "x": 1562083200000,
+  "y": 1.3457,
+  "equityReturn": -0.9932,
+  "unitMoney": ""
+}, {
+  "x": 1562169600000,
+  "y": 1.3392,
+  "equityReturn": -0.483,
+  "unitMoney": ""
+}, {
+  "x": 1562256000000,
+  "y": 1.3467,
+  "equityReturn": 0.56,
+  "unitMoney": ""
+}, {
+  "x": 1562515200000,
+  "y": 1.3175,
+  "equityReturn": -2.1683,
+  "unitMoney": ""
+}, {
+  "x": 1562601600000,
+  "y": 1.3151,
+  "equityReturn": -0.1822,
+  "unitMoney": ""
+}, {
+  "x": 1562688000000,
+  "y": 1.3136,
+  "equityReturn": -0.1141,
+  "unitMoney": ""
+}, {
+  "x": 1562774400000,
+  "y": 1.3142,
+  "equityReturn": 0.0457,
+  "unitMoney": ""
+}, {
+  "x": 1562860800000,
+  "y": 1.3239,
+  "equityReturn": 0.7381,
+  "unitMoney": ""
+}, {
+  "x": 1563120000000,
+  "y": 1.3288,
+  "equityReturn": 0.3701,
+  "unitMoney": ""
+}, {
+  "x": 1563206400000,
+  "y": 1.3232,
+  "equityReturn": -0.4214,
+  "unitMoney": ""
+}, {
+  "x": 1563292800000,
+  "y": 1.3227,
+  "equityReturn": -0.0378,
+  "unitMoney": ""
+}, {
+  "x": 1563379200000,
+  "y": 1.3114,
+  "equityReturn": -0.8543,
+  "unitMoney": ""
+}, {
+  "x": 1563465600000,
+  "y": 1.3247,
+  "equityReturn": 1.0142,
+  "unitMoney": ""
+}, {
+  "x": 1563724800000,
+  "y": 1.3162,
+  "equityReturn": -0.6417,
+  "unitMoney": ""
+}, {
+  "x": 1563811200000,
+  "y": 1.3195,
+  "equityReturn": 0.2507,
+  "unitMoney": ""
+}, {
+  "x": 1563897600000,
+  "y": 1.3293,
+  "equityReturn": 0.7427,
+  "unitMoney": ""
+}, {
+  "x": 1563984000000,
+  "y": 1.3397,
+  "equityReturn": 0.7824,
+  "unitMoney": ""
+}, {
+  "x": 1564070400000,
+  "y": 1.3424,
+  "equityReturn": 0.2015,
+  "unitMoney": ""
+}, {
+  "x": 1564329600000,
+  "y": 1.3409,
+  "equityReturn": -0.1117,
+  "unitMoney": ""
+}, {
+  "x": 1564416000000,
+  "y": 1.3463,
+  "equityReturn": 0.4027,
+  "unitMoney": ""
+}, {
+  "x": 1564502400000,
+  "y": 1.3338,
+  "equityReturn": -0.9285,
+  "unitMoney": ""
+}, {
+  "x": 1564588800000,
+  "y": 1.3231,
+  "equityReturn": -0.8022,
+  "unitMoney": ""
+}, {
+  "x": 1564675200000,
+  "y": 1.305,
+  "equityReturn": -1.368,
+  "unitMoney": ""
+}, {
+  "x": 1564934400000,
+  "y": 1.2816,
+  "equityReturn": -1.7931,
+  "unitMoney": ""
+}, {
+  "x": 1565020800000,
+  "y": 1.2696,
+  "equityReturn": -0.9363,
+  "unitMoney": ""
+}, {
+  "x": 1565107200000,
+  "y": 1.2647,
+  "equityReturn": -0.3859,
+  "unitMoney": ""
+}, {
+  "x": 1565193600000,
+  "y": 1.2805,
+  "equityReturn": 1.2493,
+  "unitMoney": ""
+}, {
+  "x": 1565280000000,
+  "y": 1.2689,
+  "equityReturn": -0.9059,
+  "unitMoney": ""
+}, {
+  "x": 1565539200000,
+  "y": 1.2905,
+  "equityReturn": 1.7023,
+  "unitMoney": ""
+}, {
+  "x": 1565625600000,
+  "y": 1.2795,
+  "equityReturn": -0.8524,
+  "unitMoney": ""
+}, {
+  "x": 1565712000000,
+  "y": 1.2851,
+  "equityReturn": 0.4377,
+  "unitMoney": ""
+}, {
+  "x": 1565798400000,
+  "y": 1.2896,
+  "equityReturn": 0.3502,
+  "unitMoney": ""
+}, {
+  "x": 1565884800000,
+  "y": 1.2951,
+  "equityReturn": 0.4265,
+  "unitMoney": ""
+}, {
+  "x": 1566144000000,
+  "y": 1.322,
+  "equityReturn": 2.0771,
+  "unitMoney": ""
+}, {
+  "x": 1566230400000,
+  "y": 1.3208,
+  "equityReturn": -0.0908,
+  "unitMoney": ""
+}, {
+  "x": 1566316800000,
+  "y": 1.3189,
+  "equityReturn": -0.1439,
+  "unitMoney": ""
+}, {
+  "x": 1566403200000,
+  "y": 1.3229,
+  "equityReturn": 0.3033,
+  "unitMoney": ""
+}, {
+  "x": 1566489600000,
+  "y": 1.332,
+  "equityReturn": 0.6879,
+  "unitMoney": ""
+}, {
+  "x": 1566748800000,
+  "y": 1.3142,
+  "equityReturn": -1.3363,
+  "unitMoney": ""
+}, {
+  "x": 1566835200000,
+  "y": 1.3311,
+  "equityReturn": 1.286,
+  "unitMoney": ""
+}, {
+  "x": 1566921600000,
+  "y": 1.3264,
+  "equityReturn": -0.3531,
+  "unitMoney": ""
+}, {
+  "x": 1567008000000,
+  "y": 1.3224,
+  "equityReturn": -0.3016,
+  "unitMoney": ""
+}, {
+  "x": 1567094400000,
+  "y": 1.3255,
+  "equityReturn": 0.2344,
+  "unitMoney": ""
+}, {
+  "x": 1567353600000,
+  "y": 1.3415,
+  "equityReturn": 1.2071,
+  "unitMoney": ""
+}, {
+  "x": 1567440000000,
+  "y": 1.3431,
+  "equityReturn": 0.1193,
+  "unitMoney": ""
+}, {
+  "x": 1567526400000,
+  "y": 1.3546,
+  "equityReturn": 0.8562,
+  "unitMoney": ""
+}, {
+  "x": 1567612800000,
+  "y": 1.3674,
+  "equityReturn": 0.9449,
+  "unitMoney": ""
+}, {
+  "x": 1567699200000,
+  "y": 1.3751,
+  "equityReturn": 0.5631,
+  "unitMoney": ""
+}, {
+  "x": 1567958400000,
+  "y": 1.3831,
+  "equityReturn": 0.5818,
+  "unitMoney": ""
+}, {
+  "x": 1568044800000,
+  "y": 1.3786,
+  "equityReturn": -0.3254,
+  "unitMoney": ""
+}, {
+  "x": 1568131200000,
+  "y": 1.3691,
+  "equityReturn": -0.6891,
+  "unitMoney": ""
+}, {
+  "x": 1568217600000,
+  "y": 1.383,
+  "equityReturn": 1.0153,
+  "unitMoney": ""
+}, {
+  "x": 1568563200000,
+  "y": 1.3781,
+  "equityReturn": -0.3543,
+  "unitMoney": ""
+}, {
+  "x": 1568649600000,
+  "y": 1.3563,
+  "equityReturn": -1.5819,
+  "unitMoney": ""
+}, {
+  "x": 1568736000000,
+  "y": 1.3625,
+  "equityReturn": 0.4571,
+  "unitMoney": ""
+}, {
+  "x": 1568822400000,
+  "y": 1.3671,
+  "equityReturn": 0.3376,
+  "unitMoney": ""
+}, {
+  "x": 1568908800000,
+  "y": 1.3708,
+  "equityReturn": 0.2706,
+  "unitMoney": ""
+}, {
+  "x": 1569168000000,
+  "y": 1.3559,
+  "equityReturn": -1.087,
+  "unitMoney": ""
+}, {
+  "x": 1569254400000,
+  "y": 1.3595,
+  "equityReturn": 0.2655,
+  "unitMoney": ""
+}, {
+  "x": 1569340800000,
+  "y": 1.3498,
+  "equityReturn": -0.7135,
+  "unitMoney": ""
+}, {
+  "x": 1569427200000,
+  "y": 1.3401,
+  "equityReturn": -0.7186,
+  "unitMoney": ""
+}, {
+  "x": 1569513600000,
+  "y": 1.3438,
+  "equityReturn": 0.2761,
+  "unitMoney": ""
+}, {
+  "x": 1569772800000,
+  "y": 1.3315,
+  "equityReturn": -0.9153,
+  "unitMoney": ""
+}, {
+  "x": 1570464000000,
+  "y": 1.3388,
+  "equityReturn": 0.5483,
+  "unitMoney": ""
+}, {
+  "x": 1570550400000,
+  "y": 1.3405,
+  "equityReturn": 0.127,
+  "unitMoney": ""
+}, {
+  "x": 1570636800000,
+  "y": 1.3508,
+  "equityReturn": 0.7684,
+  "unitMoney": ""
+}, {
+  "x": 1570723200000,
+  "y": 1.3632,
+  "equityReturn": 0.918,
+  "unitMoney": ""
+}, {
+  "x": 1570982400000,
+  "y": 1.3768,
+  "equityReturn": 0.9977,
+  "unitMoney": ""
+}, {
+  "x": 1571068800000,
+  "y": 1.3714,
+  "equityReturn": -0.3922,
+  "unitMoney": ""
+}, {
+  "x": 1571155200000,
+  "y": 1.3668,
+  "equityReturn": -0.3354,
+  "unitMoney": ""
+}, {
+  "x": 1571241600000,
+  "y": 1.3675,
+  "equityReturn": 0.0512,
+  "unitMoney": ""
+}, {
+  "x": 1571328000000,
+  "y": 1.3491,
+  "equityReturn": -1.3455,
+  "unitMoney": ""
+}, {
+  "x": 1571587200000,
+  "y": 1.3527,
+  "equityReturn": 0.2668,
+  "unitMoney": ""
+}, {
+  "x": 1571673600000,
+  "y": 1.3577,
+  "equityReturn": 0.3696,
+  "unitMoney": ""
+}, {
+  "x": 1571760000000,
+  "y": 1.3496,
+  "equityReturn": -0.5966,
+  "unitMoney": ""
+}, {
+  "x": 1571846400000,
+  "y": 1.3493,
+  "equityReturn": -0.0222,
+  "unitMoney": ""
+}, {
+  "x": 1571932800000,
+  "y": 1.358,
+  "equityReturn": 0.6448,
+  "unitMoney": ""
+}, {
+  "x": 1572192000000,
+  "y": 1.3678,
+  "equityReturn": 0.7216,
+  "unitMoney": ""
+}, {
+  "x": 1572278400000,
+  "y": 1.3624,
+  "equityReturn": -0.3948,
+  "unitMoney": ""
+}, {
+  "x": 1572364800000,
+  "y": 1.3561,
+  "equityReturn": -0.4624,
+  "unitMoney": ""
+}, {
+  "x": 1572451200000,
+  "y": 1.3546,
+  "equityReturn": -0.1106,
+  "unitMoney": ""
+}, {
+  "x": 1572537600000,
+  "y": 1.3763,
+  "equityReturn": 1.6019,
+  "unitMoney": ""
+}, {
+  "x": 1572796800000,
+  "y": 1.3845,
+  "equityReturn": 0.5958,
+  "unitMoney": ""
+}, {
+  "x": 1572883200000,
+  "y": 1.3926,
+  "equityReturn": 0.585,
+  "unitMoney": ""
+}, {
+  "x": 1572969600000,
+  "y": 1.3869,
+  "equityReturn": -0.4093,
+  "unitMoney": ""
+}, {
+  "x": 1573056000000,
+  "y": 1.3892,
+  "equityReturn": 0.1658,
+  "unitMoney": ""
+}, {
+  "x": 1573142400000,
+  "y": 1.383,
+  "equityReturn": -0.4463,
+  "unitMoney": ""
+}, {
+  "x": 1573401600000,
+  "y": 1.3601,
+  "equityReturn": -1.6558,
+  "unitMoney": ""
+}, {
+  "x": 1573488000000,
+  "y": 1.3602,
+  "equityReturn": 0.0074,
+  "unitMoney": ""
+}, {
+  "x": 1573574400000,
+  "y": 1.3585,
+  "equityReturn": -0.125,
+  "unitMoney": ""
+}, {
+  "x": 1573660800000,
+  "y": 1.3603,
+  "equityReturn": 0.1325,
+  "unitMoney": ""
+}, {
+  "x": 1573747200000,
+  "y": 1.3505,
+  "equityReturn": -0.7204,
+  "unitMoney": ""
+}, {
+  "x": 1574006400000,
+  "y": 1.3609,
+  "equityReturn": 0.7701,
+  "unitMoney": ""
+}, {
+  "x": 1574092800000,
+  "y": 1.374,
+  "equityReturn": 0.9626,
+  "unitMoney": ""
+}, {
+  "x": 1574179200000,
+  "y": 1.3612,
+  "equityReturn": -0.9316,
+  "unitMoney": ""
+}, {
+  "x": 1574265600000,
+  "y": 1.3551,
+  "equityReturn": -0.4481,
+  "unitMoney": ""
+}, {
+  "x": 1574352000000,
+  "y": 1.342,
+  "equityReturn": -0.9667,
+  "unitMoney": ""
+}, {
+  "x": 1574611200000,
+  "y": 1.3513,
+  "equityReturn": 0.693,
+  "unitMoney": ""
+}, {
+  "x": 1574697600000,
+  "y": 1.3556,
+  "equityReturn": 0.3182,
+  "unitMoney": ""
+}, {
+  "x": 1574784000000,
+  "y": 1.3503,
+  "equityReturn": -0.391,
+  "unitMoney": ""
+}, {
+  "x": 1574870400000,
+  "y": 1.346,
+  "equityReturn": -0.3184,
+  "unitMoney": ""
+}, {
+  "x": 1574956800000,
+  "y": 1.3349,
+  "equityReturn": -0.8247,
+  "unitMoney": ""
+}, {
+  "x": 1575216000000,
+  "y": 1.3368,
+  "equityReturn": 0.1423,
+  "unitMoney": ""
+}, {
+  "x": 1575302400000,
+  "y": 1.3417,
+  "equityReturn": 0.3665,
+  "unitMoney": ""
+}, {
+  "x": 1575388800000,
+  "y": 1.3412,
+  "equityReturn": -0.0373,
+  "unitMoney": ""
+}, {
+  "x": 1575475200000,
+  "y": 1.351,
+  "equityReturn": 0.7307,
+  "unitMoney": ""
+}, {
+  "x": 1575561600000,
+  "y": 1.3585,
+  "equityReturn": 0.5551,
+  "unitMoney": ""
+}, {
+  "x": 1575820800000,
+  "y": 1.3564,
+  "equityReturn": -0.1546,
+  "unitMoney": ""
+}, {
+  "x": 1575907200000,
+  "y": 1.358,
+  "equityReturn": 0.118,
+  "unitMoney": ""
+}, {
+  "x": 1575993600000,
+  "y": 1.3589,
+  "equityReturn": 0.0663,
+  "unitMoney": ""
+}, {
+  "x": 1576080000000,
+  "y": 1.3552,
+  "equityReturn": -0.2723,
+  "unitMoney": ""
+}, {
+  "x": 1576166400000,
+  "y": 1.38,
+  "equityReturn": 1.83,
+  "unitMoney": ""
+}, {
+  "x": 1576425600000,
+  "y": 1.3863,
+  "equityReturn": 0.4565,
+  "unitMoney": ""
+}, {
+  "x": 1576512000000,
+  "y": 1.4042,
+  "equityReturn": 1.2912,
+  "unitMoney": ""
+}, {
+  "x": 1576598400000,
+  "y": 1.4012,
+  "equityReturn": -0.2136,
+  "unitMoney": ""
+}, {
+  "x": 1576684800000,
+  "y": 1.3992,
+  "equityReturn": -0.1427,
+  "unitMoney": ""
+}, {
+  "x": 1576771200000,
+  "y": 1.396,
+  "equityReturn": -0.2287,
+  "unitMoney": ""
+}, {
+  "x": 1577030400000,
+  "y": 1.3795,
+  "equityReturn": -1.1819,
+  "unitMoney": ""
+}, {
+  "x": 1577116800000,
+  "y": 1.388,
+  "equityReturn": 0.6162,
+  "unitMoney": ""
+}, {
+  "x": 1577203200000,
+  "y": 1.3874,
+  "equityReturn": -0.0432,
+  "unitMoney": ""
+}, {
+  "x": 1577289600000,
+  "y": 1.3989,
+  "equityReturn": 0.8289,
+  "unitMoney": ""
+}, {
+  "x": 1577376000000,
+  "y": 1.3977,
+  "equityReturn": -0.0858,
+  "unitMoney": ""
+}, {
+  "x": 1577635200000,
+  "y": 1.4173,
+  "equityReturn": 1.4023,
+  "unitMoney": ""
+}, {
+  "x": 1577721600000,
+  "y": 1.4222,
+  "equityReturn": 0.3457,
+  "unitMoney": ""
+}, {
+  "x": 1577894400000,
+  "y": 1.4405,
+  "equityReturn": 1.2867,
+  "unitMoney": ""
+}, {
+  "x": 1577980800000,
+  "y": 1.4382,
+  "equityReturn": -0.1597,
+  "unitMoney": ""
+}, {
+  "x": 1578240000000,
+  "y": 1.433,
+  "equityReturn": -0.3616,
+  "unitMoney": ""
+}, {
+  "x": 1578326400000,
+  "y": 1.4431,
+  "equityReturn": 0.7048,
+  "unitMoney": ""
+}, {
+  "x": 1578412800000,
+  "y": 1.4275,
+  "equityReturn": -1.081,
+  "unitMoney": ""
+}, {
+  "x": 1578499200000,
+  "y": 1.4445,
+  "equityReturn": 1.1909,
+  "unitMoney": ""
+}, {
+  "x": 1578585600000,
+  "y": 1.4444,
+  "equityReturn": -0.0069,
+  "unitMoney": ""
+}, {
+  "x": 1578844800000,
+  "y": 1.4577,
+  "equityReturn": 0.9208,
+  "unitMoney": ""
+}, {
+  "x": 1578931200000,
+  "y": 1.4531,
+  "equityReturn": -0.3156,
+  "unitMoney": ""
+}, {
+  "x": 1579017600000,
+  "y": 1.4455,
+  "equityReturn": -0.523,
+  "unitMoney": ""
+}, {
+  "x": 1579104000000,
+  "y": 1.4404,
+  "equityReturn": -0.3528,
+  "unitMoney": ""
+}, {
+  "x": 1579190400000,
+  "y": 1.4424,
+  "equityReturn": 0.1389,
+  "unitMoney": ""
+}, {
+  "x": 1579449600000,
+  "y": 1.4529,
+  "equityReturn": 0.728,
+  "unitMoney": ""
+}, {
+  "x": 1579536000000,
+  "y": 1.4297,
+  "equityReturn": -1.5968,
+  "unitMoney": ""
+}, {
+  "x": 1579622400000,
+  "y": 1.4354,
+  "equityReturn": 0.3987,
+  "unitMoney": ""
+}, {
+  "x": 1579708800000,
+  "y": 1.3939,
+  "equityReturn": -2.8912,
+  "unitMoney": ""
+}, {
+  "x": 1580659200000,
+  "y": 1.2906,
+  "equityReturn": -7.4109,
+  "unitMoney": ""
+}, {
+  "x": 1580745600000,
+  "y": 1.3233,
+  "equityReturn": 2.5337,
+  "unitMoney": ""
+}, {
+  "x": 1580832000000,
+  "y": 1.3376999999999999,
+  "equityReturn": 1.0882,
+  "unitMoney": ""
+}, {
+  "x": 1580918400000,
+  "y": 1.3611,
+  "equityReturn": 1.7493,
+  "unitMoney": ""
+}, {
+  "x": 1581004800000,
+  "y": 1.3613,
+  "equityReturn": 0.0147,
+  "unitMoney": ""
+}, {
+  "x": 1581264000000,
+  "y": 1.3665,
+  "equityReturn": 0.382,
+  "unitMoney": ""
+}, {
+  "x": 1581350400000,
+  "y": 1.3786,
+  "equityReturn": 0.8855,
+  "unitMoney": ""
+}, {
+  "x": 1581436800000,
+  "y": 1.3891,
+  "equityReturn": 0.7616,
+  "unitMoney": ""
+}, {
+  "x": 1581523200000,
+  "y": 1.3812,
+  "equityReturn": -0.5687,
+  "unitMoney": ""
+}, {
+  "x": 1581609600000,
+  "y": 1.3902,
+  "equityReturn": 0.6516,
+  "unitMoney": ""
+}, {
+  "x": 1581868800000,
+  "y": 1.4196,
+  "equityReturn": 2.1148,
+  "unitMoney": ""
+}, {
+  "x": 1581955200000,
+  "y": 1.4133,
+  "equityReturn": -0.4438,
+  "unitMoney": ""
+}, {
+  "x": 1582041600000,
+  "y": 1.4112,
+  "equityReturn": -0.1486,
+  "unitMoney": ""
+}, {
+  "x": 1582128000000,
+  "y": 1.4421,
+  "equityReturn": 2.1896,
+  "unitMoney": ""
+}, {
+  "x": 1582214400000,
+  "y": 1.4438,
+  "equityReturn": 0.1179,
+  "unitMoney": ""
+}, {
+  "x": 1582473600000,
+  "y": 1.4378,
+  "equityReturn": -0.4156,
+  "unitMoney": ""
+}, {
+  "x": 1582560000000,
+  "y": 1.4343,
+  "equityReturn": -0.2434,
+  "unitMoney": ""
+}, {
+  "x": 1582646400000,
+  "y": 1.4177,
+  "equityReturn": -1.1574,
+  "unitMoney": ""
+}, {
+  "x": 1582732800000,
+  "y": 1.4216,
+  "equityReturn": 0.2751,
+  "unitMoney": ""
+}, {
+  "x": 1582819200000,
+  "y": 1.374,
+  "equityReturn": -3.3483,
+  "unitMoney": ""
+}, {
+  "x": 1583078400000,
+  "y": 1.4164,
+  "equityReturn": 3.0859,
+  "unitMoney": ""
+}, {
+  "x": 1583164800000,
+  "y": 1.424,
+  "equityReturn": 0.5366,
+  "unitMoney": ""
+}, {
+  "x": 1583251200000,
+  "y": 1.4317,
+  "equityReturn": 0.5407,
+  "unitMoney": ""
+}, {
+  "x": 1583337600000,
+  "y": 1.462,
+  "equityReturn": 2.1164,
+  "unitMoney": ""
+}, {
+  "x": 1583424000000,
+  "y": 1.4395,
+  "equityReturn": -1.539,
+  "unitMoney": ""
+}, {
+  "x": 1583683200000,
+  "y": 1.3938,
+  "equityReturn": -3.1747,
+  "unitMoney": ""
+}, {
+  "x": 1583769600000,
+  "y": 1.4217,
+  "equityReturn": 2.0017,
+  "unitMoney": ""
+}, {
+  "x": 1583856000000,
+  "y": 1.404,
+  "equityReturn": -1.245,
+  "unitMoney": ""
+}, {
+  "x": 1583942400000,
+  "y": 1.3784,
+  "equityReturn": -1.8234,
+  "unitMoney": ""
+}, {
+  "x": 1584028800000,
+  "y": 1.3601,
+  "equityReturn": -1.3276,
+  "unitMoney": ""
+}, {
+  "x": 1584288000000,
+  "y": 1.3052,
+  "equityReturn": -4.0365,
+  "unitMoney": ""
+}, {
+  "x": 1584374400000,
+  "y": 1.2993,
+  "equityReturn": -0.452,
+  "unitMoney": ""
+}, {
+  "x": 1584460800000,
+  "y": 1.275,
+  "equityReturn": -1.8702,
+  "unitMoney": ""
+}, {
+  "x": 1584547200000,
+  "y": 1.2593,
+  "equityReturn": -1.2314,
+  "unitMoney": ""
+}, {
+  "x": 1584633600000,
+  "y": 1.2804,
+  "equityReturn": 1.6755,
+  "unitMoney": ""
+}, {
+  "x": 1584892800000,
+  "y": 1.2399,
+  "equityReturn": -3.1631,
+  "unitMoney": ""
+}, {
+  "x": 1584979200000,
+  "y": 1.2706,
+  "equityReturn": 2.476,
+  "unitMoney": ""
+}, {
+  "x": 1585065600000,
+  "y": 1.3025,
+  "equityReturn": 2.5106,
+  "unitMoney": ""
+}, {
+  "x": 1585152000000,
+  "y": 1.2945,
+  "equityReturn": -0.6142,
+  "unitMoney": ""
+}, {
+  "x": 1585238400000,
+  "y": 1.2986,
+  "equityReturn": 0.3167,
+  "unitMoney": ""
+}, {
+  "x": 1585497600000,
+  "y": 1.2866,
+  "equityReturn": -0.9241,
+  "unitMoney": ""
+}, {
+  "x": 1585584000000,
+  "y": 1.2904,
+  "equityReturn": 0.2954,
+  "unitMoney": ""
+}, {
+  "x": 1585670400000,
+  "y": 1.2868,
+  "equityReturn": -0.279,
+  "unitMoney": ""
+}, {
+  "x": 1585756800000,
+  "y": 1.3064,
+  "equityReturn": 1.5232,
+  "unitMoney": ""
+}, {
+  "x": 1585843200000,
+  "y": 1.2993,
+  "equityReturn": -0.5435,
+  "unitMoney": ""
+}, {
+  "x": 1586188800000,
+  "y": 1.3273,
+  "equityReturn": 2.155,
+  "unitMoney": ""
+}, {
+  "x": 1586275200000,
+  "y": 1.3215,
+  "equityReturn": -0.437,
+  "unitMoney": ""
+}, {
+  "x": 1586361600000,
+  "y": 1.3257,
+  "equityReturn": 0.3178,
+  "unitMoney": ""
+}, {
+  "x": 1586448000000,
+  "y": 1.3179,
+  "equityReturn": -0.5884,
+  "unitMoney": ""
+}, {
+  "x": 1586707200000,
+  "y": 1.3125,
+  "equityReturn": -0.4097,
+  "unitMoney": ""
+}, {
+  "x": 1586793600000,
+  "y": 1.3358,
+  "equityReturn": 1.7752,
+  "unitMoney": ""
+}, {
+  "x": 1586880000000,
+  "y": 1.3266,
+  "equityReturn": -0.6887,
+  "unitMoney": ""
+}, {
+  "x": 1586966400000,
+  "y": 1.3286,
+  "equityReturn": 0.1508,
+  "unitMoney": ""
+}, {
+  "x": 1587052800000,
+  "y": 1.3407,
+  "equityReturn": 0.9107,
+  "unitMoney": ""
+}, {
+  "x": 1587312000000,
+  "y": 1.3457,
+  "equityReturn": 0.3729,
+  "unitMoney": ""
+}, {
+  "x": 1587398400000,
+  "y": 1.3307,
+  "equityReturn": -1.1147,
+  "unitMoney": ""
+}, {
+  "x": 1587484800000,
+  "y": 1.341,
+  "equityReturn": 0.774,
+  "unitMoney": ""
+}, {
+  "x": 1587571200000,
+  "y": 1.3378,
+  "equityReturn": -0.2386,
+  "unitMoney": ""
+}, {
+  "x": 1587657600000,
+  "y": 1.3271,
+  "equityReturn": -0.7998,
+  "unitMoney": ""
+}, {
+  "x": 1587916800000,
+  "y": 1.3358,
+  "equityReturn": 0.6556,
+  "unitMoney": ""
+}, {
+  "x": 1588003200000,
+  "y": 1.3444,
+  "equityReturn": 0.6438,
+  "unitMoney": ""
+}, {
+  "x": 1588089600000,
+  "y": 1.3506,
+  "equityReturn": 0.4612,
+  "unitMoney": ""
+}, {
+  "x": 1588176000000,
+  "y": 1.3658,
+  "equityReturn": 1.1254,
+  "unitMoney": ""
+}, {
+  "x": 1588694400000,
+  "y": 1.3735,
+  "equityReturn": 0.5638,
+  "unitMoney": ""
+}, {
+  "x": 1588780800000,
+  "y": 1.3699,
+  "equityReturn": -0.2621,
+  "unitMoney": ""
+}, {
+  "x": 1588867200000,
+  "y": 1.3841,
+  "equityReturn": 1.0366,
+  "unitMoney": ""
+}, {
+  "x": 1589126400000,
+  "y": 1.383,
+  "equityReturn": -0.0795,
+  "unitMoney": ""
+}, {
+  "x": 1589212800000,
+  "y": 1.383,
+  "equityReturn": 0.0,
+  "unitMoney": ""
+}, {
+  "x": 1589299200000,
+  "y": 1.3857,
+  "equityReturn": 0.1952,
+  "unitMoney": ""
+}, {
+  "x": 1589385600000,
+  "y": 1.3714,
+  "equityReturn": -1.032,
+  "unitMoney": ""
+}, {
+  "x": 1589472000000,
+  "y": 1.3676,
+  "equityReturn": -0.2771,
+  "unitMoney": ""
+}, {
+  "x": 1589731200000,
+  "y": 1.371,
+  "equityReturn": 0.2486,
+  "unitMoney": ""
+}, {
+  "x": 1589817600000,
+  "y": 1.3823,
+  "equityReturn": 0.8242,
+  "unitMoney": ""
+}, {
+  "x": 1589904000000,
+  "y": 1.3756,
+  "equityReturn": -0.4847,
+  "unitMoney": ""
+}, {
+  "x": 1589990400000,
+  "y": 1.3685,
+  "equityReturn": -0.5161,
+  "unitMoney": ""
+}, {
+  "x": 1590076800000,
+  "y": 1.3392,
+  "equityReturn": -2.141,
+  "unitMoney": ""
+}, {
+  "x": 1590336000000,
+  "y": 1.341,
+  "equityReturn": 0.1344,
+  "unitMoney": ""
+}, {
+  "x": 1590422400000,
+  "y": 1.3553,
+  "equityReturn": 1.0664,
+  "unitMoney": ""
+}, {
+  "x": 1590508800000,
+  "y": 1.3465,
+  "equityReturn": -0.6493,
+  "unitMoney": ""
+}, {
+  "x": 1590595200000,
+  "y": 1.3505,
+  "equityReturn": 0.2971,
+  "unitMoney": ""
+}, {
+  "x": 1590681600000,
+  "y": 1.3547,
+  "equityReturn": 0.311,
+  "unitMoney": ""
+}, {
+  "x": 1590940800000,
+  "y": 1.3892,
+  "equityReturn": 2.5467,
+  "unitMoney": ""
+}, {
+  "x": 1591027200000,
+  "y": 1.3941,
+  "equityReturn": 0.3527,
+  "unitMoney": ""
+}, {
+  "x": 1591113600000,
+  "y": 1.3943,
+  "equityReturn": 0.0143,
+  "unitMoney": ""
+}, {
+  "x": 1591200000000,
+  "y": 1.394,
+  "equityReturn": -0.0215,
+  "unitMoney": ""
+}, {
+  "x": 1591286400000,
+  "y": 1.4001999999999999,
+  "equityReturn": 0.4448,
+  "unitMoney": ""
+}, {
+  "x": 1591545600000,
+  "y": 1.4077,
+  "equityReturn": 0.5356,
+  "unitMoney": ""
+}, {
+  "x": 1591632000000,
+  "y": 1.4158,
+  "equityReturn": 0.5754,
+  "unitMoney": ""
+}, {
+  "x": 1591718400000,
+  "y": 1.4145,
+  "equityReturn": -0.0918,
+  "unitMoney": ""
+}, {
+  "x": 1591804800000,
+  "y": 1.4011,
+  "equityReturn": -0.9473,
+  "unitMoney": ""
+}, {
+  "x": 1591891200000,
+  "y": 1.4021,
+  "equityReturn": 0.0714,
+  "unitMoney": ""
+}, {
+  "x": 1592150400000,
+  "y": 1.3865,
+  "equityReturn": -1.1126,
+  "unitMoney": ""
+}, {
+  "x": 1592236800000,
+  "y": 1.4064,
+  "equityReturn": 1.4353,
+  "unitMoney": ""
+}, {
+  "x": 1592323200000,
+  "y": 1.4076,
+  "equityReturn": 0.0853,
+  "unitMoney": ""
+}, {
+  "x": 1592409600000,
+  "y": 1.4171,
+  "equityReturn": 0.6749,
+  "unitMoney": ""
+}, {
+  "x": 1592496000000,
+  "y": 1.436,
+  "equityReturn": 1.3337,
+  "unitMoney": ""
+}, {
+  "x": 1592755200000,
+  "y": 1.4377,
+  "equityReturn": 0.1184,
+  "unitMoney": ""
+}, {
+  "x": 1592841600000,
+  "y": 1.4442,
+  "equityReturn": 0.4521,
+  "unitMoney": ""
+}, {
+  "x": 1592928000000,
+  "y": 1.4521,
+  "equityReturn": 0.547,
+  "unitMoney": ""
+}, {
+  "x": 1593360000000,
+  "y": 1.4423,
+  "equityReturn": -0.6749,
+  "unitMoney": ""
+}, {
+  "x": 1593446400000,
+  "y": 1.4615,
+  "equityReturn": 1.3312,
+  "unitMoney": ""
+}, {
+  "x": 1593532800000,
+  "y": 1.4893,
+  "equityReturn": 1.9022,
+  "unitMoney": ""
+}, {
+  "x": 1593619200000,
+  "y": 1.5193,
+  "equityReturn": 2.0144,
+  "unitMoney": ""
+}, {
+  "x": 1593705600000,
+  "y": 1.5472,
+  "equityReturn": 1.8364,
+  "unitMoney": ""
+}, {
+  "x": 1593964800000,
+  "y": 1.6309,
+  "equityReturn": 5.4098,
+  "unitMoney": ""
+}, {
+  "x": 1594051200000,
+  "y": 1.6403,
+  "equityReturn": 0.5764,
+  "unitMoney": ""
+}, {
+  "x": 1594137600000,
+  "y": 1.6656,
+  "equityReturn": 1.5424,
+  "unitMoney": ""
+}, {
+  "x": 1594224000000,
+  "y": 1.6879,
+  "equityReturn": 1.3389,
+  "unitMoney": ""
+}, {
+  "x": 1594310400000,
+  "y": 1.6622,
+  "equityReturn": -1.5226,
+  "unitMoney": ""
+}, {
+  "x": 1594569600000,
+  "y": 1.6964,
+  "equityReturn": 2.0575,
+  "unitMoney": ""
+}, {
+  "x": 1594656000000,
+  "y": 1.6817,
+  "equityReturn": -0.8665,
+  "unitMoney": ""
+}, {
+  "x": 1594742400000,
+  "y": 1.6654,
+  "equityReturn": -0.9693,
+  "unitMoney": ""
+}, {
+  "x": 1594828800000,
+  "y": 1.5901,
+  "equityReturn": -4.5214,
+  "unitMoney": ""
+}, {
+  "x": 1594915200000,
+  "y": 1.601,
+  "equityReturn": 0.6855,
+  "unitMoney": ""
+}, {
+  "x": 1595174400000,
+  "y": 1.6464,
+  "equityReturn": 2.8357,
+  "unitMoney": ""
+}, {
+  "x": 1595260800000,
+  "y": 1.6502,
+  "equityReturn": 0.2308,
+  "unitMoney": ""
+}, {
+  "x": 1595347200000,
+  "y": 1.6597,
+  "equityReturn": 0.5757,
+  "unitMoney": ""
+}, {
+  "x": 1595433600000,
+  "y": 1.66,
+  "equityReturn": 0.0181,
+  "unitMoney": ""
+}, {
+  "x": 1595520000000,
+  "y": 1.5909,
+  "equityReturn": -4.1627,
+  "unitMoney": ""
+}, {
+  "x": 1595779200000,
+  "y": 1.5983,
+  "equityReturn": 0.4651,
+  "unitMoney": ""
+}, {
+  "x": 1595865600000,
+  "y": 1.6113,
+  "equityReturn": 0.8134,
+  "unitMoney": ""
+}, {
+  "x": 1595952000000,
+  "y": 1.6487,
+  "equityReturn": 2.3211,
+  "unitMoney": ""
+}, {
+  "x": 1596038400000,
+  "y": 1.6412,
+  "equityReturn": -0.4549,
+  "unitMoney": ""
+}, {
+  "x": 1596124800000,
+  "y": 1.6545,
+  "equityReturn": 0.8104,
+  "unitMoney": ""
+}, {
+  "x": 1596384000000,
+  "y": 1.6797,
+  "equityReturn": 1.5231,
+  "unitMoney": ""
+}, {
+  "x": 1596470400000,
+  "y": 1.6811,
+  "equityReturn": 0.0833,
+  "unitMoney": ""
+}, {
+  "x": 1596556800000,
+  "y": 1.6815,
+  "equityReturn": 0.0238,
+  "unitMoney": ""
+}, {
+  "x": 1596643200000,
+  "y": 1.6763,
+  "equityReturn": -0.3092,
+  "unitMoney": ""
+}, {
+  "x": 1596729600000,
+  "y": 1.6584,
+  "equityReturn": -1.0678,
+  "unitMoney": ""
+}, {
+  "x": 1596988800000,
+  "y": 1.6644,
+  "equityReturn": 0.3618,
+  "unitMoney": ""
+}, {
+  "x": 1597075200000,
+  "y": 1.6502,
+  "equityReturn": -0.8532,
+  "unitMoney": ""
+}, {
+  "x": 1597161600000,
+  "y": 1.639,
+  "equityReturn": -0.6787,
+  "unitMoney": ""
+}, {
+  "x": 1597248000000,
+  "y": 1.6361,
+  "equityReturn": -0.1769,
+  "unitMoney": ""
+}, {
+  "x": 1597334400000,
+  "y": 1.6599,
+  "equityReturn": 1.4547,
+  "unitMoney": ""
+}, {
+  "x": 1597593600000,
+  "y": 1.697,
+  "equityReturn": 2.2351,
+  "unitMoney": ""
+}, {
+  "x": 1597680000000,
+  "y": 1.6962,
+  "equityReturn": -0.0471,
+  "unitMoney": ""
+}, {
+  "x": 1597766400000,
+  "y": 1.6727,
+  "equityReturn": -1.3854,
+  "unitMoney": ""
+}, {
+  "x": 1597852800000,
+  "y": 1.6524,
+  "equityReturn": -1.2136,
+  "unitMoney": ""
+}, {
+  "x": 1597939200000,
+  "y": 1.6657,
+  "equityReturn": 0.8049,
+  "unitMoney": ""
+}, {
+  "x": 1598198400000,
+  "y": 1.6799,
+  "equityReturn": 0.85,
+  "unitMoney": ""
+}, {
+  "x": 1598284800000,
+  "y": 1.682,
+  "equityReturn": 0.13,
+  "unitMoney": ""
+}, {
+  "x": 1598371200000,
+  "y": 1.6635,
+  "equityReturn": -1.1,
+  "unitMoney": ""
+}, {
+  "x": 1598457600000,
+  "y": 1.6718,
+  "equityReturn": 0.5,
+  "unitMoney": ""
+}, {
+  "x": 1598544000000,
+  "y": 1.7098,
+  "equityReturn": 2.27,
+  "unitMoney": ""
+}, {
+  "x": 1598803200000,
+  "y": 1.7007,
+  "equityReturn": -0.53,
+  "unitMoney": ""
+}, {
+  "x": 1598889600000,
+  "y": 1.7093,
+  "equityReturn": 0.51,
+  "unitMoney": ""
+}, {
+  "x": 1598976000000,
+  "y": 1.71,
+  "equityReturn": 0.04,
+  "unitMoney": ""
+}, {
+  "x": 1599062400000,
+  "y": 1.7011,
+  "equityReturn": -0.52,
+  "unitMoney": ""
+}, {
+  "x": 1599148800000,
+  "y": 1.6856,
+  "equityReturn": -0.91,
+  "unitMoney": ""
+}, {
+  "x": 1599408000000,
+  "y": 1.6521,
+  "equityReturn": -1.99,
+  "unitMoney": ""
+}, {
+  "x": 1599494400000,
+  "y": 1.6605,
+  "equityReturn": 0.51,
+  "unitMoney": ""
+}, {
+  "x": 1599580800000,
+  "y": 1.6237,
+  "equityReturn": -2.22,
+  "unitMoney": ""
+}, {
+  "x": 1599667200000,
+  "y": 1.6229,
+  "equityReturn": -0.05,
+  "unitMoney": ""
+}, {
+  "x": 1599753600000,
+  "y": 1.6379,
+  "equityReturn": 0.92,
+  "unitMoney": ""
+}, {
+  "x": 1600012800000,
+  "y": 1.6456,
+  "equityReturn": 0.47,
+  "unitMoney": ""
+}, {
+  "x": 1600099200000,
+  "y": 1.6583,
+  "equityReturn": 0.77,
+  "unitMoney": ""
+}, {
+  "x": 1600185600000,
+  "y": 1.6488,
+  "equityReturn": -0.57,
+  "unitMoney": ""
+}, {
+  "x": 1600272000000,
+  "y": 1.6414,
+  "equityReturn": -0.45,
+  "unitMoney": ""
+}, {
+  "x": 1600358400000,
+  "y": 1.6764,
+  "equityReturn": 2.13,
+  "unitMoney": ""
+}, {
+  "x": 1600617600000,
+  "y": 1.6613,
+  "equityReturn": -0.9,
+  "unitMoney": ""
+}, {
+  "x": 1600704000000,
+  "y": 1.6429,
+  "equityReturn": -1.11,
+  "unitMoney": ""
+}, {
+  "x": 1600790400000,
+  "y": 1.6485,
+  "equityReturn": 0.34,
+  "unitMoney": ""
+}, {
+  "x": 1600876800000,
+  "y": 1.6189,
+  "equityReturn": -1.8,
+  "unitMoney": ""
+}, {
+  "x": 1600963200000,
+  "y": 1.6212,
+  "equityReturn": 0.14,
+  "unitMoney": ""
+}, {
+  "x": 1601222400000,
+  "y": 1.6256,
+  "equityReturn": 0.27,
+  "unitMoney": ""
+}, {
+  "x": 1601308800000,
+  "y": 1.629,
+  "equityReturn": 0.21,
+  "unitMoney": ""
+}, {
+  "x": 1601395200000,
+  "y": 1.6272,
+  "equityReturn": -0.11,
+  "unitMoney": ""
+}, {
+  "x": 1602172800000,
+  "y": 1.6581,
+  "equityReturn": 1.9,
+  "unitMoney": ""
+}, {
+  "x": 1602432000000,
+  "y": 1.7056,
+  "equityReturn": 2.86,
+  "unitMoney": ""
+}, {
+  "x": 1602518400000,
+  "y": 1.7111,
+  "equityReturn": 0.32,
+  "unitMoney": ""
+}, {
+  "x": 1602604800000,
+  "y": 1.7005,
+  "equityReturn": -0.62,
+  "unitMoney": ""
+}, {
+  "x": 1602691200000,
+  "y": 1.6988,
+  "equityReturn": -0.1,
+  "unitMoney": ""
+}, {
+  "x": 1602777600000,
+  "y": 1.6964,
+  "equityReturn": -0.14,
+  "unitMoney": ""
+}, {
+  "x": 1603036800000,
+  "y": 1.6842,
+  "equityReturn": -0.72,
+  "unitMoney": ""
+}, {
+  "x": 1603123200000,
+  "y": 1.6969,
+  "equityReturn": 0.75,
+  "unitMoney": ""
+}, {
+  "x": 1603209600000,
+  "y": 1.6965,
+  "equityReturn": -0.02,
+  "unitMoney": ""
+}, {
+  "x": 1603296000000,
+  "y": 1.6917,
+  "equityReturn": -0.28,
+  "unitMoney": ""
+}, {
+  "x": 1603382400000,
+  "y": 1.6721,
+  "equityReturn": -1.16,
+  "unitMoney": ""
+}, {
+  "x": 1603641600000,
+  "y": 1.663,
+  "equityReturn": -0.54,
+  "unitMoney": ""
+}, {
+  "x": 1603728000000,
+  "y": 1.666,
+  "equityReturn": 0.18,
+  "unitMoney": ""
+}, {
+  "x": 1603814400000,
+  "y": 1.6788,
+  "equityReturn": 0.77,
+  "unitMoney": ""
+}, {
+  "x": 1603900800000,
+  "y": 1.6922,
+  "equityReturn": 0.8,
+  "unitMoney": ""
+}, {
+  "x": 1603987200000,
+  "y": 1.6662,
+  "equityReturn": -1.54,
+  "unitMoney": ""
+}, {
+  "x": 1604246400000,
+  "y": 1.6749,
+  "equityReturn": 0.52,
+  "unitMoney": ""
+}, {
+  "x": 1604332800000,
+  "y": 1.6939,
+  "equityReturn": 1.13,
+  "unitMoney": ""
+}, {
+  "x": 1604419200000,
+  "y": 1.706,
+  "equityReturn": 0.71,
+  "unitMoney": ""
+}, {
+  "x": 1604505600000,
+  "y": 1.7302,
+  "equityReturn": 1.42,
+  "unitMoney": ""
+}, {
+  "x": 1604592000000,
+  "y": 1.7303,
+  "equityReturn": 0.01,
+  "unitMoney": ""
+}, {
+  "x": 1604851200000,
+  "y": 1.7627,
+  "equityReturn": 1.87,
+  "unitMoney": ""
+}, {
+  "x": 1604937600000,
+  "y": 1.7534,
+  "equityReturn": -0.53,
+  "unitMoney": ""
+}, {
+  "x": 1605024000000,
+  "y": 1.7367,
+  "equityReturn": -0.95,
+  "unitMoney": ""
+}, {
+  "x": 1605110400000,
+  "y": 1.738,
+  "equityReturn": 0.07,
+  "unitMoney": ""
+}, {
+  "x": 1605196800000,
+  "y": 1.7207,
+  "equityReturn": -1.0,
+  "unitMoney": ""
+}, {
+  "x": 1605456000000,
+  "y": 1.7364,
+  "equityReturn": 0.91,
+  "unitMoney": ""
+}, {
+  "x": 1605542400000,
+  "y": 1.7332,
+  "equityReturn": -0.18,
+  "unitMoney": ""
+}, {
+  "x": 1605628800000,
+  "y": 1.7323,
+  "equityReturn": -0.05,
+  "unitMoney": ""
+}, {
+  "x": 1605715200000,
+  "y": 1.7445,
+  "equityReturn": 0.7,
+  "unitMoney": ""
+}, {
+  "x": 1605801600000,
+  "y": 1.7496,
+  "equityReturn": 0.29,
+  "unitMoney": ""
+}, {
+  "x": 1606060800000,
+  "y": 1.7704,
+  "equityReturn": 1.19,
+  "unitMoney": ""
+}, {
+  "x": 1606147200000,
+  "y": 1.7602,
+  "equityReturn": -0.58,
+  "unitMoney": ""
+}, {
+  "x": 1606233600000,
+  "y": 1.739,
+  "equityReturn": -1.2,
+  "unitMoney": ""
+}, {
+  "x": 1606320000000,
+  "y": 1.7417,
+  "equityReturn": 0.16,
+  "unitMoney": ""
+}, {
+  "x": 1606406400000,
+  "y": 1.7625,
+  "equityReturn": 1.19,
+  "unitMoney": ""
+}, {
+  "x": 1606665600000,
+  "y": 1.7562,
+  "equityReturn": -0.36,
+  "unitMoney": ""
+}, {
+  "x": 1606752000000,
+  "y": 1.7916,
+  "equityReturn": 2.02,
+  "unitMoney": ""
+}, {
+  "x": 1606838400000,
+  "y": 1.7919,
+  "equityReturn": 0.02,
+  "unitMoney": ""
+}, {
+  "x": 1606924800000,
+  "y": 1.7887,
+  "equityReturn": -0.18,
+  "unitMoney": ""
+}, {
+  "x": 1607011200000,
+  "y": 1.7916,
+  "equityReturn": 0.16,
+  "unitMoney": ""
+}, {
+  "x": 1607270400000,
+  "y": 1.7771,
+  "equityReturn": -0.81,
+  "unitMoney": ""
+}, {
+  "x": 1607356800000,
+  "y": 1.7731,
+  "equityReturn": -0.23,
+  "unitMoney": ""
+}, {
+  "x": 1607443200000,
+  "y": 1.7507,
+  "equityReturn": -1.26,
+  "unitMoney": ""
+}, {
+  "x": 1607529600000,
+  "y": 1.7499,
+  "equityReturn": -0.05,
+  "unitMoney": ""
+}, {
+  "x": 1607616000000,
+  "y": 1.732,
+  "equityReturn": -1.02,
+  "unitMoney": ""
+}, {
+  "x": 1607875200000,
+  "y": 1.7469,
+  "equityReturn": 0.86,
+  "unitMoney": ""
+}, {
+  "x": 1607961600000,
+  "y": 1.7505,
+  "equityReturn": 0.21,
+  "unitMoney": ""
+}, {
+  "x": 1608048000000,
+  "y": 1.754,
+  "equityReturn": 0.2,
+  "unitMoney": ""
+}, {
+  "x": 1608134400000,
+  "y": 1.7753,
+  "equityReturn": 1.21,
+  "unitMoney": ""
+}, {
+  "x": 1608220800000,
+  "y": 1.7695,
+  "equityReturn": -0.33,
+  "unitMoney": ""
+}, {
+  "x": 1608480000000,
+  "y": 1.7853,
+  "equityReturn": 0.89,
+  "unitMoney": ""
+}, {
+  "x": 1608566400000,
+  "y": 1.7581,
+  "equityReturn": -1.52,
+  "unitMoney": ""
+}, {
+  "x": 1608652800000,
+  "y": 1.7722,
+  "equityReturn": 0.8,
+  "unitMoney": ""
+}, {
+  "x": 1608739200000,
+  "y": 1.7699,
+  "equityReturn": -0.13,
+  "unitMoney": ""
+}, {
+  "x": 1608825600000,
+  "y": 1.7841,
+  "equityReturn": 0.8,
+  "unitMoney": ""
+}, {
+  "x": 1609084800000,
+  "y": 1.7916,
+  "equityReturn": 0.42,
+  "unitMoney": ""
+}, {
+  "x": 1609171200000,
+  "y": 1.7845,
+  "equityReturn": -0.4,
+  "unitMoney": ""
+}, {
+  "x": 1609257600000,
+  "y": 1.8083,
+  "equityReturn": 1.33,
+  "unitMoney": ""
+}, {
+  "x": 1609344000000,
+  "y": 1.841,
+  "equityReturn": 1.81,
+  "unitMoney": ""
+}, {
+  "x": 1609689600000,
+  "y": 1.86,
+  "equityReturn": 1.03,
+  "unitMoney": ""
+}, {
+  "x": 1609776000000,
+  "y": 1.8932,
+  "equityReturn": 1.78,
+  "unitMoney": ""
+}, {
+  "x": 1609862400000,
+  "y": 1.9093,
+  "equityReturn": 0.85,
+  "unitMoney": ""
+}, {
+  "x": 1609948800000,
+  "y": 1.9412,
+  "equityReturn": 1.67,
+  "unitMoney": ""
+}, {
+  "x": 1610035200000,
+  "y": 1.9353,
+  "equityReturn": -0.3,
+  "unitMoney": ""
+}, {
+  "x": 1610294400000,
+  "y": 1.917,
+  "equityReturn": -0.95,
+  "unitMoney": ""
+}, {
+  "x": 1610380800000,
+  "y": 1.9682,
+  "equityReturn": 2.67,
+  "unitMoney": ""
+}, {
+  "x": 1610467200000,
+  "y": 1.9622,
+  "equityReturn": -0.3,
+  "unitMoney": ""
+}, {
+  "x": 1610553600000,
+  "y": 1.9269,
+  "equityReturn": -1.8,
+  "unitMoney": ""
+}, {
+  "x": 1610640000000,
+  "y": 1.9227,
+  "equityReturn": -0.22,
+  "unitMoney": ""
+}, {
+  "x": 1610899200000,
+  "y": 1.9431,
+  "equityReturn": 1.06,
+  "unitMoney": ""
+}, {
+  "x": 1610985600000,
+  "y": 1.9163,
+  "equityReturn": -1.38,
+  "unitMoney": ""
+}, {
+  "x": 1611072000000,
+  "y": 1.9291,
+  "equityReturn": 0.67,
+  "unitMoney": ""
+}, {
+  "x": 1611158400000,
+  "y": 1.9586,
+  "equityReturn": 1.53,
+  "unitMoney": ""
+}, {
+  "x": 1611244800000,
+  "y": 1.9603,
+  "equityReturn": 0.09,
+  "unitMoney": ""
+}, {
+  "x": 1611504000000,
+  "y": 1.9788,
+  "equityReturn": 0.94,
+  "unitMoney": ""
+}, {
+  "x": 1611590400000,
+  "y": 1.9414,
+  "equityReturn": -1.89,
+  "unitMoney": ""
+}, {
+  "x": 1611676800000,
+  "y": 1.9462,
+  "equityReturn": 0.25,
+  "unitMoney": ""
+}, {
+  "x": 1611763200000,
+  "y": 1.8963,
+  "equityReturn": -2.56,
+  "unitMoney": ""
+}, {
+  "x": 1611849600000,
+  "y": 1.8875,
+  "equityReturn": -0.46,
+  "unitMoney": ""
+}, {
+  "x": 1612108800000,
+  "y": 1.9096,
+  "equityReturn": 1.17,
+  "unitMoney": ""
+}, {
+  "x": 1612195200000,
+  "y": 1.9372,
+  "equityReturn": 1.45,
+  "unitMoney": ""
+}, {
+  "x": 1612281600000,
+  "y": 1.9321,
+  "equityReturn": -0.26,
+  "unitMoney": ""
+}, {
+  "x": 1612368000000,
+  "y": 1.9283,
+  "equityReturn": -0.2,
+  "unitMoney": ""
+}, {
+  "x": 1612454400000,
+  "y": 1.9314,
+  "equityReturn": 0.16,
+  "unitMoney": ""
+}, {
+  "x": 1612713600000,
+  "y": 1.9583,
+  "equityReturn": 1.39,
+  "unitMoney": ""
+}, {
+  "x": 1612800000000,
+  "y": 1.9989,
+  "equityReturn": 2.07,
+  "unitMoney": ""
+}, {
+  "x": 1612886400000,
+  "y": 2.0396,
+  "equityReturn": 2.04,
+  "unitMoney": ""
+}, {
+  "x": 1613577600000,
+  "y": 2.0263,
+  "equityReturn": -0.65,
+  "unitMoney": ""
+}, {
+  "x": 1613664000000,
+  "y": 2.0298,
+  "equityReturn": 0.17,
+  "unitMoney": ""
+}, {
+  "x": 1613923200000,
+  "y": 1.9699,
+  "equityReturn": -2.95,
+  "unitMoney": ""
+}, {
+  "x": 1614009600000,
+  "y": 1.9637,
+  "equityReturn": -0.31,
+  "unitMoney": ""
+}, {
+  "x": 1614096000000,
+  "y": 1.9163,
+  "equityReturn": -2.41,
+  "unitMoney": ""
+}, {
+  "x": 1614182400000,
+  "y": 1.9271,
+  "equityReturn": 0.56,
+  "unitMoney": ""
+}, {
+  "x": 1614268800000,
+  "y": 1.883,
+  "equityReturn": -2.29,
+  "unitMoney": ""
+}, {
+  "x": 1614528000000,
+  "y": 1.9101,
+  "equityReturn": 1.44,
+  "unitMoney": ""
+}, {
+  "x": 1614614400000,
+  "y": 1.8869,
+  "equityReturn": -1.21,
+  "unitMoney": ""
+}, {
+  "x": 1614700800000,
+  "y": 1.9211,
+  "equityReturn": 1.81,
+  "unitMoney": ""
+}, {
+  "x": 1614787200000,
+  "y": 1.864,
+  "equityReturn": -2.97,
+  "unitMoney": ""
+}, {
+  "x": 1614873600000,
+  "y": 1.8585,
+  "equityReturn": -0.3,
+  "unitMoney": ""
+}, {
+  "x": 1615132800000,
+  "y": 1.7973,
+  "equityReturn": -3.29,
+  "unitMoney": ""
+}, {
+  "x": 1615219200000,
+  "y": 1.7608,
+  "equityReturn": -2.03,
+  "unitMoney": ""
+}, {
+  "x": 1615305600000,
+  "y": 1.7716,
+  "equityReturn": 0.61,
+  "unitMoney": ""
+}, {
+  "x": 1615392000000,
+  "y": 1.8128,
+  "equityReturn": 2.33,
+  "unitMoney": ""
+}, {
+  "x": 1615478400000,
+  "y": 1.8188,
+  "equityReturn": 0.33,
+  "unitMoney": ""
+}, {
+  "x": 1615737600000,
+  "y": 1.7819,
+  "equityReturn": -2.03,
+  "unitMoney": ""
+}, {
+  "x": 1615824000000,
+  "y": 1.7965,
+  "equityReturn": 0.82,
+  "unitMoney": ""
+}, {
+  "x": 1615910400000,
+  "y": 1.8036,
+  "equityReturn": 0.4,
+  "unitMoney": ""
+}, {
+  "x": 1615996800000,
+  "y": 1.8172,
+  "equityReturn": 0.75,
+  "unitMoney": ""
+}, {
+  "x": 1616083200000,
+  "y": 1.7721,
+  "equityReturn": -2.48,
+  "unitMoney": ""
+}, {
+  "x": 1616342400000,
+  "y": 1.789,
+  "equityReturn": 0.95,
+  "unitMoney": ""
+}, {
+  "x": 1616428800000,
+  "y": 1.773,
+  "equityReturn": -0.89,
+  "unitMoney": ""
+}, {
+  "x": 1616515200000,
+  "y": 1.7465,
+  "equityReturn": -1.49,
+  "unitMoney": ""
+}, {
+  "x": 1616601600000,
+  "y": 1.7462,
+  "equityReturn": -0.02,
+  "unitMoney": ""
+}, {
+  "x": 1616688000000,
+  "y": 1.7837,
+  "equityReturn": 2.15,
+  "unitMoney": ""
+}, {
+  "x": 1616947200000,
+  "y": 1.7865,
+  "equityReturn": 0.16,
+  "unitMoney": ""
+}, {
+  "x": 1617033600000,
+  "y": 1.8025,
+  "equityReturn": 0.9,
+  "unitMoney": ""
+}, {
+  "x": 1617120000000,
+  "y": 1.787,
+  "equityReturn": -0.86,
+  "unitMoney": ""
+}, {
+  "x": 1617206400000,
+  "y": 1.8082,
+  "equityReturn": 1.19,
+  "unitMoney": ""
+}, {
+  "x": 1617292800000,
+  "y": 1.8251,
+  "equityReturn": 0.93,
+  "unitMoney": ""
+}, {
+  "x": 1617638400000,
+  "y": 1.8181,
+  "equityReturn": -0.38,
+  "unitMoney": ""
+}, {
+  "x": 1617724800000,
+  "y": 1.8058,
+  "equityReturn": -0.68,
+  "unitMoney": ""
+}, {
+  "x": 1617811200000,
+  "y": 1.8088,
+  "equityReturn": 0.17,
+  "unitMoney": ""
+}, {
+  "x": 1617897600000,
+  "y": 1.7833,
+  "equityReturn": -1.41,
+  "unitMoney": ""
+}, {
+  "x": 1618156800000,
+  "y": 1.7541,
+  "equityReturn": -1.64,
+  "unitMoney": ""
+}, {
+  "x": 1618243200000,
+  "y": 1.7514,
+  "equityReturn": -0.15,
+  "unitMoney": ""
+}, {
+  "x": 1618329600000,
+  "y": 1.7651,
+  "equityReturn": 0.78,
+  "unitMoney": ""
+}, {
+  "x": 1618416000000,
+  "y": 1.7546,
+  "equityReturn": -0.59,
+  "unitMoney": ""
+}, {
+  "x": 1618502400000,
+  "y": 1.7605,
+  "equityReturn": 0.34,
+  "unitMoney": ""
+}, {
+  "x": 1618761600000,
+  "y": 1.8012,
+  "equityReturn": 2.31,
+  "unitMoney": ""
+}, {
+  "x": 1618848000000,
+  "y": 1.8001,
+  "equityReturn": -0.06,
+  "unitMoney": ""
+}, {
+  "x": 1618934400000,
+  "y": 1.8053,
+  "equityReturn": 0.29,
+  "unitMoney": ""
+}, {
+  "x": 1619020800000,
+  "y": 1.8033,
+  "equityReturn": -0.11,
+  "unitMoney": ""
+}, {
+  "x": 1619107200000,
+  "y": 1.8194,
+  "equityReturn": 0.89,
+  "unitMoney": ""
+}, {
+  "x": 1619366400000,
+  "y": 1.8004,
+  "equityReturn": -1.04,
+  "unitMoney": ""
+}, {
+  "x": 1619452800000,
+  "y": 1.8048,
+  "equityReturn": 0.24,
+  "unitMoney": ""
+}, {
+  "x": 1619539200000,
+  "y": 1.8145,
+  "equityReturn": 0.54,
+  "unitMoney": ""
+}, {
+  "x": 1619625600000,
+  "y": 1.8297,
+  "equityReturn": 0.84,
+  "unitMoney": ""
+}, {
+  "x": 1619712000000,
+  "y": 1.8162,
+  "equityReturn": -0.74,
+  "unitMoney": ""
+}, {
+  "x": 1620230400000,
+  "y": 1.7952,
+  "equityReturn": -1.16,
+  "unitMoney": ""
+}, {
+  "x": 1620316800000,
+  "y": 1.7734,
+  "equityReturn": -1.21,
+  "unitMoney": ""
+}, {
+  "x": 1620576000000,
+  "y": 1.7721,
+  "equityReturn": -0.07,
+  "unitMoney": ""
+}, {
+  "x": 1620662400000,
+  "y": 1.7823,
+  "equityReturn": 0.58,
+  "unitMoney": ""
+}, {
+  "x": 1620748800000,
+  "y": 1.7896,
+  "equityReturn": 0.41,
+  "unitMoney": ""
+}, {
+  "x": 1620835200000,
+  "y": 1.7724,
+  "equityReturn": -0.96,
+  "unitMoney": ""
+}, {
+  "x": 1620921600000,
+  "y": 1.8122,
+  "equityReturn": 2.25,
+  "unitMoney": ""
+}, {
+  "x": 1621180800000,
+  "y": 1.8375,
+  "equityReturn": 1.4,
+  "unitMoney": ""
+}, {
+  "x": 1621267200000,
+  "y": 1.8382,
+  "equityReturn": 0.04,
+  "unitMoney": ""
+}, {
+  "x": 1621353600000,
+  "y": 1.8335,
+  "equityReturn": -0.26,
+  "unitMoney": ""
+}, {
+  "x": 1621440000000,
+  "y": 1.8386,
+  "equityReturn": 0.28,
+  "unitMoney": ""
+}, {
+  "x": 1621526400000,
+  "y": 1.8212,
+  "equityReturn": -0.95,
+  "unitMoney": ""
+}, {
+  "x": 1621785600000,
+  "y": 1.8283,
+  "equityReturn": 0.39,
+  "unitMoney": ""
+}, {
+  "x": 1621872000000,
+  "y": 1.8829,
+  "equityReturn": 2.99,
+  "unitMoney": ""
+}, {
+  "x": 1621958400000,
+  "y": 1.8836,
+  "equityReturn": 0.04,
+  "unitMoney": ""
+}, {
+  "x": 1622044800000,
+  "y": 1.8897,
+  "equityReturn": 0.32,
+  "unitMoney": ""
+}, {
+  "x": 1622131200000,
+  "y": 1.8843,
+  "equityReturn": -0.29,
+  "unitMoney": ""
+}, {
+  "x": 1622390400000,
+  "y": 1.8882,
+  "equityReturn": 0.21,
+  "unitMoney": ""
+}, {
+  "x": 1622476800000,
+  "y": 1.8917,
+  "equityReturn": 0.19,
+  "unitMoney": ""
+}, {
+  "x": 1622563200000,
+  "y": 1.8752,
+  "equityReturn": -0.87,
+  "unitMoney": ""
+}, {
+  "x": 1622649600000,
+  "y": 1.864,
+  "equityReturn": -0.6,
+  "unitMoney": ""
+}, {
+  "x": 1622736000000,
+  "y": 1.8738,
+  "equityReturn": 0.53,
+  "unitMoney": ""
+}, {
+  "x": 1622995200000,
+  "y": 1.8726,
+  "equityReturn": -0.06,
+  "unitMoney": ""
+}, {
+  "x": 1623081600000,
+  "y": 1.8574,
+  "equityReturn": -0.81,
+  "unitMoney": ""
+}, {
+  "x": 1623168000000,
+  "y": 1.8593,
+  "equityReturn": 0.1,
+  "unitMoney": ""
+}, {
+  "x": 1623254400000,
+  "y": 1.8721,
+  "equityReturn": 0.69,
+  "unitMoney": ""
+}, {
+  "x": 1623340800000,
+  "y": 1.8574,
+  "equityReturn": -0.79,
+  "unitMoney": ""
+}, {
+  "x": 1623686400000,
+  "y": 1.8381,
+  "equityReturn": -1.04,
+  "unitMoney": ""
+}, {
+  "x": 1623772800000,
+  "y": 1.8097,
+  "equityReturn": -1.55,
+  "unitMoney": ""
+}, {
+  "x": 1623859200000,
+  "y": 1.8182,
+  "equityReturn": 0.47,
+  "unitMoney": ""
+}, {
+  "x": 1623945600000,
+  "y": 1.8193,
+  "equityReturn": 0.06,
+  "unitMoney": ""
+}, {
+  "x": 1624204800000,
+  "y": 1.8154,
+  "equityReturn": -0.21,
+  "unitMoney": ""
+}, {
+  "x": 1624291200000,
+  "y": 1.8265,
+  "equityReturn": 0.61,
+  "unitMoney": ""
+}, {
+  "x": 1624377600000,
+  "y": 1.8358,
+  "equityReturn": 0.51,
+  "unitMoney": ""
+}, {
+  "x": 1624464000000,
+  "y": 1.8388,
+  "equityReturn": 0.16,
+  "unitMoney": ""
+}, {
+  "x": 1624550400000,
+  "y": 1.8683,
+  "equityReturn": 1.6,
+  "unitMoney": ""
+}, {
+  "x": 1624809600000,
+  "y": 1.8721,
+  "equityReturn": 0.2,
+  "unitMoney": ""
+}, {
+  "x": 1624896000000,
+  "y": 1.8527,
+  "equityReturn": -1.04,
+  "unitMoney": ""
+}, {
+  "x": 1624982400000,
+  "y": 1.8649,
+  "equityReturn": 0.66,
+  "unitMoney": ""
+}, {
+  "x": 1625068800000,
+  "y": 1.8668,
+  "equityReturn": 0.1,
+  "unitMoney": ""
+}, {
+  "x": 1625155200000,
+  "y": 1.8169,
+  "equityReturn": -2.67,
+  "unitMoney": ""
+}, {
+  "x": 1625414400000,
+  "y": 1.8184,
+  "equityReturn": 0.08,
+  "unitMoney": ""
+}, {
+  "x": 1625500800000,
+  "y": 1.8189,
+  "equityReturn": 0.03,
+  "unitMoney": ""
+}, {
+  "x": 1625587200000,
+  "y": 1.839,
+  "equityReturn": 1.11,
+  "unitMoney": ""
+}, {
+  "x": 1625673600000,
+  "y": 1.8223,
+  "equityReturn": -0.91,
+  "unitMoney": ""
+}, {
+  "x": 1625760000000,
+  "y": 1.8176,
+  "equityReturn": -0.26,
+  "unitMoney": ""
+}, {
+  "x": 1626019200000,
+  "y": 1.8392,
+  "equityReturn": 1.19,
+  "unitMoney": ""
+}, {
+  "x": 1626105600000,
+  "y": 1.8446,
+  "equityReturn": 0.29,
+  "unitMoney": ""
+}, {
+  "x": 1626192000000,
+  "y": 1.8247,
+  "equityReturn": -1.08,
+  "unitMoney": ""
+}, {
+  "x": 1626278400000,
+  "y": 1.8482,
+  "equityReturn": 1.29,
+  "unitMoney": ""
+}, {
+  "x": 1626364800000,
+  "y": 1.8303,
+  "equityReturn": -0.97,
+  "unitMoney": ""
+}, {
+  "x": 1626624000000,
+  "y": 1.8367,
+  "equityReturn": 0.35,
+  "unitMoney": ""
+}, {
+  "x": 1626710400000,
+  "y": 1.8354,
+  "equityReturn": -0.07,
+  "unitMoney": ""
+}, {
+  "x": 1626796800000,
+  "y": 1.8479,
+  "equityReturn": 0.68,
+  "unitMoney": ""
+}, {
+  "x": 1626883200000,
+  "y": 1.8516,
+  "equityReturn": 0.2,
+  "unitMoney": ""
+}, {
+  "x": 1626969600000,
+  "y": 1.8306,
+  "equityReturn": -1.13,
+  "unitMoney": ""
+}, {
+  "x": 1627228800000,
+  "y": 1.7747,
+  "equityReturn": -3.05,
+  "unitMoney": ""
+}, {
+  "x": 1627315200000,
+  "y": 1.7163,
+  "equityReturn": -3.29,
+  "unitMoney": ""
+}, {
+  "x": 1627401600000,
+  "y": 1.7194,
+  "equityReturn": 0.18,
+  "unitMoney": ""
+}, {
+  "x": 1627488000000,
+  "y": 1.7499,
+  "equityReturn": 1.77,
+  "unitMoney": ""
+}, {
+  "x": 1627574400000,
+  "y": 1.7374,
+  "equityReturn": -0.71,
+  "unitMoney": ""
+}, {
+  "x": 1627833600000,
+  "y": 1.7791,
+  "equityReturn": 2.4,
+  "unitMoney": ""
+}, {
+  "x": 1627920000000,
+  "y": 1.7794,
+  "equityReturn": 0.02,
+  "unitMoney": ""
+}, {
+  "x": 1628006400000,
+  "y": 1.7947,
+  "equityReturn": 0.86,
+  "unitMoney": ""
+}, {
+  "x": 1628092800000,
+  "y": 1.7846,
+  "equityReturn": -0.56,
+  "unitMoney": ""
+}, {
+  "x": 1628179200000,
+  "y": 1.7756,
+  "equityReturn": -0.5,
+  "unitMoney": ""
+}, {
+  "x": 1628438400000,
+  "y": 1.7974,
+  "equityReturn": 1.23,
+  "unitMoney": ""
+}, {
+  "x": 1628524800000,
+  "y": 1.817,
+  "equityReturn": 1.09,
+  "unitMoney": ""
+}, {
+  "x": 1628611200000,
+  "y": 1.8078,
+  "equityReturn": -0.51,
+  "unitMoney": ""
+}, {
+  "x": 1628697600000,
+  "y": 1.7937,
+  "equityReturn": -0.78,
+  "unitMoney": ""
+}, {
+  "x": 1628784000000,
+  "y": 1.7845,
+  "equityReturn": -0.51,
+  "unitMoney": ""
+}, {
+  "x": 1629043200000,
+  "y": 1.7838,
+  "equityReturn": -0.04,
+  "unitMoney": ""
+}, {
+  "x": 1629129600000,
+  "y": 1.7487,
+  "equityReturn": -1.97,
+  "unitMoney": ""
+}, {
+  "x": 1629216000000,
+  "y": 1.7682,
+  "equityReturn": 1.12,
+  "unitMoney": ""
+}, {
+  "x": 1629302400000,
+  "y": 1.7573,
+  "equityReturn": -0.62,
+  "unitMoney": ""
+}, {
+  "x": 1629388800000,
+  "y": 1.7265,
+  "equityReturn": -1.75,
+  "unitMoney": ""
+}, {
+  "x": 1629648000000,
+  "y": 1.7505,
+  "equityReturn": 1.39,
+  "unitMoney": ""
+}, {
+  "x": 1629734400000,
+  "y": 1.7687,
+  "equityReturn": 1.04,
+  "unitMoney": ""
+}, {
+  "x": 1629820800000,
+  "y": 1.7726,
+  "equityReturn": 0.22,
+  "unitMoney": ""
+}, {
+  "x": 1629907200000,
+  "y": 1.7396,
+  "equityReturn": -1.86,
+  "unitMoney": ""
+}, {
+  "x": 1629993600000,
+  "y": 1.7483,
+  "equityReturn": 0.5,
+  "unitMoney": ""
+}, {
+  "x": 1630252800000,
+  "y": 1.7434,
+  "equityReturn": -0.28,
+  "unitMoney": ""
+}, {
+  "x": 1630339200000,
+  "y": 1.7409,
+  "equityReturn": -0.14,
+  "unitMoney": ""
+}, {
+  "x": 1630425600000,
+  "y": 1.763,
+  "equityReturn": 1.27,
+  "unitMoney": ""
+}, {
+  "x": 1630512000000,
+  "y": 1.763,
+  "equityReturn": 0.0,
+  "unitMoney": ""
+}, {
+  "x": 1630598400000,
+  "y": 1.7543,
+  "equityReturn": -0.49,
+  "unitMoney": ""
+}, {
+  "x": 1630857600000,
+  "y": 1.7853,
+  "equityReturn": 1.77,
+  "unitMoney": ""
+}, {
+  "x": 1630944000000,
+  "y": 1.8058,
+  "equityReturn": 1.15,
+  "unitMoney": ""
+}, {
+  "x": 1631030400000,
+  "y": 1.7986,
+  "equityReturn": -0.4,
+  "unitMoney": ""
+}, {
+  "x": 1631116800000,
+  "y": 1.7978,
+  "equityReturn": -0.04,
+  "unitMoney": ""
+}, {
+  "x": 1631203200000,
+  "y": 1.8131,
+  "equityReturn": 0.85,
+  "unitMoney": ""
+}, {
+  "x": 1631462400000,
+  "y": 1.8055,
+  "equityReturn": -0.42,
+  "unitMoney": ""
+}, {
+  "x": 1631548800000,
+  "y": 1.7802,
+  "equityReturn": -1.4,
+  "unitMoney": ""
+}, {
+  "x": 1631635200000,
+  "y": 1.7631,
+  "equityReturn": -0.96,
+  "unitMoney": ""
+}, {
+  "x": 1631721600000,
+  "y": 1.7429,
+  "equityReturn": -1.15,
+  "unitMoney": ""
+}, {
+  "x": 1631808000000,
+  "y": 1.76,
+  "equityReturn": 0.98,
+  "unitMoney": ""
+}, {
+  "x": 1632240000000,
+  "y": 1.7486,
+  "equityReturn": -0.65,
+  "unitMoney": ""
+}, {
+  "x": 1632326400000,
+  "y": 1.7591,
+  "equityReturn": 0.6,
+  "unitMoney": ""
+}, {
+  "x": 1632412800000,
+  "y": 1.7582,
+  "equityReturn": -0.05,
+  "unitMoney": ""
+}, {
+  "x": 1632672000000,
+  "y": 1.7677,
+  "equityReturn": 0.54,
+  "unitMoney": ""
+}, {
+  "x": 1632758400000,
+  "y": 1.7701,
+  "equityReturn": 0.14,
+  "unitMoney": ""
+}, {
+  "x": 1632844800000,
+  "y": 1.7531,
+  "equityReturn": -0.96,
+  "unitMoney": ""
+}, {
+  "x": 1632931200000,
+  "y": 1.7642,
+  "equityReturn": 0.63,
+  "unitMoney": ""
+}, {
+  "x": 1633622400000,
+  "y": 1.7858,
+  "equityReturn": 1.22,
+  "unitMoney": ""
+}, {
+  "x": 1633881600000,
+  "y": 1.7878,
+  "equityReturn": 0.11,
+  "unitMoney": ""
+}, {
+  "x": 1633968000000,
+  "y": 1.7697,
+  "equityReturn": -1.01,
+  "unitMoney": ""
+}, {
+  "x": 1634054400000,
+  "y": 1.789,
+  "equityReturn": 1.09,
+  "unitMoney": ""
+}, {
+  "x": 1634140800000,
+  "y": 1.7801,
+  "equityReturn": -0.5,
+  "unitMoney": ""
+}, {
+  "x": 1634227200000,
+  "y": 1.7869,
+  "equityReturn": 0.38,
+  "unitMoney": ""
+}, {
+  "x": 1634486400000,
+  "y": 1.7671,
+  "equityReturn": -1.11,
+  "unitMoney": ""
+}, {
+  "x": 1634572800000,
+  "y": 1.7835,
+  "equityReturn": 0.93,
+  "unitMoney": ""
+}, {
+  "x": 1634659200000,
+  "y": 1.7794,
+  "equityReturn": -0.23,
+  "unitMoney": ""
+}, {
+  "x": 1634745600000,
+  "y": 1.7853,
+  "equityReturn": 0.33,
+  "unitMoney": ""
+}, {
+  "x": 1634832000000,
+  "y": 1.7966,
+  "equityReturn": 0.63,
+  "unitMoney": ""
+}, {
+  "x": 1635091200000,
+  "y": 1.804,
+  "equityReturn": 0.41,
+  "unitMoney": ""
+}, {
+  "x": 1635177600000,
+  "y": 1.7984,
+  "equityReturn": -0.31,
+  "unitMoney": ""
+}, {
+  "x": 1635264000000,
+  "y": 1.7765,
+  "equityReturn": -1.22,
+  "unitMoney": ""
+}, {
+  "x": 1635350400000,
+  "y": 1.765,
+  "equityReturn": -0.65,
+  "unitMoney": ""
+}, {
+  "x": 1635436800000,
+  "y": 1.78,
+  "equityReturn": 0.85,
+  "unitMoney": ""
+}, {
+  "x": 1635696000000,
+  "y": 1.7741,
+  "equityReturn": -0.33,
+  "unitMoney": ""
+}, {
+  "x": 1635782400000,
+  "y": 1.7567,
+  "equityReturn": -0.98,
+  "unitMoney": ""
+}, {
+  "x": 1635868800000,
+  "y": 1.7504,
+  "equityReturn": -0.36,
+  "unitMoney": ""
+}, {
+  "x": 1635955200000,
+  "y": 1.7667,
+  "equityReturn": 0.93,
+  "unitMoney": ""
+}, {
+  "x": 1636041600000,
+  "y": 1.7577,
+  "equityReturn": -0.51,
+  "unitMoney": ""
+}, {
+  "x": 1636300800000,
+  "y": 1.7596,
+  "equityReturn": 0.11,
+  "unitMoney": ""
+}, {
+  "x": 1636387200000,
+  "y": 1.7591,
+  "equityReturn": -0.03,
+  "unitMoney": ""
+}, {
+  "x": 1636473600000,
+  "y": 1.7501,
+  "equityReturn": -0.51,
+  "unitMoney": ""
+}, {
+  "x": 1636560000000,
+  "y": 1.7763,
+  "equityReturn": 1.5,
+  "unitMoney": ""
+}, {
+  "x": 1636646400000,
+  "y": 1.773,
+  "equityReturn": -0.19,
+  "unitMoney": ""
+}, {
+  "x": 1636905600000,
+  "y": 1.771,
+  "equityReturn": -0.11,
+  "unitMoney": ""
+}, {
+  "x": 1636992000000,
+  "y": 1.7714,
+  "equityReturn": 0.02,
+  "unitMoney": ""
+}, {
+  "x": 1637078400000,
+  "y": 1.7723,
+  "equityReturn": 0.05,
+  "unitMoney": ""
+}, {
+  "x": 1637164800000,
+  "y": 1.756,
+  "equityReturn": -0.92,
+  "unitMoney": ""
+}, {
+  "x": 1637251200000,
+  "y": 1.7739,
+  "equityReturn": 1.02,
+  "unitMoney": ""
+}, {
+  "x": 1637510400000,
+  "y": 1.7816,
+  "equityReturn": 0.43,
+  "unitMoney": ""
+}, {
+  "x": 1637596800000,
+  "y": 1.7818,
+  "equityReturn": 0.01,
+  "unitMoney": ""
+}, {
+  "x": 1637683200000,
+  "y": 1.7835,
+  "equityReturn": 0.1,
+  "unitMoney": ""
+}, {
+  "x": 1637769600000,
+  "y": 1.7765,
+  "equityReturn": -0.39,
+  "unitMoney": ""
+}, {
+  "x": 1637856000000,
+  "y": 1.7642,
+  "equityReturn": -0.69,
+  "unitMoney": ""
+}, {
+  "x": 1638115200000,
+  "y": 1.7611,
+  "equityReturn": -0.18,
+  "unitMoney": ""
+}, {
+  "x": 1638201600000,
+  "y": 1.7546,
+  "equityReturn": -0.37,
+  "unitMoney": ""
+}, {
+  "x": 1638288000000,
+  "y": 1.7587,
+  "equityReturn": 0.23,
+  "unitMoney": ""
+}, {
+  "x": 1638374400000,
+  "y": 1.7628,
+  "equityReturn": 0.23,
+  "unitMoney": ""
+}, {
+  "x": 1638460800000,
+  "y": 1.7782,
+  "equityReturn": 0.87,
+  "unitMoney": ""
+}, {
+  "x": 1638720000000,
+  "y": 1.7753,
+  "equityReturn": -0.16,
+  "unitMoney": ""
+}, {
+  "x": 1638806400000,
+  "y": 1.7852,
+  "equityReturn": 0.56,
+  "unitMoney": ""
+}, {
+  "x": 1638892800000,
+  "y": 1.8107,
+  "equityReturn": 1.43,
+  "unitMoney": ""
+}, {
+  "x": 1638979200000,
+  "y": 1.8389,
+  "equityReturn": 1.56,
+  "unitMoney": ""
+}, {
+  "x": 1639065600000,
+  "y": 1.831,
+  "equityReturn": -0.43,
+  "unitMoney": ""
+}, {
+  "x": 1639324800000,
+  "y": 1.8409,
+  "equityReturn": 0.54,
+  "unitMoney": ""
+}, {
+  "x": 1639411200000,
+  "y": 1.8294,
+  "equityReturn": -0.62,
+  "unitMoney": ""
+}, {
+  "x": 1639497600000,
+  "y": 1.8142,
+  "equityReturn": -0.83,
+  "unitMoney": ""
+}, {
+  "x": 1639584000000,
+  "y": 1.8239,
+  "equityReturn": 0.53,
+  "unitMoney": ""
+}, {
+  "x": 1639670400000,
+  "y": 1.7968,
+  "equityReturn": -1.49,
+  "unitMoney": ""
+}, {
+  "x": 1639929600000,
+  "y": 1.7717,
+  "equityReturn": -1.4,
+  "unitMoney": ""
+}, {
+  "x": 1640016000000,
+  "y": 1.7832,
+  "equityReturn": 0.65,
+  "unitMoney": ""
+}, {
+  "x": 1640102400000,
+  "y": 1.7835,
+  "equityReturn": 0.02,
+  "unitMoney": ""
+}, {
+  "x": 1640188800000,
+  "y": 1.7953,
+  "equityReturn": 0.66,
+  "unitMoney": ""
+}, {
+  "x": 1640275200000,
+  "y": 1.7862,
+  "equityReturn": -0.51,
+  "unitMoney": ""
+}, {
+  "x": 1640534400000,
+  "y": 1.7855,
+  "equityReturn": -0.04,
+  "unitMoney": ""
+}, {
+  "x": 1640620800000,
+  "y": 1.798,
+  "equityReturn": 0.7,
+  "unitMoney": ""
+}, {
+  "x": 1640707200000,
+  "y": 1.7732,
+  "equityReturn": -1.38,
+  "unitMoney": ""
+}, {
+  "x": 1640793600000,
+  "y": 1.7862,
+  "equityReturn": 0.73,
+  "unitMoney": ""
+}, {
+  "x": 1640880000000,
+  "y": 1.7927,
+  "equityReturn": 0.36,
+  "unitMoney": ""
+}, {
+  "x": 1641225600000,
+  "y": 1.7849,
+  "equityReturn": -0.44,
+  "unitMoney": ""
+}, {
+  "x": 1641312000000,
+  "y": 1.7679,
+  "equityReturn": -0.95,
+  "unitMoney": ""
+}, {
+  "x": 1641398400000,
+  "y": 1.7507,
+  "equityReturn": -0.97,
+  "unitMoney": ""
+}, {
+  "x": 1641484800000,
+  "y": 1.7522,
+  "equityReturn": 0.09,
+  "unitMoney": ""
+}, {
+  "x": 1641744000000,
+  "y": 1.7594,
+  "equityReturn": 0.41,
+  "unitMoney": ""
+}, {
+  "x": 1641830400000,
+  "y": 1.7434,
+  "equityReturn": -0.91,
+  "unitMoney": ""
+}, {
+  "x": 1641916800000,
+  "y": 1.7597,
+  "equityReturn": 0.93,
+  "unitMoney": ""
+}, {
+  "x": 1642003200000,
+  "y": 1.7325,
+  "equityReturn": -1.55,
+  "unitMoney": ""
+}, {
+  "x": 1642089600000,
+  "y": 1.7193,
+  "equityReturn": -0.76,
+  "unitMoney": ""
+}, {
+  "x": 1642348800000,
+  "y": 1.7331,
+  "equityReturn": 0.8,
+  "unitMoney": ""
+}, {
+  "x": 1642435200000,
+  "y": 1.7489,
+  "equityReturn": 0.91,
+  "unitMoney": ""
+}, {
+  "x": 1642521600000,
+  "y": 1.7376,
+  "equityReturn": -0.65,
+  "unitMoney": ""
+}, {
+  "x": 1642608000000,
+  "y": 1.7524,
+  "equityReturn": 0.85,
+  "unitMoney": ""
+}, {
+  "x": 1642694400000,
+  "y": 1.7372,
+  "equityReturn": -0.87,
+  "unitMoney": ""
+}, {
+  "x": 1642953600000,
+  "y": 1.7396,
+  "equityReturn": 0.14,
+  "unitMoney": ""
+}, {
+  "x": 1643040000000,
+  "y": 1.7026,
+  "equityReturn": -2.13,
+  "unitMoney": ""
+}, {
+  "x": 1643126400000,
+  "y": 1.7145,
+  "equityReturn": 0.7,
+  "unitMoney": ""
+}, {
+  "x": 1643212800000,
+  "y": 1.6829,
+  "equityReturn": -1.84,
+  "unitMoney": ""
+}, {
+  "x": 1643299200000,
+  "y": 1.6635,
+  "equityReturn": -1.15,
+  "unitMoney": ""
+}, {
+  "x": 1644163200000,
+  "y": 1.6875,
+  "equityReturn": 1.44,
+  "unitMoney": ""
+}, {
+  "x": 1644249600000,
+  "y": 1.6789,
+  "equityReturn": -0.51,
+  "unitMoney": ""
+}, {
+  "x": 1644336000000,
+  "y": 1.694,
+  "equityReturn": 0.9,
+  "unitMoney": ""
+}, {
+  "x": 1644422400000,
+  "y": 1.6899,
+  "equityReturn": -0.24,
+  "unitMoney": ""
+}, {
+  "x": 1644508800000,
+  "y": 1.6767,
+  "equityReturn": -0.78,
+  "unitMoney": ""
+}, {
+  "x": 1644768000000,
+  "y": 1.6594,
+  "equityReturn": -1.03,
+  "unitMoney": ""
+}, {
+  "x": 1644854400000,
+  "y": 1.6759,
+  "equityReturn": 0.99,
+  "unitMoney": ""
+}, {
+  "x": 1644940800000,
+  "y": 1.6821,
+  "equityReturn": 0.37,
+  "unitMoney": ""
+}, {
+  "x": 1645027200000,
+  "y": 1.686,
+  "equityReturn": 0.23,
+  "unitMoney": ""
+}, {
+  "x": 1645113600000,
+  "y": 1.6935,
+  "equityReturn": 0.44,
+  "unitMoney": ""
+}, {
+  "x": 1645372800000,
+  "y": 1.6878,
+  "equityReturn": -0.34,
+  "unitMoney": ""
+}, {
+  "x": 1645459200000,
+  "y": 1.6672,
+  "equityReturn": -1.22,
+  "unitMoney": ""
+}, {
+  "x": 1645545600000,
+  "y": 1.6841,
+  "equityReturn": 1.01,
+  "unitMoney": ""
+}, {
+  "x": 1645632000000,
+  "y": 1.6517,
+  "equityReturn": -1.92,
+  "unitMoney": ""
+}, {
+  "x": 1645718400000,
+  "y": 1.667,
+  "equityReturn": 0.93,
+  "unitMoney": ""
+}, {
+  "x": 1645977600000,
+  "y": 1.6697,
+  "equityReturn": 0.16,
+  "unitMoney": ""
+}, {
+  "x": 1646064000000,
+  "y": 1.6825,
+  "equityReturn": 0.77,
+  "unitMoney": ""
+}, {
+  "x": 1646150400000,
+  "y": 1.6685,
+  "equityReturn": -0.83,
+  "unitMoney": ""
+}, {
+  "x": 1646236800000,
+  "y": 1.6593,
+  "equityReturn": -0.55,
+  "unitMoney": ""
+}, {
+  "x": 1646323200000,
+  "y": 1.6403,
+  "equityReturn": -1.15,
+  "unitMoney": ""
+}, {
+  "x": 1646582400000,
+  "y": 1.5909,
+  "equityReturn": -3.01,
+  "unitMoney": ""
+}, {
+  "x": 1646668800000,
+  "y": 1.5605,
+  "equityReturn": -1.91,
+  "unitMoney": ""
+}, {
+  "x": 1646755200000,
+  "y": 1.5465,
+  "equityReturn": -0.9,
+  "unitMoney": ""
+}, {
+  "x": 1646841600000,
+  "y": 1.5674,
+  "equityReturn": 1.35,
+  "unitMoney": ""
+}, {
+  "x": 1646928000000,
+  "y": 1.5727,
+  "equityReturn": 0.34,
+  "unitMoney": ""
+}, {
+  "x": 1647187200000,
+  "y": 1.5275,
+  "equityReturn": -2.87,
+  "unitMoney": ""
+}, {
+  "x": 1647273600000,
+  "y": 1.4622,
+  "equityReturn": -4.27,
+  "unitMoney": ""
+}, {
+  "x": 1647360000000,
+  "y": 1.5214,
+  "equityReturn": 4.05,
+  "unitMoney": ""
+}, {
+  "x": 1647446400000,
+  "y": 1.5495,
+  "equityReturn": 1.85,
+  "unitMoney": ""
+}, {
+  "x": 1647532800000,
+  "y": 1.5596,
+  "equityReturn": 0.65,
+  "unitMoney": ""
+}, {
+  "x": 1647792000000,
+  "y": 1.557,
+  "equityReturn": -0.17,
+  "unitMoney": ""
+}, {
+  "x": 1647878400000,
+  "y": 1.5559,
+  "equityReturn": -0.07,
+  "unitMoney": ""
+}, {
+  "x": 1647964800000,
+  "y": 1.5633,
+  "equityReturn": 0.48,
+  "unitMoney": ""
+}, {
+  "x": 1648051200000,
+  "y": 1.5548,
+  "equityReturn": -0.54,
+  "unitMoney": ""
+}, {
+  "x": 1648137600000,
+  "y": 1.5284,
+  "equityReturn": -1.7,
+  "unitMoney": ""
+}, {
+  "x": 1648396800000,
+  "y": 1.5194,
+  "equityReturn": -0.59,
+  "unitMoney": ""
+}, {
+  "x": 1648483200000,
+  "y": 1.5145,
+  "equityReturn": -0.32,
+  "unitMoney": ""
+}, {
+  "x": 1648569600000,
+  "y": 1.5559,
+  "equityReturn": 2.73,
+  "unitMoney": ""
+}, {
+  "x": 1648656000000,
+  "y": 1.5451,
+  "equityReturn": -0.69,
+  "unitMoney": ""
+}, {
+  "x": 1648742400000,
+  "y": 1.5635,
+  "equityReturn": 1.19,
+  "unitMoney": ""
+}, {
+  "x": 1649174400000,
+  "y": 1.5591,
+  "equityReturn": -0.28,
+  "unitMoney": ""
+}, {
+  "x": 1649260800000,
+  "y": 1.5402,
+  "equityReturn": -1.21,
+  "unitMoney": ""
+}, {
+  "x": 1649347200000,
+  "y": 1.548,
+  "equityReturn": 0.51,
+  "unitMoney": ""
+}, {
+  "x": 1649606400000,
+  "y": 1.5026,
+  "equityReturn": -2.93,
+  "unitMoney": ""
+}, {
+  "x": 1649692800000,
+  "y": 1.5299,
+  "equityReturn": 1.82,
+  "unitMoney": ""
+}, {
+  "x": 1649779200000,
+  "y": 1.5162,
+  "equityReturn": -0.9,
+  "unitMoney": ""
+}, {
+  "x": 1649865600000,
+  "y": 1.5341,
+  "equityReturn": 1.18,
+  "unitMoney": ""
+}, {
+  "x": 1649952000000,
+  "y": 1.533,
+  "equityReturn": -0.07,
+  "unitMoney": ""
+}, {
+  "x": 1650211200000,
+  "y": 1.5251999999999999,
+  "equityReturn": -0.51,
+  "unitMoney": ""
+}, {
+  "x": 1650297600000,
+  "y": 1.5143,
+  "equityReturn": -0.71,
+  "unitMoney": ""
+}, {
+  "x": 1650384000000,
+  "y": 1.4922,
+  "equityReturn": -1.46,
+  "unitMoney": ""
+}, {
+  "x": 1650470400000,
+  "y": 1.4662,
+  "equityReturn": -1.74,
+  "unitMoney": ""
+}, {
+  "x": 1650556800000,
+  "y": 1.4723,
+  "equityReturn": 0.42,
+  "unitMoney": ""
+}, {
+  "x": 1650816000000,
+  "y": 1.4039,
+  "equityReturn": -4.65,
+  "unitMoney": ""
+}, {
+  "x": 1650902400000,
+  "y": 1.3935,
+  "equityReturn": -0.74,
+  "unitMoney": ""
+}, {
+  "x": 1650988800000,
+  "y": 1.4283,
+  "equityReturn": 2.5,
+  "unitMoney": ""
+}, {
+  "x": 1651075200000,
+  "y": 1.4368,
+  "equityReturn": 0.6,
+  "unitMoney": ""
+}, {
+  "x": 1651161600000,
+  "y": 1.4708,
+  "equityReturn": 2.37,
+  "unitMoney": ""
+}, {
+  "x": 1651680000000,
+  "y": 1.4689,
+  "equityReturn": -0.13,
+  "unitMoney": ""
+}, {
+  "x": 1651766400000,
+  "y": 1.434,
+  "equityReturn": -2.38,
+  "unitMoney": ""
+}, {
+  "x": 1652025600000,
+  "y": 1.4231,
+  "equityReturn": -0.76,
+  "unitMoney": ""
+}, {
+  "x": 1652112000000,
+  "y": 1.438,
+  "equityReturn": 1.05,
+  "unitMoney": ""
+}, {
+  "x": 1652198400000,
+  "y": 1.4578,
+  "equityReturn": 1.38,
+  "unitMoney": ""
+}, {
+  "x": 1652284800000,
+  "y": 1.4517,
+  "equityReturn": -0.42,
+  "unitMoney": ""
+}, {
+  "x": 1652371200000,
+  "y": 1.462,
+  "equityReturn": 0.71,
+  "unitMoney": ""
+}, {
+  "x": 1652630400000,
+  "y": 1.451,
+  "equityReturn": -0.75,
+  "unitMoney": ""
+}, {
+  "x": 1652716800000,
+  "y": 1.4681,
+  "equityReturn": 1.18,
+  "unitMoney": ""
+}, {
+  "x": 1652803200000,
+  "y": 1.4634,
+  "equityReturn": -0.32,
+  "unitMoney": ""
+}, {
+  "x": 1652889600000,
+  "y": 1.4661,
+  "equityReturn": 0.18,
+  "unitMoney": ""
+}, {
+  "x": 1652976000000,
+  "y": 1.4934,
+  "equityReturn": 1.86,
+  "unitMoney": ""
+}, {
+  "x": 1653235200000,
+  "y": 1.4851,
+  "equityReturn": -0.56,
+  "unitMoney": ""
+}, {
+  "x": 1653321600000,
+  "y": 1.4525,
+  "equityReturn": -2.2,
+  "unitMoney": ""
+}, {
+  "x": 1653408000000,
+  "y": 1.4607,
+  "equityReturn": 0.56,
+  "unitMoney": ""
+}, {
+  "x": 1653494400000,
+  "y": 1.4653,
+  "equityReturn": 0.31,
+  "unitMoney": ""
+}, {
+  "x": 1653580800000,
+  "y": 1.4681,
+  "equityReturn": 0.19,
+  "unitMoney": ""
+}, {
+  "x": 1653840000000,
+  "y": 1.4784,
+  "equityReturn": 0.7,
+  "unitMoney": ""
+}, {
+  "x": 1653926400000,
+  "y": 1.5003,
+  "equityReturn": 1.48,
+  "unitMoney": ""
+}, {
+  "x": 1654012800000,
+  "y": 1.4979,
+  "equityReturn": -0.16,
+  "unitMoney": ""
+}, {
+  "x": 1654099200000,
+  "y": 1.5011,
+  "equityReturn": 0.21,
+  "unitMoney": ""
+}, {
+  "x": 1654444800000,
+  "y": 1.5277,
+  "equityReturn": 1.77,
+  "unitMoney": ""
+}, {
+  "x": 1654531200000,
+  "y": 1.5322,
+  "equityReturn": 0.29,
+  "unitMoney": ""
+}, {
+  "x": 1654617600000,
+  "y": 1.5472,
+  "equityReturn": 0.98,
+  "unitMoney": ""
+}, {
+  "x": 1654704000000,
+  "y": 1.532,
+  "equityReturn": -0.98,
+  "unitMoney": ""
+}, {
+  "x": 1654790400000,
+  "y": 1.5536,
+  "equityReturn": 1.41,
+  "unitMoney": ""
+}, {
+  "x": 1655049600000,
+  "y": 1.5366,
+  "equityReturn": -1.09,
+  "unitMoney": ""
+}, {
+  "x": 1655136000000,
+  "y": 1.548,
+  "equityReturn": 0.74,
+  "unitMoney": ""
+}, {
+  "x": 1655222400000,
+  "y": 1.5679,
+  "equityReturn": 1.29,
+  "unitMoney": ""
+}, {
+  "x": 1655308800000,
+  "y": 1.5593,
+  "equityReturn": -0.55,
+  "unitMoney": ""
+}, {
+  "x": 1655395200000,
+  "y": 1.58,
+  "equityReturn": 1.33,
+  "unitMoney": ""
+}, {
+  "x": 1655654400000,
+  "y": 1.5887,
+  "equityReturn": 0.55,
+  "unitMoney": ""
+}, {
+  "x": 1655740800000,
+  "y": 1.5876999999999999,
+  "equityReturn": -0.06,
+  "unitMoney": ""
+}, {
+  "x": 1655827200000,
+  "y": 1.5692,
+  "equityReturn": -1.17,
+  "unitMoney": ""
+}, {
+  "x": 1655913600000,
+  "y": 1.5947,
+  "equityReturn": 1.63,
+  "unitMoney": ""
+}, {
+  "x": 1656000000000,
+  "y": 1.6127,
+  "equityReturn": 1.13,
+  "unitMoney": ""
+}, {
+  "x": 1656259200000,
+  "y": 1.6301,
+  "equityReturn": 1.08,
+  "unitMoney": ""
+}, {
+  "x": 1656345600000,
+  "y": 1.6463,
+  "equityReturn": 0.99,
+  "unitMoney": ""
+}, {
+  "x": 1656432000000,
+  "y": 1.6238,
+  "equityReturn": -1.37,
+  "unitMoney": ""
+}, {
+  "x": 1656518400000,
+  "y": 1.6475,
+  "equityReturn": 1.46,
+  "unitMoney": ""
+}, {
+  "x": 1656604800000,
+  "y": 1.6411,
+  "equityReturn": -0.39,
+  "unitMoney": ""
+}, {
+  "x": 1656864000000,
+  "y": 1.6511,
+  "equityReturn": 0.61,
+  "unitMoney": ""
+}, {
+  "x": 1656950400000,
+  "y": 1.6488,
+  "equityReturn": -0.14,
+  "unitMoney": ""
+}, {
+  "x": 1657036800000,
+  "y": 1.6265,
+  "equityReturn": -1.35,
+  "unitMoney": ""
+}, {
+  "x": 1657123200000,
+  "y": 1.6337,
+  "equityReturn": 0.44,
+  "unitMoney": ""
+}, {
+  "x": 1657209600000,
+  "y": 1.6298,
+  "equityReturn": -0.24,
+  "unitMoney": ""
+}, {
+  "x": 1657468800000,
+  "y": 1.6049,
+  "equityReturn": -1.53,
+  "unitMoney": ""
+}, {
+  "x": 1657555200000,
+  "y": 1.5925,
+  "equityReturn": -0.77,
+  "unitMoney": ""
+}, {
+  "x": 1657641600000,
+  "y": 1.5954,
+  "equityReturn": 0.18,
+  "unitMoney": ""
+}, {
+  "x": 1657728000000,
+  "y": 1.5957,
+  "equityReturn": 0.02,
+  "unitMoney": ""
+}, {
+  "x": 1657814400000,
+  "y": 1.5737,
+  "equityReturn": -1.38,
+  "unitMoney": ""
+}, {
+  "x": 1658073600000,
+  "y": 1.589,
+  "equityReturn": 0.97,
+  "unitMoney": ""
+}, {
+  "x": 1658160000000,
+  "y": 1.581,
+  "equityReturn": -0.5,
+  "unitMoney": ""
+}, {
+  "x": 1658246400000,
+  "y": 1.5861,
+  "equityReturn": 0.32,
+  "unitMoney": ""
+}, {
+  "x": 1658332800000,
+  "y": 1.5705,
+  "equityReturn": -0.98,
+  "unitMoney": ""
+}, {
+  "x": 1658419200000,
+  "y": 1.5714,
+  "equityReturn": 0.06,
+  "unitMoney": ""
+}, {
+  "x": 1658678400000,
+  "y": 1.5626,
+  "equityReturn": -0.56,
+  "unitMoney": ""
+}, {
+  "x": 1658764800000,
+  "y": 1.5743,
+  "equityReturn": 0.75,
+  "unitMoney": ""
+}, {
+  "x": 1658851200000,
+  "y": 1.567,
+  "equityReturn": -0.46,
+  "unitMoney": ""
+}, {
+  "x": 1658937600000,
+  "y": 1.5676,
+  "equityReturn": 0.04,
+  "unitMoney": ""
+}, {
+  "x": 1659024000000,
+  "y": 1.5485,
+  "equityReturn": -1.22,
+  "unitMoney": ""
+}, {
+  "x": 1659283200000,
+  "y": 1.555,
+  "equityReturn": 0.42,
+  "unitMoney": ""
+}, {
+  "x": 1659369600000,
+  "y": 1.526,
+  "equityReturn": -1.86,
+  "unitMoney": ""
+}, {
+  "x": 1659456000000,
+  "y": 1.5121,
+  "equityReturn": -0.91,
+  "unitMoney": ""
+}, {
+  "x": 1659542400000,
+  "y": 1.5242,
+  "equityReturn": 0.8,
+  "unitMoney": ""
+}, {
+  "x": 1659628800000,
+  "y": 1.5447,
+  "equityReturn": 1.34,
+  "unitMoney": ""
+}, {
+  "x": 1659888000000,
+  "y": 1.5418,
+  "equityReturn": -0.19,
+  "unitMoney": ""
+}, {
+  "x": 1659974400000,
+  "y": 1.5445,
+  "equityReturn": 0.18,
+  "unitMoney": ""
+}, {
+  "x": 1660060800000,
+  "y": 1.5283,
+  "equityReturn": -1.05,
+  "unitMoney": ""
+}, {
+  "x": 1660147200000,
+  "y": 1.5578,
+  "equityReturn": 1.93,
+  "unitMoney": ""
+}, {
+  "x": 1660233600000,
+  "y": 1.5572,
+  "equityReturn": -0.04,
+  "unitMoney": ""
+}, {
+  "x": 1660492800000,
+  "y": 1.5553,
+  "equityReturn": -0.12,
+  "unitMoney": ""
+}, {
+  "x": 1660579200000,
+  "y": 1.5525,
+  "equityReturn": -0.18,
+  "unitMoney": ""
+}, {
+  "x": 1660665600000,
+  "y": 1.5663,
+  "equityReturn": 0.89,
+  "unitMoney": ""
+}, {
+  "x": 1660752000000,
+  "y": 1.5535,
+  "equityReturn": -0.82,
+  "unitMoney": ""
+}, {
+  "x": 1660838400000,
+  "y": 1.5435,
+  "equityReturn": -0.64,
+  "unitMoney": ""
+}, {
+  "x": 1661097600000,
+  "y": 1.5542,
+  "equityReturn": 0.69,
+  "unitMoney": ""
+}, {
+  "x": 1661184000000,
+  "y": 1.5473,
+  "equityReturn": -0.44,
+  "unitMoney": ""
+}, {
+  "x": 1661270400000,
+  "y": 1.5197,
+  "equityReturn": -1.78,
+  "unitMoney": ""
+}, {
+  "x": 1661356800000,
+  "y": 1.532,
+  "equityReturn": 0.81,
+  "unitMoney": ""
+}, {
+  "x": 1661443200000,
+  "y": 1.5298,
+  "equityReturn": -0.14,
+  "unitMoney": ""
+}, {
+  "x": 1661702400000,
+  "y": 1.5234,
+  "equityReturn": -0.42,
+  "unitMoney": ""
+}, {
+  "x": 1661788800000,
+  "y": 1.5186,
+  "equityReturn": -0.32,
+  "unitMoney": ""
+}, {
+  "x": 1661875200000,
+  "y": 1.5197,
+  "equityReturn": 0.07,
+  "unitMoney": ""
+}, {
+  "x": 1661961600000,
+  "y": 1.5074,
+  "equityReturn": -0.81,
+  "unitMoney": ""
+}, {
+  "x": 1662048000000,
+  "y": 1.5003,
+  "equityReturn": -0.47,
+  "unitMoney": ""
+}, {
+  "x": 1662307200000,
+  "y": 1.4973,
+  "equityReturn": -0.2,
+  "unitMoney": ""
+}, {
+  "x": 1662393600000,
+  "y": 1.5101,
+  "equityReturn": 0.85,
+  "unitMoney": ""
+}, {
+  "x": 1662480000000,
+  "y": 1.5111,
+  "equityReturn": 0.07,
+  "unitMoney": ""
+}, {
+  "x": 1662566400000,
+  "y": 1.5052,
+  "equityReturn": -0.39,
+  "unitMoney": ""
+}, {
+  "x": 1662652800000,
+  "y": 1.525,
+  "equityReturn": 1.32,
+  "unitMoney": ""
+}, {
+  "x": 1662998400000,
+  "y": 1.531,
+  "equityReturn": 0.39,
+  "unitMoney": ""
+}, {
+  "x": 1663084800000,
+  "y": 1.515,
+  "equityReturn": -1.05,
+  "unitMoney": ""
+}, {
+  "x": 1663171200000,
+  "y": 1.5015,
+  "equityReturn": -0.89,
+  "unitMoney": ""
+}, {
+  "x": 1663257600000,
+  "y": 1.4684,
+  "equityReturn": -2.2,
+  "unitMoney": ""
+}, {
+  "x": 1663516800000,
+  "y": 1.4667,
+  "equityReturn": -0.12,
+  "unitMoney": ""
+}, {
+  "x": 1663603200000,
+  "y": 1.4684,
+  "equityReturn": 0.12,
+  "unitMoney": ""
+}, {
+  "x": 1663689600000,
+  "y": 1.4582,
+  "equityReturn": -0.69,
+  "unitMoney": ""
+}, {
+  "x": 1663776000000,
+  "y": 1.4461,
+  "equityReturn": -0.83,
+  "unitMoney": ""
+}, {
+  "x": 1663862400000,
+  "y": 1.4414,
+  "equityReturn": -0.33,
+  "unitMoney": ""
+}, {
+  "x": 1664121600000,
+  "y": 1.4345,
+  "equityReturn": -0.48,
+  "unitMoney": ""
+}, {
+  "x": 1664208000000,
+  "y": 1.4541,
+  "equityReturn": 1.37,
+  "unitMoney": ""
+}, {
+  "x": 1664294400000,
+  "y": 1.4319,
+  "equityReturn": -1.53,
+  "unitMoney": ""
+}, {
+  "x": 1664380800000,
+  "y": 1.4313,
+  "equityReturn": -0.04,
+  "unitMoney": ""
+}, {
+  "x": 1664467200000,
+  "y": 1.4235,
+  "equityReturn": -0.54,
+  "unitMoney": ""
+}, {
+  "x": 1665331200000,
+  "y": 1.3938,
+  "equityReturn": -2.09,
+  "unitMoney": ""
+}, {
+  "x": 1665417600000,
+  "y": 1.396,
+  "equityReturn": 0.16,
+  "unitMoney": ""
+}, {
+  "x": 1665504000000,
+  "y": 1.4158,
+  "equityReturn": 1.42,
+  "unitMoney": ""
+}, {
+  "x": 1665590400000,
+  "y": 1.4052,
+  "equityReturn": -0.75,
+  "unitMoney": ""
+}, {
+  "x": 1665676800000,
+  "y": 1.4369,
+  "equityReturn": 2.26,
+  "unitMoney": ""
+}, {
+  "x": 1665936000000,
+  "y": 1.4383,
+  "equityReturn": 0.1,
+  "unitMoney": ""
+}, {
+  "x": 1666022400000,
+  "y": 1.4355,
+  "equityReturn": -0.19,
+  "unitMoney": ""
+}, {
+  "x": 1666108800000,
+  "y": 1.4138,
+  "equityReturn": -1.51,
+  "unitMoney": ""
+}, {
+  "x": 1666195200000,
+  "y": 1.407,
+  "equityReturn": -0.48,
+  "unitMoney": ""
+}, {
+  "x": 1666281600000,
+  "y": 1.4027,
+  "equityReturn": -0.31,
+  "unitMoney": ""
+}, {
+  "x": 1666540800000,
+  "y": 1.364,
+  "equityReturn": -2.76,
+  "unitMoney": ""
+}, {
+  "x": 1666627200000,
+  "y": 1.362,
+  "equityReturn": -0.15,
+  "unitMoney": ""
+}, {
+  "x": 1666713600000,
+  "y": 1.3723,
+  "equityReturn": 0.76,
+  "unitMoney": ""
+}, {
+  "x": 1666800000000,
+  "y": 1.3634,
+  "equityReturn": -0.65,
+  "unitMoney": ""
+}, {
+  "x": 1666886400000,
+  "y": 1.3316,
+  "equityReturn": -2.33,
+  "unitMoney": ""
+}, {
+  "x": 1667145600000,
+  "y": 1.32,
+  "equityReturn": -0.87,
+  "unitMoney": ""
+}, {
+  "x": 1667232000000,
+  "y": 1.3646,
+  "equityReturn": 3.38,
+  "unitMoney": ""
+}, {
+  "x": 1667318400000,
+  "y": 1.3802,
+  "equityReturn": 1.14,
+  "unitMoney": ""
+}, {
+  "x": 1667404800000,
+  "y": 1.3696,
+  "equityReturn": -0.77,
+  "unitMoney": ""
+}, {
+  "x": 1667491200000,
+  "y": 1.4119,
+  "equityReturn": 3.09,
+  "unitMoney": ""
+}, {
+  "x": 1667750400000,
+  "y": 1.4147,
+  "equityReturn": 0.2,
+  "unitMoney": ""
+}, {
+  "x": 1667836800000,
+  "y": 1.4055,
+  "equityReturn": -0.65,
+  "unitMoney": ""
+}, {
+  "x": 1667923200000,
+  "y": 1.3932,
+  "equityReturn": -0.88,
+  "unitMoney": ""
+}, {
+  "x": 1668009600000,
+  "y": 1.3831,
+  "equityReturn": -0.72,
+  "unitMoney": ""
+}, {
+  "x": 1668096000000,
+  "y": 1.4196,
+  "equityReturn": 2.64,
+  "unitMoney": ""
+}, {
+  "x": 1668355200000,
+  "y": 1.4212,
+  "equityReturn": 0.11,
+  "unitMoney": ""
+}, {
+  "x": 1668441600000,
+  "y": 1.4466,
+  "equityReturn": 1.79,
+  "unitMoney": ""
+}, {
+  "x": 1668528000000,
+  "y": 1.4353,
+  "equityReturn": -0.78,
+  "unitMoney": ""
+}, {
+  "x": 1668614400000,
+  "y": 1.4297,
+  "equityReturn": -0.39,
+  "unitMoney": ""
+}, {
+  "x": 1668700800000,
+  "y": 1.4238,
+  "equityReturn": -0.41,
+  "unitMoney": ""
+}, {
+  "x": 1668960000000,
+  "y": 1.4122,
+  "equityReturn": -0.81,
+  "unitMoney": ""
+}, {
+  "x": 1669046400000,
+  "y": 1.4124,
+  "equityReturn": 0.01,
+  "unitMoney": ""
+}, {
+  "x": 1669132800000,
+  "y": 1.4138,
+  "equityReturn": 0.1,
+  "unitMoney": ""
+}, {
+  "x": 1669219200000,
+  "y": 1.4078,
+  "equityReturn": -0.42,
+  "unitMoney": ""
+}, {
+  "x": 1669305600000,
+  "y": 1.4146,
+  "equityReturn": 0.48,
+  "unitMoney": ""
+}, {
+  "x": 1669564800000,
+  "y": 1.3995,
+  "equityReturn": -1.07,
+  "unitMoney": ""
+}, {
+  "x": 1669651200000,
+  "y": 1.4403,
+  "equityReturn": 2.92,
+  "unitMoney": ""
+}, {
+  "x": 1669737600000,
+  "y": 1.4419,
+  "equityReturn": 0.11,
+  "unitMoney": ""
+}, {
+  "x": 1669824000000,
+  "y": 1.4569,
+  "equityReturn": 1.04,
+  "unitMoney": ""
+}, {
+  "x": 1669910400000,
+  "y": 1.4485,
+  "equityReturn": -0.58,
+  "unitMoney": ""
+}, {
+  "x": 1670169600000,
+  "y": 1.4751,
+  "equityReturn": 1.84,
+  "unitMoney": ""
+}, {
+  "x": 1670256000000,
+  "y": 1.4827,
+  "equityReturn": 0.52,
+  "unitMoney": ""
+}, {
+  "x": 1670342400000,
+  "y": 1.4792,
+  "equityReturn": -0.24,
+  "unitMoney": ""
+}, {
+  "x": 1670428800000,
+  "y": 1.4795,
+  "equityReturn": 0.02,
+  "unitMoney": ""
+}, {
+  "x": 1670515200000,
+  "y": 1.4926,
+  "equityReturn": 0.89,
+  "unitMoney": ""
+}, {
+  "x": 1670774400000,
+  "y": 1.4769,
+  "equityReturn": -1.05,
+  "unitMoney": ""
+}, {
+  "x": 1670860800000,
+  "y": 1.4743,
+  "equityReturn": -0.18,
+  "unitMoney": ""
+}, {
+  "x": 1670947200000,
+  "y": 1.4783,
+  "equityReturn": 0.27,
+  "unitMoney": ""
+}, {
+  "x": 1671033600000,
+  "y": 1.4773,
+  "equityReturn": -0.07,
+  "unitMoney": ""
+}, {
+  "x": 1671120000000,
+  "y": 1.4781,
+  "equityReturn": 0.05,
+  "unitMoney": ""
+}, {
+  "x": 1671379200000,
+  "y": 1.4565,
+  "equityReturn": -1.46,
+  "unitMoney": ""
+}, {
+  "x": 1671465600000,
+  "y": 1.4338,
+  "equityReturn": -1.56,
+  "unitMoney": ""
+}, {
+  "x": 1671552000000,
+  "y": 1.4343,
+  "equityReturn": 0.03,
+  "unitMoney": ""
+}, {
+  "x": 1671638400000,
+  "y": 1.4362,
+  "equityReturn": 0.13,
+  "unitMoney": ""
+}, {
+  "x": 1671724800000,
+  "y": 1.4335,
+  "equityReturn": -0.19,
+  "unitMoney": ""
+}, {
+  "x": 1671984000000,
+  "y": 1.439,
+  "equityReturn": 0.38,
+  "unitMoney": ""
+}, {
+  "x": 1672070400000,
+  "y": 1.4558,
+  "equityReturn": 1.17,
+  "unitMoney": ""
+}, {
+  "x": 1672156800000,
+  "y": 1.4499,
+  "equityReturn": -0.41,
+  "unitMoney": ""
+}, {
+  "x": 1672243200000,
+  "y": 1.4448,
+  "equityReturn": -0.35,
+  "unitMoney": ""
+}, {
+  "x": 1672329600000,
+  "y": 1.45,
+  "equityReturn": 0.36,
+  "unitMoney": ""
+}, {
+  "x": 1672416000000,
+  "y": 1.45,
+  "equityReturn": 0,
+  "unitMoney": ""
+}, {
+  "x": 1672675200000,
+  "y": 1.4558,
+  "equityReturn": 0.4,
+  "unitMoney": ""
+}, {
+  "x": 1672761600000,
+  "y": 1.4575,
+  "equityReturn": 0.12,
+  "unitMoney": ""
+}, {
+  "x": 1672848000000,
+  "y": 1.4841,
+  "equityReturn": 1.83,
+  "unitMoney": ""
+}, {
+  "x": 1672934400000,
+  "y": 1.4885,
+  "equityReturn": 0.3,
+  "unitMoney": ""
+}, {
+  "x": 1673193600000,
+  "y": 1.4997,
+  "equityReturn": 0.75,
+  "unitMoney": ""
+}, {
+  "x": 1673280000000,
+  "y": 1.5012,
+  "equityReturn": 0.1,
+  "unitMoney": ""
+}, {
+  "x": 1673366400000,
+  "y": 1.4987,
+  "equityReturn": -0.17,
+  "unitMoney": ""
+}, {
+  "x": 1673452800000,
+  "y": 1.5014,
+  "equityReturn": 0.18,
+  "unitMoney": ""
+}, {
+  "x": 1673539200000,
+  "y": 1.5212,
+  "equityReturn": 1.32,
+  "unitMoney": ""
+}, {
+  "x": 1673798400000,
+  "y": 1.5437,
+  "equityReturn": 1.48,
+  "unitMoney": ""
+}, {
+  "x": 1673884800000,
+  "y": 1.5434,
+  "equityReturn": -0.02,
+  "unitMoney": ""
+}, {
+  "x": 1673971200000,
+  "y": 1.541,
+  "equityReturn": -0.16,
+  "unitMoney": ""
+}, {
+  "x": 1674057600000,
+  "y": 1.5499,
+  "equityReturn": 0.58,
+  "unitMoney": ""
+}, {
+  "x": 1674144000000,
+  "y": 1.5589,
+  "equityReturn": 0.58,
+  "unitMoney": ""
+}, {
+  "x": 1675008000000,
+  "y": 1.5658,
+  "equityReturn": 0.44,
+  "unitMoney": ""
+}, {
+  "x": 1675094400000,
+  "y": 1.5501,
+  "equityReturn": -1.0,
+  "unitMoney": ""
+}, {
+  "x": 1675180800000,
+  "y": 1.5638,
+  "equityReturn": 0.88,
+  "unitMoney": ""
+}, {
+  "x": 1675267200000,
+  "y": 1.5586,
+  "equityReturn": -0.33,
+  "unitMoney": ""
+}, {
+  "x": 1675353600000,
+  "y": 1.5447,
+  "equityReturn": -0.89,
+  "unitMoney": ""
+}, {
+  "x": 1675612800000,
+  "y": 1.5253,
+  "equityReturn": -1.26,
+  "unitMoney": ""
+}, {
+  "x": 1675699200000,
+  "y": 1.5279,
+  "equityReturn": 0.17,
+  "unitMoney": ""
+}, {
+  "x": 1675785600000,
+  "y": 1.5216,
+  "equityReturn": -0.41,
+  "unitMoney": ""
+}, {
+  "x": 1675872000000,
+  "y": 1.541,
+  "equityReturn": 1.27,
+  "unitMoney": ""
+}, {
+  "x": 1675958400000,
+  "y": 1.5323,
+  "equityReturn": -0.56,
+  "unitMoney": ""
+}, {
+  "x": 1676217600000,
+  "y": 1.5454,
+  "equityReturn": 0.85,
+  "unitMoney": ""
+}, {
+  "x": 1676304000000,
+  "y": 1.546,
+  "equityReturn": 0.04,
+  "unitMoney": ""
+}, {
+  "x": 1676390400000,
+  "y": 1.5383,
+  "equityReturn": -0.5,
+  "unitMoney": ""
+}, {
+  "x": 1676476800000,
+  "y": 1.5278,
+  "equityReturn": -0.68,
+  "unitMoney": ""
+}, {
+  "x": 1676563200000,
+  "y": 1.5069,
+  "equityReturn": -1.37,
+  "unitMoney": ""
+}, {
+  "x": 1676822400000,
+  "y": 1.5418,
+  "equityReturn": 2.32,
+  "unitMoney": ""
+}, {
+  "x": 1676908800000,
+  "y": 1.5456,
+  "equityReturn": 0.25,
+  "unitMoney": ""
+}, {
+  "x": 1676995200000,
+  "y": 1.5323,
+  "equityReturn": -0.86,
+  "unitMoney": ""
+}, {
+  "x": 1677081600000,
+  "y": 1.5311,
+  "equityReturn": -0.08,
+  "unitMoney": ""
+}, {
+  "x": 1677168000000,
+  "y": 1.5162,
+  "equityReturn": -0.97,
+  "unitMoney": ""
+}, {
+  "x": 1677427200000,
+  "y": 1.5104,
+  "equityReturn": -0.38,
+  "unitMoney": ""
+}, {
+  "x": 1677513600000,
+  "y": 1.5194,
+  "equityReturn": 0.6,
+  "unitMoney": ""
+}, {
+  "x": 1677600000000,
+  "y": 1.5398,
+  "equityReturn": 1.34,
+  "unitMoney": ""
+}, {
+  "x": 1677686400000,
+  "y": 1.5365,
+  "equityReturn": -0.21,
+  "unitMoney": ""
+}, {
+  "x": 1677772800000,
+  "y": 1.5409,
+  "equityReturn": 0.29,
+  "unitMoney": ""
+}, {
+  "x": 1678032000000,
+  "y": 1.5333,
+  "equityReturn": -0.49,
+  "unitMoney": ""
+}, {
+  "x": 1678118400000,
+  "y": 1.512,
+  "equityReturn": -1.39,
+  "unitMoney": ""
+}, {
+  "x": 1678204800000,
+  "y": 1.5067,
+  "equityReturn": -0.35,
+  "unitMoney": ""
+}, {
+  "x": 1678291200000,
+  "y": 1.5018,
+  "equityReturn": -0.33,
+  "unitMoney": ""
+}, {
+  "x": 1678377600000,
+  "y": 1.4832,
+  "equityReturn": -1.24,
+  "unitMoney": ""
+}, {
+  "x": 1678636800000,
+  "y": 1.4978,
+  "equityReturn": 0.98,
+  "unitMoney": ""
+}, {
+  "x": 1678723200000,
+  "y": 1.4893,
+  "equityReturn": -0.57,
+  "unitMoney": ""
+}, {
+  "x": 1678809600000,
+  "y": 1.4901,
+  "equityReturn": 0.05,
+  "unitMoney": ""
+}, {
+  "x": 1678896000000,
+  "y": 1.4732,
+  "equityReturn": -1.13,
+  "unitMoney": ""
+}, {
+  "x": 1678982400000,
+  "y": 1.4802,
+  "equityReturn": 0.48,
+  "unitMoney": ""
+}, {
+  "x": 1679241600000,
+  "y": 1.4732,
+  "equityReturn": -0.47,
+  "unitMoney": ""
+}, {
+  "x": 1679328000000,
+  "y": 1.4884,
+  "equityReturn": 1.03,
+  "unitMoney": ""
+}, {
+  "x": 1679414400000,
+  "y": 1.4944,
+  "equityReturn": 0.4,
+  "unitMoney": ""
+}, {
+  "x": 1679500800000,
+  "y": 1.5084,
+  "equityReturn": 0.94,
+  "unitMoney": ""
+}, {
+  "x": 1679587200000,
+  "y": 1.5042,
+  "equityReturn": -0.28,
+  "unitMoney": ""
+}, {
+  "x": 1679846400000,
+  "y": 1.499,
+  "equityReturn": -0.35,
+  "unitMoney": ""
+}, {
+  "x": 1679932800000,
+  "y": 1.4945,
+  "equityReturn": -0.3,
+  "unitMoney": ""
+}, {
+  "x": 1680019200000,
+  "y": 1.4968,
+  "equityReturn": 0.15,
+  "unitMoney": ""
+}, {
+  "x": 1680105600000,
+  "y": 1.5082,
+  "equityReturn": 0.76,
+  "unitMoney": ""
+}, {
+  "x": 1680192000000,
+  "y": 1.5127,
+  "equityReturn": 0.3,
+  "unitMoney": ""
+}, {
+  "x": 1680451200000,
+  "y": 1.5267,
+  "equityReturn": 0.93,
+  "unitMoney": ""
+}, {
+  "x": 1680537600000,
+  "y": 1.531,
+  "equityReturn": 0.28,
+  "unitMoney": ""
+}, {
+  "x": 1680710400000,
+  "y": 1.5287,
+  "equityReturn": -0.15,
+  "unitMoney": ""
+}, {
+  "x": 1680796800000,
+  "y": 1.5382,
+  "equityReturn": 0.62,
+  "unitMoney": ""
+}, {
+  "x": 1681056000000,
+  "y": 1.5318,
+  "equityReturn": -0.42,
+  "unitMoney": ""
+}, {
+  "x": 1681142400000,
+  "y": 1.5301,
+  "equityReturn": -0.11,
+  "unitMoney": ""
+}, {
+  "x": 1681228800000,
+  "y": 1.529,
+  "equityReturn": -0.07,
+  "unitMoney": ""
+}, {
+  "x": 1681315200000,
+  "y": 1.5191,
+  "equityReturn": -0.65,
+  "unitMoney": ""
+}, {
+  "x": 1681401600000,
+  "y": 1.5271,
+  "equityReturn": 0.53,
+  "unitMoney": ""
+}, {
+  "x": 1681660800000,
+  "y": 1.5473,
+  "equityReturn": 1.32,
+  "unitMoney": ""
+}, {
+  "x": 1681747200000,
+  "y": 1.5518,
+  "equityReturn": 0.29,
+  "unitMoney": ""
+}, {
+  "x": 1681833600000,
+  "y": 1.5387,
+  "equityReturn": -0.84,
+  "unitMoney": ""
+}, {
+  "x": 1681920000000,
+  "y": 1.5344,
+  "equityReturn": -0.28,
+  "unitMoney": ""
+}, {
+  "x": 1682006400000,
+  "y": 1.5061,
+  "equityReturn": -1.84,
+  "unitMoney": ""
+}, {
+  "x": 1682265600000,
+  "y": 1.4884,
+  "equityReturn": -1.18,
+  "unitMoney": ""
+}, {
+  "x": 1682352000000,
+  "y": 1.4814,
+  "equityReturn": -0.47,
+  "unitMoney": ""
+}, {
+  "x": 1682438400000,
+  "y": 1.4805,
+  "equityReturn": -0.06,
+  "unitMoney": ""
+}, {
+  "x": 1682524800000,
+  "y": 1.4909,
+  "equityReturn": 0.7,
+  "unitMoney": ""
+}, {
+  "x": 1682611200000,
+  "y": 1.5052,
+  "equityReturn": 0.96,
+  "unitMoney": ""
+}, {
+  "x": 1683129600000,
+  "y": 1.5056,
+  "equityReturn": 0.03,
+  "unitMoney": ""
+}, {
+  "x": 1683216000000,
+  "y": 1.5008,
+  "equityReturn": -0.32,
+  "unitMoney": ""
+}, {
+  "x": 1683475200000,
+  "y": 1.5169,
+  "equityReturn": 1.07,
+  "unitMoney": ""
+}, {
+  "x": 1683561600000,
+  "y": 1.5047,
+  "equityReturn": -0.8,
+  "unitMoney": ""
+}, {
+  "x": 1683648000000,
+  "y": 1.4937,
+  "equityReturn": -0.73,
+  "unitMoney": ""
+}, {
+  "x": 1683734400000,
+  "y": 1.4916,
+  "equityReturn": -0.14,
+  "unitMoney": ""
+}, {
+  "x": 1683820800000,
+  "y": 1.473,
+  "equityReturn": -1.25,
+  "unitMoney": ""
+}, {
+  "x": 1684080000000,
+  "y": 1.4946,
+  "equityReturn": 1.47,
+  "unitMoney": ""
+}, {
+  "x": 1684166400000,
+  "y": 1.4875,
+  "equityReturn": -0.48,
+  "unitMoney": ""
+}, {
+  "x": 1684252800000,
+  "y": 1.4812,
+  "equityReturn": -0.42,
+  "unitMoney": ""
+}, {
+  "x": 1684339200000,
+  "y": 1.4799,
+  "equityReturn": -0.09,
+  "unitMoney": ""
+}, {
+  "x": 1684425600000,
+  "y": 1.4763,
+  "equityReturn": -0.24,
+  "unitMoney": ""
+}, {
+  "x": 1684684800000,
+  "y": 1.485,
+  "equityReturn": 0.59,
+  "unitMoney": ""
+}, {
+  "x": 1684771200000,
+  "y": 1.4652,
+  "equityReturn": -1.33,
+  "unitMoney": ""
+}, {
+  "x": 1684857600000,
+  "y": 1.4461,
+  "equityReturn": -1.3,
+  "unitMoney": ""
+}, {
+  "x": 1684944000000,
+  "y": 1.443,
+  "equityReturn": -0.21,
+  "unitMoney": ""
+}, {
+  "x": 1685030400000,
+  "y": 1.4436,
+  "equityReturn": 0.04,
+  "unitMoney": ""
+}, {
+  "x": 1685289600000,
+  "y": 1.4378,
+  "equityReturn": -0.4,
+  "unitMoney": ""
+}, {
+  "x": 1685376000000,
+  "y": 1.4391,
+  "equityReturn": 0.09,
+  "unitMoney": ""
+}, {
+  "x": 1685462400000,
+  "y": 1.4258,
+  "equityReturn": -0.92,
+  "unitMoney": ""
+}, {
+  "x": 1685548800000,
+  "y": 1.4298,
+  "equityReturn": 0.28,
+  "unitMoney": ""
+}, {
+  "x": 1685635200000,
+  "y": 1.4495,
+  "equityReturn": 1.38,
+  "unitMoney": ""
+}, {
+  "x": 1685894400000,
+  "y": 1.4433,
+  "equityReturn": -0.43,
+  "unitMoney": ""
+}, {
+  "x": 1685980800000,
+  "y": 1.4306,
+  "equityReturn": -0.88,
+  "unitMoney": ""
+}, {
+  "x": 1686067200000,
+  "y": 1.4243,
+  "equityReturn": -0.44,
+  "unitMoney": ""
+}, {
+  "x": 1686153600000,
+  "y": 1.4352,
+  "equityReturn": 0.77,
+  "unitMoney": ""
+}, {
+  "x": 1686240000000,
+  "y": 1.4418,
+  "equityReturn": 0.46,
+  "unitMoney": ""
+}, {
+  "x": 1686499200000,
+  "y": 1.4447,
+  "equityReturn": 0.2,
+  "unitMoney": ""
+}, {
+  "x": 1686585600000,
+  "y": 1.4526,
+  "equityReturn": 0.55,
+  "unitMoney": ""
+}, {
+  "x": 1686672000000,
+  "y": 1.4541,
+  "equityReturn": 0.1,
+  "unitMoney": ""
+}, {
+  "x": 1686758400000,
+  "y": 1.4763,
+  "equityReturn": 1.53,
+  "unitMoney": ""
+}, {
+  "x": 1686844800000,
+  "y": 1.4902,
+  "equityReturn": 0.94,
+  "unitMoney": ""
+}, {
+  "x": 1687104000000,
+  "y": 1.4801,
+  "equityReturn": -0.68,
+  "unitMoney": ""
+}, {
+  "x": 1687190400000,
+  "y": 1.4781,
+  "equityReturn": -0.14,
+  "unitMoney": ""
+}, {
+  "x": 1687276800000,
+  "y": 1.4578,
+  "equityReturn": -1.37,
+  "unitMoney": ""
+}, {
+  "x": 1687708800000,
+  "y": 1.4389,
+  "equityReturn": -1.3,
+  "unitMoney": ""
+}, {
+  "x": 1687795200000,
+  "y": 1.4523,
+  "equityReturn": 0.93,
+  "unitMoney": ""
+}, {
+  "x": 1687881600000,
+  "y": 1.4518,
+  "equityReturn": -0.03,
+  "unitMoney": ""
+}, {
+  "x": 1687968000000,
+  "y": 1.4455,
+  "equityReturn": -0.43,
+  "unitMoney": ""
+}, {
+  "x": 1688054400000,
+  "y": 1.4546,
+  "equityReturn": 0.63,
+  "unitMoney": ""
+}, {
+  "x": 1688313600000,
+  "y": 1.4728,
+  "equityReturn": 1.25,
+  "unitMoney": ""
+}, {
+  "x": 1688400000000,
+  "y": 1.475,
+  "equityReturn": 0.15,
+  "unitMoney": ""
+}, {
+  "x": 1688486400000,
+  "y": 1.4649,
+  "equityReturn": -0.68,
+  "unitMoney": ""
+}, {
+  "x": 1688572800000,
+  "y": 1.4559,
+  "equityReturn": -0.61,
+  "unitMoney": ""
+}, {
+  "x": 1688659200000,
+  "y": 1.4501,
+  "equityReturn": -0.4,
+  "unitMoney": ""
+}, {
+  "x": 1688918400000,
+  "y": 1.4566,
+  "equityReturn": 0.45,
+  "unitMoney": ""
+}, {
+  "x": 1689004800000,
+  "y": 1.4659,
+  "equityReturn": 0.64,
+  "unitMoney": ""
+}, {
+  "x": 1689091200000,
+  "y": 1.4583,
+  "equityReturn": -0.52,
+  "unitMoney": ""
+}, {
+  "x": 1689177600000,
+  "y": 1.4804,
+  "equityReturn": 1.52,
+  "unitMoney": ""
+}, {
+  "x": 1689264000000,
+  "y": 1.481,
+  "equityReturn": 0.04,
+  "unitMoney": ""
+}, {
+  "x": 1689523200000,
+  "y": 1.4714,
+  "equityReturn": -0.65,
+  "unitMoney": ""
+}, {
+  "x": 1689609600000,
+  "y": 1.4679,
+  "equityReturn": -0.24,
+  "unitMoney": ""
+}, {
+  "x": 1689696000000,
+  "y": 1.4668,
+  "equityReturn": -0.07,
+  "unitMoney": ""
+}, {
+  "x": 1689782400000,
+  "y": 1.4571,
+  "equityReturn": -0.66,
+  "unitMoney": ""
+}, {
+  "x": 1689868800000,
+  "y": 1.4575,
+  "equityReturn": 0.03,
+  "unitMoney": ""
+}, {
+  "x": 1690128000000,
+  "y": 1.4514,
+  "equityReturn": -0.42,
+  "unitMoney": ""
+}, {
+  "x": 1690214400000,
+  "y": 1.4911,
+  "equityReturn": 2.74,
+  "unitMoney": ""
+}, {
+  "x": 1690300800000,
+  "y": 1.4884,
+  "equityReturn": -0.18,
+  "unitMoney": ""
+}, {
+  "x": 1690387200000,
+  "y": 1.4866,
+  "equityReturn": -0.12,
+  "unitMoney": ""
+}, {
+  "x": 1690473600000,
+  "y": 1.5198,
+  "equityReturn": 2.23,
+  "unitMoney": ""
+}, {
+  "x": 1690732800000,
+  "y": 1.5276,
+  "equityReturn": 0.51,
+  "unitMoney": ""
+}, {
+  "x": 1690819200000,
+  "y": 1.5219,
+  "equityReturn": -0.37,
+  "unitMoney": ""
+}, {
+  "x": 1690905600000,
+  "y": 1.5118,
+  "equityReturn": -0.66,
+  "unitMoney": ""
+}, {
+  "x": 1690992000000,
+  "y": 1.5241,
+  "equityReturn": 0.81,
+  "unitMoney": ""
+}, {
+  "x": 1691078400000,
+  "y": 1.5298,
+  "equityReturn": 0.37,
+  "unitMoney": ""
+}, {
+  "x": 1691337600000,
+  "y": 1.5189,
+  "equityReturn": -0.71,
+  "unitMoney": ""
+}, {
+  "x": 1691424000000,
+  "y": 1.5152,
+  "equityReturn": -0.24,
+  "unitMoney": ""
+}, {
+  "x": 1691510400000,
+  "y": 1.5112,
+  "equityReturn": -0.26,
+  "unitMoney": ""
+}, {
+  "x": 1691596800000,
+  "y": 1.5142,
+  "equityReturn": 0.2,
+  "unitMoney": ""
+}, {
+  "x": 1691683200000,
+  "y": 1.4819,
+  "equityReturn": -2.13,
+  "unitMoney": ""
+}, {
+  "x": 1691942400000,
+  "y": 1.4715,
+  "equityReturn": -0.7,
+  "unitMoney": ""
+}, {
+  "x": 1692028800000,
+  "y": 1.4681,
+  "equityReturn": -0.23,
+  "unitMoney": ""
+}, {
+  "x": 1692115200000,
+  "y": 1.458,
+  "equityReturn": -0.69,
+  "unitMoney": ""
+}, {
+  "x": 1692201600000,
+  "y": 1.4625,
+  "equityReturn": 0.31,
+  "unitMoney": ""
+}, {
+  "x": 1692288000000,
+  "y": 1.4456,
+  "equityReturn": -1.16,
+  "unitMoney": ""
+}, {
+  "x": 1692547200000,
+  "y": 1.4259,
+  "equityReturn": -1.36,
+  "unitMoney": ""
+}, {
+  "x": 1692633600000,
+  "y": 1.4363,
+  "equityReturn": 0.73,
+  "unitMoney": ""
+}, {
+  "x": 1692720000000,
+  "y": 1.4141,
+  "equityReturn": -1.55,
+  "unitMoney": ""
+}, {
+  "x": 1692806400000,
+  "y": 1.4238,
+  "equityReturn": 0.69,
+  "unitMoney": ""
+}, {
+  "x": 1692892800000,
+  "y": 1.4195,
+  "equityReturn": -0.3,
+  "unitMoney": ""
+}, {
+  "x": 1693152000000,
+  "y": 1.435,
+  "equityReturn": 1.09,
+  "unitMoney": ""
+}, {
+  "x": 1693238400000,
+  "y": 1.4485,
+  "equityReturn": 0.94,
+  "unitMoney": ""
+}, {
+  "x": 1693324800000,
+  "y": 1.4478,
+  "equityReturn": -0.05,
+  "unitMoney": ""
+}, {
+  "x": 1693411200000,
+  "y": 1.4396,
+  "equityReturn": -0.57,
+  "unitMoney": ""
+}, {
+  "x": 1693497600000,
+  "y": 1.4491,
+  "equityReturn": 0.66,
+  "unitMoney": ""
+}, {
+  "x": 1693756800000,
+  "y": 1.47,
+  "equityReturn": 1.44,
+  "unitMoney": ""
+}, {
+  "x": 1693843200000,
+  "y": 1.4595,
+  "equityReturn": -0.71,
+  "unitMoney": ""
+}, {
+  "x": 1693929600000,
+  "y": 1.4566,
+  "equityReturn": -0.2,
+  "unitMoney": ""
+}, {
+  "x": 1694016000000,
+  "y": 1.4372,
+  "equityReturn": -1.33,
+  "unitMoney": ""
+}, {
+  "x": 1694102400000,
+  "y": 1.4305,
+  "equityReturn": -0.47,
+  "unitMoney": ""
+}, {
+  "x": 1694361600000,
+  "y": 1.4405,
+  "equityReturn": 0.7,
+  "unitMoney": ""
+}, {
+  "x": 1694448000000,
+  "y": 1.4379,
+  "equityReturn": -0.18,
+  "unitMoney": ""
+}, {
+  "x": 1694534400000,
+  "y": 1.4292,
+  "equityReturn": -0.61,
+  "unitMoney": ""
+}, {
+  "x": 1694620800000,
+  "y": 1.4281,
+  "equityReturn": -0.08,
+  "unitMoney": ""
+}, {
+  "x": 1694707200000,
+  "y": 1.4194,
+  "equityReturn": -0.61,
+  "unitMoney": ""
+}, {
+  "x": 1694966400000,
+  "y": 1.4262,
+  "equityReturn": 0.48,
+  "unitMoney": ""
+}, {
+  "x": 1695052800000,
+  "y": 1.4236,
+  "equityReturn": -0.18,
+  "unitMoney": ""
+}, {
+  "x": 1695139200000,
+  "y": 1.4184,
+  "equityReturn": -0.37,
+  "unitMoney": ""
+}, {
+  "x": 1695225600000,
+  "y": 1.4064,
+  "equityReturn": -0.85,
+  "unitMoney": ""
+}, {
+  "x": 1695312000000,
+  "y": 1.4304,
+  "equityReturn": 1.71,
+  "unitMoney": ""
+}, {
+  "x": 1695571200000,
+  "y": 1.4215,
+  "equityReturn": -0.62,
+  "unitMoney": ""
+}, {
+  "x": 1695657600000,
+  "y": 1.4137,
+  "equityReturn": -0.55,
+  "unitMoney": ""
+}, {
+  "x": 1695744000000,
+  "y": 1.4164,
+  "equityReturn": 0.19,
+  "unitMoney": ""
+}, {
+  "x": 1695830400000,
+  "y": 1.4125,
+  "equityReturn": -0.28,
+  "unitMoney": ""
+}, {
+  "x": 1696780800000,
+  "y": 1.4107,
+  "equityReturn": -0.13,
+  "unitMoney": ""
+}, {
+  "x": 1696867200000,
+  "y": 1.4007,
+  "equityReturn": -0.71,
+  "unitMoney": ""
+}, {
+  "x": 1696953600000,
+  "y": 1.4044,
+  "equityReturn": 0.26,
+  "unitMoney": ""
+}, {
+  "x": 1697040000000,
+  "y": 1.417,
+  "equityReturn": 0.9,
+  "unitMoney": ""
+}, {
+  "x": 1697126400000,
+  "y": 1.4029,
+  "equityReturn": -1.0,
+  "unitMoney": ""
+}, {
+  "x": 1697385600000,
+  "y": 1.3896,
+  "equityReturn": -0.95,
+  "unitMoney": ""
+}, {
+  "x": 1697472000000,
+  "y": 1.3942,
+  "equityReturn": 0.33,
+  "unitMoney": ""
+}, {
+  "x": 1697558400000,
+  "y": 1.3838,
+  "equityReturn": -0.75,
+  "unitMoney": ""
+}]; /*累计净值走势*/
+var Data_ACWorthTrend = [
+  [1556208000000, 1.3304],
+  [1556467200000, 1.334],
+  [1556553600000, 1.338],
+  [1557072000000, 1.2652],
+  [1557158400000, 1.2751],
+  [1557244800000, 1.2582],
+  [1557331200000, 1.2368],
+  [1557417600000, 1.2789],
+  [1557676800000, 1.2592],
+  [1557763200000, 1.2517],
+  [1557849600000, 1.2782],
+  [1557936000000, 1.2836],
+  [1558022400000, 1.2535],
+  [1558281600000, 1.2435],
+  [1558368000000, 1.259],
+  [1558454400000, 1.2536],
+  [1558540800000, 1.2338],
+  [1558627200000, 1.2375],
+  [1558886400000, 1.252],
+  [1558972800000, 1.2639],
+  [1559059200000, 1.2613],
+  [1559145600000, 1.2547],
+  [1559232000000, 1.2519],
+  [1559491200000, 1.2532],
+  [1559577600000, 1.2424],
+  [1559664000000, 1.2422],
+  [1559750400000, 1.2322],
+  [1560096000000, 1.2471],
+  [1560182400000, 1.2832],
+  [1560268800000, 1.2743],
+  [1560355200000, 1.2725],
+  [1560441600000, 1.2632],
+  [1560700800000, 1.2631],
+  [1560787200000, 1.2674],
+  [1560873600000, 1.2852],
+  [1560960000000, 1.3217],
+  [1561046400000, 1.3236],
+  [1561305600000, 1.3258],
+  [1561392000000, 1.3128],
+  [1561478400000, 1.311],
+  [1561564800000, 1.3248],
+  [1561651200000, 1.3229],
+  [1561824000000, 1.3229],
+  [1561910400000, 1.3588],
+  [1561996800000, 1.3592],
+  [1562083200000, 1.3457],
+  [1562169600000, 1.3392],
+  [1562256000000, 1.3467],
+  [1562515200000, 1.3175],
+  [1562601600000, 1.3151],
+  [1562688000000, 1.3136],
+  [1562774400000, 1.3142],
+  [1562860800000, 1.3239],
+  [1563120000000, 1.3288],
+  [1563206400000, 1.3232],
+  [1563292800000, 1.3227],
+  [1563379200000, 1.3114],
+  [1563465600000, 1.3247],
+  [1563724800000, 1.3162],
+  [1563811200000, 1.3195],
+  [1563897600000, 1.3293],
+  [1563984000000, 1.3397],
+  [1564070400000, 1.3424],
+  [1564329600000, 1.3409],
+  [1564416000000, 1.3463],
+  [1564502400000, 1.3338],
+  [1564588800000, 1.3231],
+  [1564675200000, 1.305],
+  [1564934400000, 1.2816],
+  [1565020800000, 1.2696],
+  [1565107200000, 1.2647],
+  [1565193600000, 1.2805],
+  [1565280000000, 1.2689],
+  [1565539200000, 1.2905],
+  [1565625600000, 1.2795],
+  [1565712000000, 1.2851],
+  [1565798400000, 1.2896],
+  [1565884800000, 1.2951],
+  [1566144000000, 1.322],
+  [1566230400000, 1.3208],
+  [1566316800000, 1.3189],
+  [1566403200000, 1.3229],
+  [1566489600000, 1.332],
+  [1566748800000, 1.3142],
+  [1566835200000, 1.3311],
+  [1566921600000, 1.3264],
+  [1567008000000, 1.3224],
+  [1567094400000, 1.3255],
+  [1567353600000, 1.3415],
+  [1567440000000, 1.3431],
+  [1567526400000, 1.3546],
+  [1567612800000, 1.3674],
+  [1567699200000, 1.3751],
+  [1567958400000, 1.3831],
+  [1568044800000, 1.3786],
+  [1568131200000, 1.3691],
+  [1568217600000, 1.383],
+  [1568563200000, 1.3781],
+  [1568649600000, 1.3563],
+  [1568736000000, 1.3625],
+  [1568822400000, 1.3671],
+  [1568908800000, 1.3708],
+  [1569168000000, 1.3559],
+  [1569254400000, 1.3595],
+  [1569340800000, 1.3498],
+  [1569427200000, 1.3401],
+  [1569513600000, 1.3438],
+  [1569772800000, 1.3315],
+  [1570464000000, 1.3388],
+  [1570550400000, 1.3405],
+  [1570636800000, 1.3508],
+  [1570723200000, 1.3632],
+  [1570982400000, 1.3768],
+  [1571068800000, 1.3714],
+  [1571155200000, 1.3668],
+  [1571241600000, 1.3675],
+  [1571328000000, 1.3491],
+  [1571587200000, 1.3527],
+  [1571673600000, 1.3577],
+  [1571760000000, 1.3496],
+  [1571846400000, 1.3493],
+  [1571932800000, 1.358],
+  [1572192000000, 1.3678],
+  [1572278400000, 1.3624],
+  [1572364800000, 1.3561],
+  [1572451200000, 1.3546],
+  [1572537600000, 1.3763],
+  [1572796800000, 1.3845],
+  [1572883200000, 1.3926],
+  [1572969600000, 1.3869],
+  [1573056000000, 1.3892],
+  [1573142400000, 1.383],
+  [1573401600000, 1.3601],
+  [1573488000000, 1.3602],
+  [1573574400000, 1.3585],
+  [1573660800000, 1.3603],
+  [1573747200000, 1.3505],
+  [1574006400000, 1.3609],
+  [1574092800000, 1.374],
+  [1574179200000, 1.3612],
+  [1574265600000, 1.3551],
+  [1574352000000, 1.342],
+  [1574611200000, 1.3513],
+  [1574697600000, 1.3556],
+  [1574784000000, 1.3503],
+  [1574870400000, 1.346],
+  [1574956800000, 1.3349],
+  [1575216000000, 1.3368],
+  [1575302400000, 1.3417],
+  [1575388800000, 1.3412],
+  [1575475200000, 1.351],
+  [1575561600000, 1.3585],
+  [1575820800000, 1.3564],
+  [1575907200000, 1.358],
+  [1575993600000, 1.3589],
+  [1576080000000, 1.3552],
+  [1576166400000, 1.38],
+  [1576425600000, 1.3863],
+  [1576512000000, 1.4042],
+  [1576598400000, 1.4012],
+  [1576684800000, 1.3992],
+  [1576771200000, 1.396],
+  [1577030400000, 1.3795],
+  [1577116800000, 1.388],
+  [1577203200000, 1.3874],
+  [1577289600000, 1.3989],
+  [1577376000000, 1.3977],
+  [1577635200000, 1.4173],
+  [1577721600000, 1.4222],
+  [1577894400000, 1.4405],
+  [1577980800000, 1.4382],
+  [1578240000000, 1.433],
+  [1578326400000, 1.4431],
+  [1578412800000, 1.4275],
+  [1578499200000, 1.4445],
+  [1578585600000, 1.4444],
+  [1578844800000, 1.4577],
+  [1578931200000, 1.4531],
+  [1579017600000, 1.4455],
+  [1579104000000, 1.4404],
+  [1579190400000, 1.4424],
+  [1579449600000, 1.4529],
+  [1579536000000, 1.4297],
+  [1579622400000, 1.4354],
+  [1579708800000, 1.3939],
+  [1580659200000, 1.2906],
+  [1580745600000, 1.3233],
+  [1580832000000, 1.3376999999999999],
+  [1580918400000, 1.3611],
+  [1581004800000, 1.3613],
+  [1581264000000, 1.3665],
+  [1581350400000, 1.3786],
+  [1581436800000, 1.3891],
+  [1581523200000, 1.3812],
+  [1581609600000, 1.3902],
+  [1581868800000, 1.4196],
+  [1581955200000, 1.4133],
+  [1582041600000, 1.4112],
+  [1582128000000, 1.4421],
+  [1582214400000, 1.4438],
+  [1582473600000, 1.4378],
+  [1582560000000, 1.4343],
+  [1582646400000, 1.4177],
+  [1582732800000, 1.4216],
+  [1582819200000, 1.374],
+  [1583078400000, 1.4164],
+  [1583164800000, 1.424],
+  [1583251200000, 1.4317],
+  [1583337600000, 1.462],
+  [1583424000000, 1.4395],
+  [1583683200000, 1.3938],
+  [1583769600000, 1.4217],
+  [1583856000000, 1.404],
+  [1583942400000, 1.3784],
+  [1584028800000, 1.3601],
+  [1584288000000, 1.3052],
+  [1584374400000, 1.2993],
+  [1584460800000, 1.275],
+  [1584547200000, 1.2593],
+  [1584633600000, 1.2804],
+  [1584892800000, 1.2399],
+  [1584979200000, 1.2706],
+  [1585065600000, 1.3025],
+  [1585152000000, 1.2945],
+  [1585238400000, 1.2986],
+  [1585497600000, 1.2866],
+  [1585584000000, 1.2904],
+  [1585670400000, 1.2868],
+  [1585756800000, 1.3064],
+  [1585843200000, 1.2993],
+  [1586188800000, 1.3273],
+  [1586275200000, 1.3215],
+  [1586361600000, 1.3257],
+  [1586448000000, 1.3179],
+  [1586707200000, 1.3125],
+  [1586793600000, 1.3358],
+  [1586880000000, 1.3266],
+  [1586966400000, 1.3286],
+  [1587052800000, 1.3407],
+  [1587312000000, 1.3457],
+  [1587398400000, 1.3307],
+  [1587484800000, 1.341],
+  [1587571200000, 1.3378],
+  [1587657600000, 1.3271],
+  [1587916800000, 1.3358],
+  [1588003200000, 1.3444],
+  [1588089600000, 1.3506],
+  [1588176000000, 1.3658],
+  [1588694400000, 1.3735],
+  [1588780800000, 1.3699],
+  [1588867200000, 1.3841],
+  [1589126400000, 1.383],
+  [1589212800000, 1.383],
+  [1589299200000, 1.3857],
+  [1589385600000, 1.3714],
+  [1589472000000, 1.3676],
+  [1589731200000, 1.371],
+  [1589817600000, 1.3823],
+  [1589904000000, 1.3756],
+  [1589990400000, 1.3685],
+  [1590076800000, 1.3392],
+  [1590336000000, 1.341],
+  [1590422400000, 1.3553],
+  [1590508800000, 1.3465],
+  [1590595200000, 1.3505],
+  [1590681600000, 1.3547],
+  [1590940800000, 1.3892],
+  [1591027200000, 1.3941],
+  [1591113600000, 1.3943],
+  [1591200000000, 1.394],
+  [1591286400000, 1.4001999999999999],
+  [1591545600000, 1.4077],
+  [1591632000000, 1.4158],
+  [1591718400000, 1.4145],
+  [1591804800000, 1.4011],
+  [1591891200000, 1.4021],
+  [1592150400000, 1.3865],
+  [1592236800000, 1.4064],
+  [1592323200000, 1.4076],
+  [1592409600000, 1.4171],
+  [1592496000000, 1.436],
+  [1592755200000, 1.4377],
+  [1592841600000, 1.4442],
+  [1592928000000, 1.4521],
+  [1593360000000, 1.4423],
+  [1593446400000, 1.4615],
+  [1593532800000, 1.4893],
+  [1593619200000, 1.5193],
+  [1593705600000, 1.5472],
+  [1593964800000, 1.6309],
+  [1594051200000, 1.6403],
+  [1594137600000, 1.6656],
+  [1594224000000, 1.6879],
+  [1594310400000, 1.6622],
+  [1594569600000, 1.6964],
+  [1594656000000, 1.6817],
+  [1594742400000, 1.6654],
+  [1594828800000, 1.5901],
+  [1594915200000, 1.601],
+  [1595174400000, 1.6464],
+  [1595260800000, 1.6502],
+  [1595347200000, 1.6597],
+  [1595433600000, 1.66],
+  [1595520000000, 1.5909],
+  [1595779200000, 1.5983],
+  [1595865600000, 1.6113],
+  [1595952000000, 1.6487],
+  [1596038400000, 1.6412],
+  [1596124800000, 1.6545],
+  [1596384000000, 1.6797],
+  [1596470400000, 1.6811],
+  [1596556800000, 1.6815],
+  [1596643200000, 1.6763],
+  [1596729600000, 1.6584],
+  [1596988800000, 1.6644],
+  [1597075200000, 1.6502],
+  [1597161600000, 1.639],
+  [1597248000000, 1.6361],
+  [1597334400000, 1.6599],
+  [1597593600000, 1.697],
+  [1597680000000, 1.6962],
+  [1597766400000, 1.6727],
+  [1597852800000, 1.6524],
+  [1597939200000, 1.6657],
+  [1598198400000, 1.6799],
+  [1598284800000, 1.682],
+  [1598371200000, 1.6635],
+  [1598457600000, 1.6718],
+  [1598544000000, 1.7098],
+  [1598803200000, 1.7007],
+  [1598889600000, 1.7093],
+  [1598976000000, 1.71],
+  [1599062400000, 1.7011],
+  [1599148800000, 1.6856],
+  [1599408000000, 1.6521],
+  [1599494400000, 1.6605],
+  [1599580800000, 1.6237],
+  [1599667200000, 1.6229],
+  [1599753600000, 1.6379],
+  [1600012800000, 1.6456],
+  [1600099200000, 1.6583],
+  [1600185600000, 1.6488],
+  [1600272000000, 1.6414],
+  [1600358400000, 1.6764],
+  [1600617600000, 1.6613],
+  [1600704000000, 1.6429],
+  [1600790400000, 1.6485],
+  [1600876800000, 1.6189],
+  [1600963200000, 1.6212],
+  [1601222400000, 1.6256],
+  [1601308800000, 1.629],
+  [1601395200000, 1.6272],
+  [1602172800000, 1.6581],
+  [1602432000000, 1.7056],
+  [1602518400000, 1.7111],
+  [1602604800000, 1.7005],
+  [1602691200000, 1.6988],
+  [1602777600000, 1.6964],
+  [1603036800000, 1.6842],
+  [1603123200000, 1.6969],
+  [1603209600000, 1.6965],
+  [1603296000000, 1.6917],
+  [1603382400000, 1.6721],
+  [1603641600000, 1.663],
+  [1603728000000, 1.666],
+  [1603814400000, 1.6788],
+  [1603900800000, 1.6922],
+  [1603987200000, 1.6662],
+  [1604246400000, 1.6749],
+  [1604332800000, 1.6939],
+  [1604419200000, 1.706],
+  [1604505600000, 1.7302],
+  [1604592000000, 1.7303],
+  [1604851200000, 1.7627],
+  [1604937600000, 1.7534],
+  [1605024000000, 1.7367],
+  [1605110400000, 1.738],
+  [1605196800000, 1.7207],
+  [1605456000000, 1.7364],
+  [1605542400000, 1.7332],
+  [1605628800000, 1.7323],
+  [1605715200000, 1.7445],
+  [1605801600000, 1.7496],
+  [1606060800000, 1.7704],
+  [1606147200000, 1.7602],
+  [1606233600000, 1.739],
+  [1606320000000, 1.7417],
+  [1606406400000, 1.7625],
+  [1606665600000, 1.7562],
+  [1606752000000, 1.7916],
+  [1606838400000, 1.7919],
+  [1606924800000, 1.7887],
+  [1607011200000, 1.7916],
+  [1607270400000, 1.7771],
+  [1607356800000, 1.7731],
+  [1607443200000, 1.7507],
+  [1607529600000, 1.7499],
+  [1607616000000, 1.732],
+  [1607875200000, 1.7469],
+  [1607961600000, 1.7505],
+  [1608048000000, 1.754],
+  [1608134400000, 1.7753],
+  [1608220800000, 1.7695],
+  [1608480000000, 1.7853],
+  [1608566400000, 1.7581],
+  [1608652800000, 1.7722],
+  [1608739200000, 1.7699],
+  [1608825600000, 1.7841],
+  [1609084800000, 1.7916],
+  [1609171200000, 1.7845],
+  [1609257600000, 1.8083],
+  [1609344000000, 1.841],
+  [1609689600000, 1.86],
+  [1609776000000, 1.8932],
+  [1609862400000, 1.9093],
+  [1609948800000, 1.9412],
+  [1610035200000, 1.9353],
+  [1610294400000, 1.917],
+  [1610380800000, 1.9682],
+  [1610467200000, 1.9622],
+  [1610553600000, 1.9269],
+  [1610640000000, 1.9227],
+  [1610899200000, 1.9431],
+  [1610985600000, 1.9163],
+  [1611072000000, 1.9291],
+  [1611158400000, 1.9586],
+  [1611244800000, 1.9603],
+  [1611504000000, 1.9788],
+  [1611590400000, 1.9414],
+  [1611676800000, 1.9462],
+  [1611763200000, 1.8963],
+  [1611849600000, 1.8875],
+  [1612108800000, 1.9096],
+  [1612195200000, 1.9372],
+  [1612281600000, 1.9321],
+  [1612368000000, 1.9283],
+  [1612454400000, 1.9314],
+  [1612713600000, 1.9583],
+  [1612800000000, 1.9989],
+  [1612886400000, 2.0396],
+  [1613577600000, 2.0263],
+  [1613664000000, 2.0298],
+  [1613923200000, 1.9699],
+  [1614009600000, 1.9637],
+  [1614096000000, 1.9163],
+  [1614182400000, 1.9271],
+  [1614268800000, 1.883],
+  [1614528000000, 1.9101],
+  [1614614400000, 1.8869],
+  [1614700800000, 1.9211],
+  [1614787200000, 1.864],
+  [1614873600000, 1.8585],
+  [1615132800000, 1.7973],
+  [1615219200000, 1.7608],
+  [1615305600000, 1.7716],
+  [1615392000000, 1.8128],
+  [1615478400000, 1.8188],
+  [1615737600000, 1.7819],
+  [1615824000000, 1.7965],
+  [1615910400000, 1.8036],
+  [1615996800000, 1.8172],
+  [1616083200000, 1.7721],
+  [1616342400000, 1.789],
+  [1616428800000, 1.773],
+  [1616515200000, 1.7465],
+  [1616601600000, 1.7462],
+  [1616688000000, 1.7837],
+  [1616947200000, 1.7865],
+  [1617033600000, 1.8025],
+  [1617120000000, 1.787],
+  [1617206400000, 1.8082],
+  [1617292800000, 1.8251],
+  [1617638400000, 1.8181],
+  [1617724800000, 1.8058],
+  [1617811200000, 1.8088],
+  [1617897600000, 1.7833],
+  [1618156800000, 1.7541],
+  [1618243200000, 1.7514],
+  [1618329600000, 1.7651],
+  [1618416000000, 1.7546],
+  [1618502400000, 1.7605],
+  [1618761600000, 1.8012],
+  [1618848000000, 1.8001],
+  [1618934400000, 1.8053],
+  [1619020800000, 1.8033],
+  [1619107200000, 1.8194],
+  [1619366400000, 1.8004],
+  [1619452800000, 1.8048],
+  [1619539200000, 1.8145],
+  [1619625600000, 1.8297],
+  [1619712000000, 1.8162],
+  [1620230400000, 1.7952],
+  [1620316800000, 1.7734],
+  [1620576000000, 1.7721],
+  [1620662400000, 1.7823],
+  [1620748800000, 1.7896],
+  [1620835200000, 1.7724],
+  [1620921600000, 1.8122],
+  [1621180800000, 1.8375],
+  [1621267200000, 1.8382],
+  [1621353600000, 1.8335],
+  [1621440000000, 1.8386],
+  [1621526400000, 1.8212],
+  [1621785600000, 1.8283],
+  [1621872000000, 1.8829],
+  [1621958400000, 1.8836],
+  [1622044800000, 1.8897],
+  [1622131200000, 1.8843],
+  [1622390400000, 1.8882],
+  [1622476800000, 1.8917],
+  [1622563200000, 1.8752],
+  [1622649600000, 1.864],
+  [1622736000000, 1.8738],
+  [1622995200000, 1.8726],
+  [1623081600000, 1.8574],
+  [1623168000000, 1.8593],
+  [1623254400000, 1.8721],
+  [1623340800000, 1.8574],
+  [1623686400000, 1.8381],
+  [1623772800000, 1.8097],
+  [1623859200000, 1.8182],
+  [1623945600000, 1.8193],
+  [1624204800000, 1.8154],
+  [1624291200000, 1.8265],
+  [1624377600000, 1.8358],
+  [1624464000000, 1.8388],
+  [1624550400000, 1.8683],
+  [1624809600000, 1.8721],
+  [1624896000000, 1.8527],
+  [1624982400000, 1.8649],
+  [1625068800000, 1.8668],
+  [1625155200000, 1.8169],
+  [1625414400000, 1.8184],
+  [1625500800000, 1.8189],
+  [1625587200000, 1.839],
+  [1625673600000, 1.8223],
+  [1625760000000, 1.8176],
+  [1626019200000, 1.8392],
+  [1626105600000, 1.8446],
+  [1626192000000, 1.8247],
+  [1626278400000, 1.8482],
+  [1626364800000, 1.8303],
+  [1626624000000, 1.8367],
+  [1626710400000, 1.8354],
+  [1626796800000, 1.8479],
+  [1626883200000, 1.8516],
+  [1626969600000, 1.8306],
+  [1627228800000, 1.7747],
+  [1627315200000, 1.7163],
+  [1627401600000, 1.7194],
+  [1627488000000, 1.7499],
+  [1627574400000, 1.7374],
+  [1627833600000, 1.7791],
+  [1627920000000, 1.7794],
+  [1628006400000, 1.7947],
+  [1628092800000, 1.7846],
+  [1628179200000, 1.7756],
+  [1628438400000, 1.7974],
+  [1628524800000, 1.817],
+  [1628611200000, 1.8078],
+  [1628697600000, 1.7937],
+  [1628784000000, 1.7845],
+  [1629043200000, 1.7838],
+  [1629129600000, 1.7487],
+  [1629216000000, 1.7682],
+  [1629302400000, 1.7573],
+  [1629388800000, 1.7265],
+  [1629648000000, 1.7505],
+  [1629734400000, 1.7687],
+  [1629820800000, 1.7726],
+  [1629907200000, 1.7396],
+  [1629993600000, 1.7483],
+  [1630252800000, 1.7434],
+  [1630339200000, 1.7409],
+  [1630425600000, 1.763],
+  [1630512000000, 1.763],
+  [1630598400000, 1.7543],
+  [1630857600000, 1.7853],
+  [1630944000000, 1.8058],
+  [1631030400000, 1.7986],
+  [1631116800000, 1.7978],
+  [1631203200000, 1.8131],
+  [1631462400000, 1.8055],
+  [1631548800000, 1.7802],
+  [1631635200000, 1.7631],
+  [1631721600000, 1.7429],
+  [1631808000000, 1.76],
+  [1632240000000, 1.7486],
+  [1632326400000, 1.7591],
+  [1632412800000, 1.7582],
+  [1632672000000, 1.7677],
+  [1632758400000, 1.7701],
+  [1632844800000, 1.7531],
+  [1632931200000, 1.7642],
+  [1633622400000, 1.7858],
+  [1633881600000, 1.7878],
+  [1633968000000, 1.7697],
+  [1634054400000, 1.789],
+  [1634140800000, 1.7801],
+  [1634227200000, 1.7869],
+  [1634486400000, 1.7671],
+  [1634572800000, 1.7835],
+  [1634659200000, 1.7794],
+  [1634745600000, 1.7853],
+  [1634832000000, 1.7966],
+  [1635091200000, 1.804],
+  [1635177600000, 1.7984],
+  [1635264000000, 1.7765],
+  [1635350400000, 1.765],
+  [1635436800000, 1.78],
+  [1635696000000, 1.7741],
+  [1635782400000, 1.7567],
+  [1635868800000, 1.7504],
+  [1635955200000, 1.7667],
+  [1636041600000, 1.7577],
+  [1636300800000, 1.7596],
+  [1636387200000, 1.7591],
+  [1636473600000, 1.7501],
+  [1636560000000, 1.7763],
+  [1636646400000, 1.773],
+  [1636905600000, 1.771],
+  [1636992000000, 1.7714],
+  [1637078400000, 1.7723],
+  [1637164800000, 1.756],
+  [1637251200000, 1.7739],
+  [1637510400000, 1.7816],
+  [1637596800000, 1.7818],
+  [1637683200000, 1.7835],
+  [1637769600000, 1.7765],
+  [1637856000000, 1.7642],
+  [1638115200000, 1.7611],
+  [1638201600000, 1.7546],
+  [1638288000000, 1.7587],
+  [1638374400000, 1.7628],
+  [1638460800000, 1.7782],
+  [1638720000000, 1.7753],
+  [1638806400000, 1.7852],
+  [1638892800000, 1.8107],
+  [1638979200000, 1.8389],
+  [1639065600000, 1.831],
+  [1639324800000, 1.8409],
+  [1639411200000, 1.8294],
+  [1639497600000, 1.8142],
+  [1639584000000, 1.8239],
+  [1639670400000, 1.7968],
+  [1639929600000, 1.7717],
+  [1640016000000, 1.7832],
+  [1640102400000, 1.7835],
+  [1640188800000, 1.7953],
+  [1640275200000, 1.7862],
+  [1640534400000, 1.7855],
+  [1640620800000, 1.798],
+  [1640707200000, 1.7732],
+  [1640793600000, 1.7862],
+  [1640880000000, 1.7927],
+  [1641225600000, 1.7849],
+  [1641312000000, 1.7679],
+  [1641398400000, 1.7507],
+  [1641484800000, 1.7522],
+  [1641744000000, 1.7594],
+  [1641830400000, 1.7434],
+  [1641916800000, 1.7597],
+  [1642003200000, 1.7325],
+  [1642089600000, 1.7193],
+  [1642348800000, 1.7331],
+  [1642435200000, 1.7489],
+  [1642521600000, 1.7376],
+  [1642608000000, 1.7524],
+  [1642694400000, 1.7372],
+  [1642953600000, 1.7396],
+  [1643040000000, 1.7026],
+  [1643126400000, 1.7145],
+  [1643212800000, 1.6829],
+  [1643299200000, 1.6635],
+  [1644163200000, 1.6875],
+  [1644249600000, 1.6789],
+  [1644336000000, 1.694],
+  [1644422400000, 1.6899],
+  [1644508800000, 1.6767],
+  [1644768000000, 1.6594],
+  [1644854400000, 1.6759],
+  [1644940800000, 1.6821],
+  [1645027200000, 1.686],
+  [1645113600000, 1.6935],
+  [1645372800000, 1.6878],
+  [1645459200000, 1.6672],
+  [1645545600000, 1.6841],
+  [1645632000000, 1.6517],
+  [1645718400000, 1.667],
+  [1645977600000, 1.6697],
+  [1646064000000, 1.6825],
+  [1646150400000, 1.6685],
+  [1646236800000, 1.6593],
+  [1646323200000, 1.6403],
+  [1646582400000, 1.5909],
+  [1646668800000, 1.5605],
+  [1646755200000, 1.5465],
+  [1646841600000, 1.5674],
+  [1646928000000, 1.5727],
+  [1647187200000, 1.5275],
+  [1647273600000, 1.4622],
+  [1647360000000, 1.5214],
+  [1647446400000, 1.5495],
+  [1647532800000, 1.5596],
+  [1647792000000, 1.557],
+  [1647878400000, 1.5559],
+  [1647964800000, 1.5633],
+  [1648051200000, 1.5548],
+  [1648137600000, 1.5284],
+  [1648396800000, 1.5194],
+  [1648483200000, 1.5145],
+  [1648569600000, 1.5559],
+  [1648656000000, 1.5451],
+  [1648742400000, 1.5635],
+  [1649174400000, 1.5591],
+  [1649260800000, 1.5402],
+  [1649347200000, 1.548],
+  [1649606400000, 1.5026],
+  [1649692800000, 1.5299],
+  [1649779200000, 1.5162],
+  [1649865600000, 1.5341],
+  [1649952000000, 1.533],
+  [1650211200000, 1.5251999999999999],
+  [1650297600000, 1.5143],
+  [1650384000000, 1.4922],
+  [1650470400000, 1.4662],
+  [1650556800000, 1.4723],
+  [1650816000000, 1.4039],
+  [1650902400000, 1.3935],
+  [1650988800000, 1.4283],
+  [1651075200000, 1.4368],
+  [1651161600000, 1.4708],
+  [1651680000000, 1.4689],
+  [1651766400000, 1.434],
+  [1652025600000, 1.4231],
+  [1652112000000, 1.438],
+  [1652198400000, 1.4578],
+  [1652284800000, 1.4517],
+  [1652371200000, 1.462],
+  [1652630400000, 1.451],
+  [1652716800000, 1.4681],
+  [1652803200000, 1.4634],
+  [1652889600000, 1.4661],
+  [1652976000000, 1.4934],
+  [1653235200000, 1.4851],
+  [1653321600000, 1.4525],
+  [1653408000000, 1.4607],
+  [1653494400000, 1.4653],
+  [1653580800000, 1.4681],
+  [1653840000000, 1.4784],
+  [1653926400000, 1.5003],
+  [1654012800000, 1.4979],
+  [1654099200000, 1.5011],
+  [1654444800000, 1.5277],
+  [1654531200000, 1.5322],
+  [1654617600000, 1.5472],
+  [1654704000000, 1.532],
+  [1654790400000, 1.5536],
+  [1655049600000, 1.5366],
+  [1655136000000, 1.548],
+  [1655222400000, 1.5679],
+  [1655308800000, 1.5593],
+  [1655395200000, 1.58],
+  [1655654400000, 1.5887],
+  [1655740800000, 1.5876999999999999],
+  [1655827200000, 1.5692],
+  [1655913600000, 1.5947],
+  [1656000000000, 1.6127],
+  [1656259200000, 1.6301],
+  [1656345600000, 1.6463],
+  [1656432000000, 1.6238],
+  [1656518400000, 1.6475],
+  [1656604800000, 1.6411],
+  [1656864000000, 1.6511],
+  [1656950400000, 1.6488],
+  [1657036800000, 1.6265],
+  [1657123200000, 1.6337],
+  [1657209600000, 1.6298],
+  [1657468800000, 1.6049],
+  [1657555200000, 1.5925],
+  [1657641600000, 1.5954],
+  [1657728000000, 1.5957],
+  [1657814400000, 1.5737],
+  [1658073600000, 1.589],
+  [1658160000000, 1.581],
+  [1658246400000, 1.5861],
+  [1658332800000, 1.5705],
+  [1658419200000, 1.5714],
+  [1658678400000, 1.5626],
+  [1658764800000, 1.5743],
+  [1658851200000, 1.567],
+  [1658937600000, 1.5676],
+  [1659024000000, 1.5485],
+  [1659283200000, 1.555],
+  [1659369600000, 1.526],
+  [1659456000000, 1.5121],
+  [1659542400000, 1.5242],
+  [1659628800000, 1.5447],
+  [1659888000000, 1.5418],
+  [1659974400000, 1.5445],
+  [1660060800000, 1.5283],
+  [1660147200000, 1.5578],
+  [1660233600000, 1.5572],
+  [1660492800000, 1.5553],
+  [1660579200000, 1.5525],
+  [1660665600000, 1.5663],
+  [1660752000000, 1.5535],
+  [1660838400000, 1.5435],
+  [1661097600000, 1.5542],
+  [1661184000000, 1.5473],
+  [1661270400000, 1.5197],
+  [1661356800000, 1.532],
+  [1661443200000, 1.5298],
+  [1661702400000, 1.5234],
+  [1661788800000, 1.5186],
+  [1661875200000, 1.5197],
+  [1661961600000, 1.5074],
+  [1662048000000, 1.5003],
+  [1662307200000, 1.4973],
+  [1662393600000, 1.5101],
+  [1662480000000, 1.5111],
+  [1662566400000, 1.5052],
+  [1662652800000, 1.525],
+  [1662998400000, 1.531],
+  [1663084800000, 1.515],
+  [1663171200000, 1.5015],
+  [1663257600000, 1.4684],
+  [1663516800000, 1.4667],
+  [1663603200000, 1.4684],
+  [1663689600000, 1.4582],
+  [1663776000000, 1.4461],
+  [1663862400000, 1.4414],
+  [1664121600000, 1.4345],
+  [1664208000000, 1.4541],
+  [1664294400000, 1.4319],
+  [1664380800000, 1.4313],
+  [1664467200000, 1.4235],
+  [1665331200000, 1.3938],
+  [1665417600000, 1.396],
+  [1665504000000, 1.4158],
+  [1665590400000, 1.4052],
+  [1665676800000, 1.4369],
+  [1665936000000, 1.4383],
+  [1666022400000, 1.4355],
+  [1666108800000, 1.4138],
+  [1666195200000, 1.407],
+  [1666281600000, 1.4027],
+  [1666540800000, 1.364],
+  [1666627200000, 1.362],
+  [1666713600000, 1.3723],
+  [1666800000000, 1.3634],
+  [1666886400000, 1.3316],
+  [1667145600000, 1.32],
+  [1667232000000, 1.3646],
+  [1667318400000, 1.3802],
+  [1667404800000, 1.3696],
+  [1667491200000, 1.4119],
+  [1667750400000, 1.4147],
+  [1667836800000, 1.4055],
+  [1667923200000, 1.3932],
+  [1668009600000, 1.3831],
+  [1668096000000, 1.4196],
+  [1668355200000, 1.4212],
+  [1668441600000, 1.4466],
+  [1668528000000, 1.4353],
+  [1668614400000, 1.4297],
+  [1668700800000, 1.4238],
+  [1668960000000, 1.4122],
+  [1669046400000, 1.4124],
+  [1669132800000, 1.4138],
+  [1669219200000, 1.4078],
+  [1669305600000, 1.4146],
+  [1669564800000, 1.3995],
+  [1669651200000, 1.4403],
+  [1669737600000, 1.4419],
+  [1669824000000, 1.4569],
+  [1669910400000, 1.4485],
+  [1670169600000, 1.4751],
+  [1670256000000, 1.4827],
+  [1670342400000, 1.4792],
+  [1670428800000, 1.4795],
+  [1670515200000, 1.4926],
+  [1670774400000, 1.4769],
+  [1670860800000, 1.4743],
+  [1670947200000, 1.4783],
+  [1671033600000, 1.4773],
+  [1671120000000, 1.4781],
+  [1671379200000, 1.4565],
+  [1671465600000, 1.4338],
+  [1671552000000, 1.4343],
+  [1671638400000, 1.4362],
+  [1671724800000, 1.4335],
+  [1671984000000, 1.439],
+  [1672070400000, 1.4558],
+  [1672156800000, 1.4499],
+  [1672243200000, 1.4448],
+  [1672329600000, 1.45],
+  [1672416000000, 1.45],
+  [1672675200000, 1.4558],
+  [1672761600000, 1.4575],
+  [1672848000000, 1.4841],
+  [1672934400000, 1.4885],
+  [1673193600000, 1.4997],
+  [1673280000000, 1.5012],
+  [1673366400000, 1.4987],
+  [1673452800000, 1.5014],
+  [1673539200000, 1.5212],
+  [1673798400000, 1.5437],
+  [1673884800000, 1.5434],
+  [1673971200000, 1.541],
+  [1674057600000, 1.5499],
+  [1674144000000, 1.5589],
+  [1675008000000, 1.5658],
+  [1675094400000, 1.5501],
+  [1675180800000, 1.5638],
+  [1675267200000, 1.5586],
+  [1675353600000, 1.5447],
+  [1675612800000, 1.5253],
+  [1675699200000, 1.5279],
+  [1675785600000, 1.5216],
+  [1675872000000, 1.541],
+  [1675958400000, 1.5323],
+  [1676217600000, 1.5454],
+  [1676304000000, 1.546],
+  [1676390400000, 1.5383],
+  [1676476800000, 1.5278],
+  [1676563200000, 1.5069],
+  [1676822400000, 1.5418],
+  [1676908800000, 1.5456],
+  [1676995200000, 1.5323],
+  [1677081600000, 1.5311],
+  [1677168000000, 1.5162],
+  [1677427200000, 1.5104],
+  [1677513600000, 1.5194],
+  [1677600000000, 1.5398],
+  [1677686400000, 1.5365],
+  [1677772800000, 1.5409],
+  [1678032000000, 1.5333],
+  [1678118400000, 1.512],
+  [1678204800000, 1.5067],
+  [1678291200000, 1.5018],
+  [1678377600000, 1.4832],
+  [1678636800000, 1.4978],
+  [1678723200000, 1.4893],
+  [1678809600000, 1.4901],
+  [1678896000000, 1.4732],
+  [1678982400000, 1.4802],
+  [1679241600000, 1.4732],
+  [1679328000000, 1.4884],
+  [1679414400000, 1.4944],
+  [1679500800000, 1.5084],
+  [1679587200000, 1.5042],
+  [1679846400000, 1.499],
+  [1679932800000, 1.4945],
+  [1680019200000, 1.4968],
+  [1680105600000, 1.5082],
+  [1680192000000, 1.5127],
+  [1680451200000, 1.5267],
+  [1680537600000, 1.531],
+  [1680710400000, 1.5287],
+  [1680796800000, 1.5382],
+  [1681056000000, 1.5318],
+  [1681142400000, 1.5301],
+  [1681228800000, 1.529],
+  [1681315200000, 1.5191],
+  [1681401600000, 1.5271],
+  [1681660800000, 1.5473],
+  [1681747200000, 1.5518],
+  [1681833600000, 1.5387],
+  [1681920000000, 1.5344],
+  [1682006400000, 1.5061],
+  [1682265600000, 1.4884],
+  [1682352000000, 1.4814],
+  [1682438400000, 1.4805],
+  [1682524800000, 1.4909],
+  [1682611200000, 1.5052],
+  [1683129600000, 1.5056],
+  [1683216000000, 1.5008],
+  [1683475200000, 1.5169],
+  [1683561600000, 1.5047],
+  [1683648000000, 1.4937],
+  [1683734400000, 1.4916],
+  [1683820800000, 1.473],
+  [1684080000000, 1.4946],
+  [1684166400000, 1.4875],
+  [1684252800000, 1.4812],
+  [1684339200000, 1.4799],
+  [1684425600000, 1.4763],
+  [1684684800000, 1.485],
+  [1684771200000, 1.4652],
+  [1684857600000, 1.4461],
+  [1684944000000, 1.443],
+  [1685030400000, 1.4436],
+  [1685289600000, 1.4378],
+  [1685376000000, 1.4391],
+  [1685462400000, 1.4258],
+  [1685548800000, 1.4298],
+  [1685635200000, 1.4495],
+  [1685894400000, 1.4433],
+  [1685980800000, 1.4306],
+  [1686067200000, 1.4243],
+  [1686153600000, 1.4352],
+  [1686240000000, 1.4418],
+  [1686499200000, 1.4447],
+  [1686585600000, 1.4526],
+  [1686672000000, 1.4541],
+  [1686758400000, 1.4763],
+  [1686844800000, 1.4902],
+  [1687104000000, 1.4801],
+  [1687190400000, 1.4781],
+  [1687276800000, 1.4578],
+  [1687708800000, 1.4389],
+  [1687795200000, 1.4523],
+  [1687881600000, 1.4518],
+  [1687968000000, 1.4455],
+  [1688054400000, 1.4546],
+  [1688313600000, 1.4728],
+  [1688400000000, 1.475],
+  [1688486400000, 1.4649],
+  [1688572800000, 1.4559],
+  [1688659200000, 1.4501],
+  [1688918400000, 1.4566],
+  [1689004800000, 1.4659],
+  [1689091200000, 1.4583],
+  [1689177600000, 1.4804],
+  [1689264000000, 1.481],
+  [1689523200000, 1.4714],
+  [1689609600000, 1.4679],
+  [1689696000000, 1.4668],
+  [1689782400000, 1.4571],
+  [1689868800000, 1.4575],
+  [1690128000000, 1.4514],
+  [1690214400000, 1.4911],
+  [1690300800000, 1.4884],
+  [1690387200000, 1.4866],
+  [1690473600000, 1.5198],
+  [1690732800000, 1.5276],
+  [1690819200000, 1.5219],
+  [1690905600000, 1.5118],
+  [1690992000000, 1.5241],
+  [1691078400000, 1.5298],
+  [1691337600000, 1.5189],
+  [1691424000000, 1.5152],
+  [1691510400000, 1.5112],
+  [1691596800000, 1.5142],
+  [1691683200000, 1.4819],
+  [1691942400000, 1.4715],
+  [1692028800000, 1.4681],
+  [1692115200000, 1.458],
+  [1692201600000, 1.4625],
+  [1692288000000, 1.4456],
+  [1692547200000, 1.4259],
+  [1692633600000, 1.4363],
+  [1692720000000, 1.4141],
+  [1692806400000, 1.4238],
+  [1692892800000, 1.4195],
+  [1693152000000, 1.435],
+  [1693238400000, 1.4485],
+  [1693324800000, 1.4478],
+  [1693411200000, 1.4396],
+  [1693497600000, 1.4491],
+  [1693756800000, 1.47],
+  [1693843200000, 1.4595],
+  [1693929600000, 1.4566],
+  [1694016000000, 1.4372],
+  [1694102400000, 1.4305],
+  [1694361600000, 1.4405],
+  [1694448000000, 1.4379],
+  [1694534400000, 1.4292],
+  [1694620800000, 1.4281],
+  [1694707200000, 1.4194],
+  [1694966400000, 1.4262],
+  [1695052800000, 1.4236],
+  [1695139200000, 1.4184],
+  [1695225600000, 1.4064],
+  [1695312000000, 1.4304],
+  [1695571200000, 1.4215],
+  [1695657600000, 1.4137],
+  [1695744000000, 1.4164],
+  [1695830400000, 1.4125],
+  [1696780800000, 1.4107],
+  [1696867200000, 1.4007],
+  [1696953600000, 1.4044],
+  [1697040000000, 1.417],
+  [1697126400000, 1.4029],
+  [1697385600000, 1.3896],
+  [1697472000000, 1.3942],
+  [1697558400000, 1.3838]
+]; /*累计收益率走势*/
+var Data_grandTotal = [{
+  "name": "易方达沪深300ETF",
+  "data": [
+    [1681747200000, 0],
+    [1681833600000, -0.84],
+    [1681920000000, -1.12],
+    [1682006400000, -2.94],
+    [1682265600000, -4.09],
+    [1682352000000, -4.54],
+    [1682438400000, -4.59],
+    [1682524800000, -3.92],
+    [1682611200000, -3.00],
+    [1683129600000, -2.98],
+    [1683216000000, -3.29],
+    [1683475200000, -2.25],
+    [1683561600000, -3.04],
+    [1683648000000, -3.74],
+    [1683734400000, -3.88],
+    [1683820800000, -5.08],
+    [1684080000000, -3.69],
+    [1684166400000, -4.14],
+    [1684252800000, -4.55],
+    [1684339200000, -4.63],
+    [1684425600000, -4.87],
+    [1684684800000, -4.30],
+    [1684771200000, -5.58],
+    [1684857600000, -6.81],
+    [1684944000000, -7.01],
+    [1685030400000, -6.97],
+    [1685289600000, -7.35],
+    [1685376000000, -7.26],
+    [1685462400000, -8.12],
+    [1685548800000, -7.86],
+    [1685635200000, -6.59],
+    [1685894400000, -6.99],
+    [1685980800000, -7.81],
+    [1686067200000, -8.22],
+    [1686153600000, -7.51],
+    [1686240000000, -7.09],
+    [1686499200000, -6.90],
+    [1686585600000, -6.39],
+    [1686672000000, -6.30],
+    [1686758400000, -4.87],
+    [1686844800000, -3.97],
+    [1687104000000, -4.62],
+    [1687190400000, -4.75],
+    [1687276800000, -6.06],
+    [1687708800000, -7.28],
+    [1687795200000, -6.41],
+    [1687881600000, -6.44],
+    [1687968000000, -6.85],
+    [1688054400000, -6.26],
+    [1688313600000, -5.09],
+    [1688400000000, -4.95],
+    [1688486400000, -5.60],
+    [1688572800000, -6.18],
+    [1688659200000, -6.55],
+    [1688918400000, -6.13],
+    [1689004800000, -5.54],
+    [1689091200000, -6.03],
+    [1689177600000, -4.60],
+    [1689264000000, -4.56],
+    [1689523200000, -5.18],
+    [1689609600000, -5.41],
+    [1689696000000, -5.48],
+    [1689782400000, -6.10],
+    [1689868800000, -6.08],
+    [1690128000000, -6.47],
+    [1690214400000, -3.91],
+    [1690300800000, -4.09],
+    [1690387200000, -4.20],
+    [1690473600000, -2.06],
+    [1690732800000, -1.56],
+    [1690819200000, -1.93],
+    [1690905600000, -2.58],
+    [1690992000000, -1.79],
+    [1691078400000, -1.42],
+    [1691337600000, -2.12],
+    [1691424000000, -2.36],
+    [1691510400000, -2.62],
+    [1691596800000, -2.42],
+    [1691683200000, -4.50],
+    [1691942400000, -5.17],
+    [1692028800000, -5.39],
+    [1692115200000, -6.04],
+    [1692201600000, -5.75],
+    [1692288000000, -6.84],
+    [1692547200000, -8.11],
+    [1692633600000, -7.44],
+    [1692720000000, -8.87],
+    [1692806400000, -8.25],
+    [1692892800000, -8.53],
+    [1693152000000, -7.53],
+    [1693238400000, -6.66],
+    [1693324800000, -6.70],
+    [1693411200000, -7.23],
+    [1693497600000, -6.62],
+    [1693756800000, -5.27],
+    [1693843200000, -5.95],
+    [1693929600000, -6.13],
+    [1694016000000, -7.38],
+    [1694102400000, -7.82],
+    [1694361600000, -7.17],
+    [1694448000000, -7.34],
+    [1694534400000, -7.90],
+    [1694620800000, -7.97],
+    [1694707200000, -8.53],
+    [1694966400000, -8.09],
+    [1695052800000, -8.26],
+    [1695139200000, -8.60],
+    [1695225600000, -9.37],
+    [1695312000000, -7.82],
+    [1695571200000, -8.40],
+    [1695657600000, -8.90],
+    [1695744000000, -8.73],
+    [1695830400000, -8.98],
+    [1696780800000, -9.09],
+    [1696867200000, -9.74],
+    [1696953600000, -9.50],
+    [1697040000000, -8.69],
+    [1697126400000, -9.60],
+    [1697385600000, -10.45],
+    [1697472000000, -10.16],
+    [1697558400000, -10.83]
+  ]
+}, {
+  "name": "同类平均",
+  "data": [
+    [1681747200000, 0],
+    [1681833600000, -0.69],
+    [1681920000000, -0.89],
+    [1682006400000, -3.01],
+    [1682265600000, -3.99],
+    [1682352000000, -5.17],
+    [1682438400000, -4.77],
+    [1682524800000, -4.46],
+    [1682611200000, -3.51],
+    [1683129600000, -3.65],
+    [1683216000000, -4.29],
+    [1683475200000, -3.47],
+    [1683561600000, -4.50],
+    [1683648000000, -4.78],
+    [1683734400000, -4.80],
+    [1683820800000, -5.88],
+    [1684080000000, -4.56],
+    [1684166400000, -4.99],
+    [1684252800000, -5.18],
+    [1684339200000, -5.14],
+    [1684425600000, -5.19],
+    [1684684800000, -4.91],
+    [1684771200000, -5.93],
+    [1684857600000, -6.72],
+    [1684944000000, -6.93],
+    [1685030400000, -6.74],
+    [1685289600000, -7.20],
+    [1685376000000, -6.85],
+    [1685462400000, -7.45],
+    [1685548800000, -7.20],
+    [1685635200000, -6.08],
+    [1685894400000, -6.41],
+    [1685980800000, -7.68],
+    [1686067200000, -7.96],
+    [1686153600000, -7.86],
+    [1686240000000, -7.20],
+    [1686499200000, -6.99],
+    [1686585600000, -6.48],
+    [1686672000000, -6.48],
+    [1686758400000, -5.09],
+    [1686844800000, -4.18],
+    [1687104000000, -4.53],
+    [1687190400000, -4.62],
+    [1687276800000, -6.32],
+    [1687708800000, -7.62],
+    [1687795200000, -6.77],
+    [1687881600000, -6.91],
+    [1687968000000, -7.02],
+    [1688054400000, -6.27],
+    [1688313600000, -5.51],
+    [1688400000000, -5.24],
+    [1688486400000, -5.92],
+    [1688572800000, -6.51],
+    [1688659200000, -7.03],
+    [1688918400000, -6.59],
+    [1689004800000, -5.97],
+    [1689091200000, -6.68],
+    [1689177600000, -5.34],
+    [1689264000000, -5.46],
+    [1689523200000, -5.98],
+    [1689609600000, -6.29],
+    [1689696000000, -6.51],
+    [1689782400000, -7.31],
+    [1689868800000, -7.33],
+    [1690128000000, -7.72],
+    [1690214400000, -5.66],
+    [1690300800000, -5.88],
+    [1690387200000, -6.16],
+    [1690473600000, -4.59],
+    [1690732800000, -4.00],
+    [1690819200000, -4.24],
+    [1690905600000, -4.79],
+    [1690992000000, -4.19],
+    [1691078400000, -3.77],
+    [1691337600000, -4.50],
+    [1691424000000, -4.85],
+    [1691510400000, -5.19],
+    [1691596800000, -4.98],
+    [1691683200000, -6.82],
+    [1691942400000, -7.17],
+    [1692028800000, -7.67],
+    [1692115200000, -8.47],
+    [1692201600000, -8.02],
+    [1692288000000, -9.31],
+    [1692547200000, -10.47],
+    [1692633600000, -9.93],
+    [1692720000000, -11.47],
+    [1692806400000, -10.80],
+    [1692892800000, -11.63],
+    [1693152000000, -10.73],
+    [1693238400000, -9.09],
+    [1693324800000, -8.95],
+    [1693411200000, -9.46],
+    [1693497600000, -9.20],
+    [1693756800000, -7.99],
+    [1693843200000, -8.61],
+    [1693929600000, -8.72],
+    [1694016000000, -10.14],
+    [1694102400000, -10.34],
+    [1694361600000, -9.54],
+    [1694448000000, -9.70],
+    [1694534400000, -10.48],
+    [1694620800000, -10.71],
+    [1694707200000, -10.88],
+    [1694966400000, -10.63],
+    [1695052800000, -11.01],
+    [1695139200000, -11.53],
+    [1695225600000, -12.25],
+    [1695312000000, -10.67],
+    [1695571200000, -11.19],
+    [1695657600000, -11.62],
+    [1695744000000, -11.20],
+    [1695830400000, -11.19],
+    [1696780800000, -11.34],
+    [1696867200000, -11.84],
+    [1696953600000, -11.44],
+    [1697040000000, -10.69],
+    [1697126400000, -11.50],
+    [1697385600000, -12.49],
+    [1697472000000, -12.26],
+    [1697558400000, -13.24]
+  ]
+}, {
+  "name": "沪深300",
+  "data": [
+    [1681747200000, 0],
+    [1681833600000, -0.90],
+    [1681920000000, -1.18],
+    [1682006400000, -3.11],
+    [1682265600000, -4.31],
+    [1682352000000, -4.79],
+    [1682438400000, -4.87],
+    [1682524800000, -4.17],
+    [1682611200000, -3.19],
+    [1683129600000, -3.17],
+    [1683216000000, -3.49],
+    [1683475200000, -2.39],
+    [1683561600000, -3.22],
+    [1683648000000, -3.97],
+    [1683734400000, -4.12],
+    [1683820800000, -5.39],
+    [1684080000000, -3.92],
+    [1684166400000, -4.42],
+    [1684252800000, -4.85],
+    [1684339200000, -4.95],
+    [1684425600000, -5.23],
+    [1684684800000, -4.63],
+    [1684771200000, -5.98],
+    [1684857600000, -7.28],
+    [1684944000000, -7.49],
+    [1685030400000, -7.47],
+    [1685289600000, -7.88],
+    [1685376000000, -7.79],
+    [1685462400000, -8.73],
+    [1685548800000, -8.53],
+    [1685635200000, -7.21],
+    [1685894400000, -7.64],
+    [1685980800000, -8.50],
+    [1686067200000, -8.95],
+    [1686153600000, -8.21],
+    [1686240000000, -7.82],
+    [1686499200000, -7.63],
+    [1686585600000, -7.14],
+    [1686672000000, -7.16],
+    [1686758400000, -5.68],
+    [1686844800000, -4.77],
+    [1687104000000, -5.55],
+    [1687190400000, -5.71],
+    [1687276800000, -7.16],
+    [1687708800000, -8.47],
+    [1687795200000, -7.61],
+    [1687881600000, -7.72],
+    [1687968000000, -8.17],
+    [1688054400000, -7.68],
+    [1688313600000, -6.47],
+    [1688400000000, -6.32],
+    [1688486400000, -7.05],
+    [1688572800000, -7.67],
+    [1688659200000, -8.08],
+    [1688918400000, -7.63],
+    [1689004800000, -7.03],
+    [1689091200000, -7.65],
+    [1689177600000, -6.33],
+    [1689264000000, -6.32],
+    [1689523200000, -7.08],
+    [1689609600000, -7.38],
+    [1689696000000, -7.48],
+    [1689782400000, -8.13],
+    [1689868800000, -8.17],
+    [1690128000000, -8.57],
+    [1690214400000, -5.93],
+    [1690300800000, -6.13],
+    [1690387200000, -6.24],
+    [1690473600000, -4.07],
+    [1690732800000, -3.54],
+    [1690819200000, -3.94],
+    [1690905600000, -4.62],
+    [1690992000000, -3.77],
+    [1691078400000, -3.40],
+    [1691337600000, -4.13],
+    [1691424000000, -4.38],
+    [1691510400000, -4.67],
+    [1691596800000, -4.48],
+    [1691683200000, -6.67],
+    [1691942400000, -7.36],
+    [1692028800000, -7.58],
+    [1692115200000, -8.26],
+    [1692201600000, -7.95],
+    [1692288000000, -9.08],
+    [1692547200000, -10.39],
+    [1692633600000, -9.70],
+    [1692720000000, -11.18],
+    [1692806400000, -10.54],
+    [1692892800000, -10.88],
+    [1693152000000, -9.84],
+    [1693238400000, -8.94],
+    [1693324800000, -8.97],
+    [1693411200000, -9.53],
+    [1693497600000, -8.90],
+    [1693756800000, -7.52],
+    [1693843200000, -8.21],
+    [1693929600000, -8.41],
+    [1694016000000, -9.70],
+    [1694102400000, -10.14],
+    [1694361600000, -9.48],
+    [1694448000000, -9.64],
+    [1694534400000, -10.22],
+    [1694620800000, -10.30],
+    [1694707200000, -10.89],
+    [1694966400000, -10.44],
+    [1695052800000, -10.61],
+    [1695139200000, -10.96],
+    [1695225600000, -11.76],
+    [1695312000000, -10.17],
+    [1695571200000, -10.75],
+    [1695657600000, -11.27],
+    [1695744000000, -11.09],
+    [1695830400000, -11.35],
+    [1696780800000, -11.47],
+    [1696867200000, -12.13],
+    [1696953600000, -11.88],
+    [1697040000000, -11.04],
+    [1697126400000, -11.98],
+    [1697385600000, -12.86],
+    [1697472000000, -12.56],
+    [1697558400000, -13.25]
+  ]
+}]; /*同类排名走势*/
+var Data_rateInSimilarType = [{
+  "x": 1563984000000,
+  "y": 188,
+  "sc": "835"
+}, {
+  "x": 1564070400000,
+  "y": 286,
+  "sc": "839"
+}, {
+  "x": 1564329600000,
+  "y": 310,
+  "sc": "839"
+}, {
+  "x": 1564416000000,
+  "y": 309,
+  "sc": "839"
+}, {
+  "x": 1564502400000,
+  "y": 336,
+  "sc": "839"
+}, {
+  "x": 1564588800000,
+  "y": 341,
+  "sc": "839"
+}, {
+  "x": 1564675200000,
+  "y": 334,
+  "sc": "839"
+}, {
+  "x": 1564934400000,
+  "y": 330,
+  "sc": "839"
+}, {
+  "x": 1565020800000,
+  "y": 366,
+  "sc": "839"
+}, {
+  "x": 1565107200000,
+  "y": 358,
+  "sc": "839"
+}, {
+  "x": 1565193600000,
+  "y": 355,
+  "sc": "840"
+}, {
+  "x": 1565280000000,
+  "y": 348,
+  "sc": "841"
+}, {
+  "x": 1565539200000,
+  "y": 348,
+  "sc": "842"
+}, {
+  "x": 1565625600000,
+  "y": 349,
+  "sc": "842"
+}, {
+  "x": 1565712000000,
+  "y": 355,
+  "sc": "842"
+}, {
+  "x": 1565798400000,
+  "y": 378,
+  "sc": "842"
+}, {
+  "x": 1565884800000,
+  "y": 380,
+  "sc": "844"
+}, {
+  "x": 1566144000000,
+  "y": 391,
+  "sc": "845"
+}, {
+  "x": 1566230400000,
+  "y": 375,
+  "sc": "845"
+}, {
+  "x": 1566316800000,
+  "y": 363,
+  "sc": "846"
+}, {
+  "x": 1566403200000,
+  "y": 369,
+  "sc": "847"
+}, {
+  "x": 1566489600000,
+  "y": 373,
+  "sc": "850"
+}, {
+  "x": 1566748800000,
+  "y": 408,
+  "sc": "851"
+}, {
+  "x": 1566835200000,
+  "y": 384,
+  "sc": "855"
+}, {
+  "x": 1566921600000,
+  "y": 407,
+  "sc": "855"
+}, {
+  "x": 1567008000000,
+  "y": 410,
+  "sc": "855"
+}, {
+  "x": 1567094400000,
+  "y": 400,
+  "sc": "855"
+}, {
+  "x": 1567353600000,
+  "y": 415,
+  "sc": "855"
+}, {
+  "x": 1567440000000,
+  "y": 434,
+  "sc": "855"
+}, {
+  "x": 1567526400000,
+  "y": 434,
+  "sc": "855"
+}, {
+  "x": 1567612800000,
+  "y": 445,
+  "sc": "862"
+}, {
+  "x": 1567699200000,
+  "y": 474,
+  "sc": "862"
+}, {
+  "x": 1567958400000,
+  "y": 523,
+  "sc": "862"
+}, {
+  "x": 1568044800000,
+  "y": 535,
+  "sc": "862"
+}, {
+  "x": 1568131200000,
+  "y": 530,
+  "sc": "856"
+}, {
+  "x": 1568217600000,
+  "y": 510,
+  "sc": "856"
+}, {
+  "x": 1568563200000,
+  "y": 546,
+  "sc": "867"
+}, {
+  "x": 1568649600000,
+  "y": 536,
+  "sc": "867"
+}, {
+  "x": 1568736000000,
+  "y": 544,
+  "sc": "867"
+}, {
+  "x": 1568822400000,
+  "y": 567,
+  "sc": "867"
+}, {
+  "x": 1568908800000,
+  "y": 548,
+  "sc": "867"
+}, {
+  "x": 1569168000000,
+  "y": 543,
+  "sc": "868"
+}, {
+  "x": 1569254400000,
+  "y": 536,
+  "sc": "868"
+}, {
+  "x": 1569340800000,
+  "y": 508,
+  "sc": "868"
+}, {
+  "x": 1569427200000,
+  "y": 473,
+  "sc": "874"
+}, {
+  "x": 1569513600000,
+  "y": 481,
+  "sc": "867"
+}, {
+  "x": 1569772800000,
+  "y": 514,
+  "sc": "868"
+}, {
+  "x": 1570464000000,
+  "y": 525,
+  "sc": "879"
+}, {
+  "x": 1570550400000,
+  "y": 544,
+  "sc": "881"
+}, {
+  "x": 1570636800000,
+  "y": 565,
+  "sc": "881"
+}, {
+  "x": 1570723200000,
+  "y": 550,
+  "sc": "882"
+}, {
+  "x": 1570982400000,
+  "y": 568,
+  "sc": "882"
+}, {
+  "x": 1571068800000,
+  "y": 517,
+  "sc": "884"
+}, {
+  "x": 1571155200000,
+  "y": 497,
+  "sc": "887"
+}, {
+  "x": 1571241600000,
+  "y": 499,
+  "sc": "887"
+}, {
+  "x": 1571328000000,
+  "y": 513,
+  "sc": "887"
+}, {
+  "x": 1571587200000,
+  "y": 512,
+  "sc": "887"
+}, {
+  "x": 1571673600000,
+  "y": 538,
+  "sc": "888"
+}, {
+  "x": 1571760000000,
+  "y": 530,
+  "sc": "889"
+}, {
+  "x": 1571846400000,
+  "y": 535,
+  "sc": "889"
+}, {
+  "x": 1571932800000,
+  "y": 532,
+  "sc": "889"
+}, {
+  "x": 1572192000000,
+  "y": 543,
+  "sc": "891"
+}, {
+  "x": 1572278400000,
+  "y": 534,
+  "sc": "891"
+}, {
+  "x": 1572364800000,
+  "y": 507,
+  "sc": "891"
+}, {
+  "x": 1572451200000,
+  "y": 437,
+  "sc": "896"
+}, {
+  "x": 1572537600000,
+  "y": 429,
+  "sc": "897"
+}, {
+  "x": 1572796800000,
+  "y": 420,
+  "sc": "898"
+}, {
+  "x": 1572883200000,
+  "y": 429,
+  "sc": "897"
+}, {
+  "x": 1572969600000,
+  "y": 438,
+  "sc": "897"
+}, {
+  "x": 1573056000000,
+  "y": 454,
+  "sc": "897"
+}, {
+  "x": 1573142400000,
+  "y": 455,
+  "sc": "904"
+}, {
+  "x": 1573401600000,
+  "y": 419,
+  "sc": "904"
+}, {
+  "x": 1573488000000,
+  "y": 450,
+  "sc": "904"
+}, {
+  "x": 1573574400000,
+  "y": 450,
+  "sc": "904"
+}, {
+  "x": 1573660800000,
+  "y": 439,
+  "sc": "905"
+}, {
+  "x": 1573747200000,
+  "y": 467,
+  "sc": "905"
+}, {
+  "x": 1574006400000,
+  "y": 500,
+  "sc": "906"
+}, {
+  "x": 1574092800000,
+  "y": 496,
+  "sc": "906"
+}, {
+  "x": 1574179200000,
+  "y": 501,
+  "sc": "908"
+}, {
+  "x": 1574265600000,
+  "y": 499,
+  "sc": "911"
+}, {
+  "x": 1574352000000,
+  "y": 530,
+  "sc": "911"
+}, {
+  "x": 1574611200000,
+  "y": 532,
+  "sc": "912"
+}, {
+  "x": 1574697600000,
+  "y": 475,
+  "sc": "913"
+}, {
+  "x": 1574784000000,
+  "y": 508,
+  "sc": "913"
+}, {
+  "x": 1574870400000,
+  "y": 491,
+  "sc": "913"
+}, {
+  "x": 1574956800000,
+  "y": 512,
+  "sc": "917"
+}, {
+  "x": 1575216000000,
+  "y": 529,
+  "sc": "919"
+}, {
+  "x": 1575302400000,
+  "y": 511,
+  "sc": "921"
+}, {
+  "x": 1575388800000,
+  "y": 508,
+  "sc": "921"
+}, {
+  "x": 1575475200000,
+  "y": 523,
+  "sc": "921"
+}, {
+  "x": 1575561600000,
+  "y": 555,
+  "sc": "924"
+}, {
+  "x": 1575820800000,
+  "y": 507,
+  "sc": "926"
+}, {
+  "x": 1575907200000,
+  "y": 525,
+  "sc": "928"
+}, {
+  "x": 1575993600000,
+  "y": 511,
+  "sc": "930"
+}, {
+  "x": 1576080000000,
+  "y": 562,
+  "sc": "931"
+}, {
+  "x": 1576166400000,
+  "y": 554,
+  "sc": "931"
+}, {
+  "x": 1576425600000,
+  "y": 546,
+  "sc": "930"
+}, {
+  "x": 1576512000000,
+  "y": 511,
+  "sc": "932"
+}, {
+  "x": 1576598400000,
+  "y": 527,
+  "sc": "932"
+}, {
+  "x": 1576684800000,
+  "y": 543,
+  "sc": "931"
+}, {
+  "x": 1576771200000,
+  "y": 516,
+  "sc": "935"
+}, {
+  "x": 1577030400000,
+  "y": 489,
+  "sc": "936"
+}, {
+  "x": 1577116800000,
+  "y": 505,
+  "sc": "934"
+}, {
+  "x": 1577203200000,
+  "y": 532,
+  "sc": "927"
+}, {
+  "x": 1577289600000,
+  "y": 607,
+  "sc": "933"
+}, {
+  "x": 1577376000000,
+  "y": 567,
+  "sc": "946"
+}, {
+  "x": 1577635200000,
+  "y": 573,
+  "sc": "946"
+}, {
+  "x": 1577721600000,
+  "y": 565,
+  "sc": "947"
+}, {
+  "x": 1577894400000,
+  "y": 583,
+  "sc": "946"
+}, {
+  "x": 1577980800000,
+  "y": 599,
+  "sc": "946"
+}, {
+  "x": 1578240000000,
+  "y": 620,
+  "sc": "946"
+}, {
+  "x": 1578326400000,
+  "y": 622,
+  "sc": "946"
+}, {
+  "x": 1578412800000,
+  "y": 623,
+  "sc": "948"
+}, {
+  "x": 1578499200000,
+  "y": 619,
+  "sc": "948"
+}, {
+  "x": 1578585600000,
+  "y": 606,
+  "sc": "948"
+}, {
+  "x": 1578844800000,
+  "y": 614,
+  "sc": "948"
+}, {
+  "x": 1578931200000,
+  "y": 619,
+  "sc": "949"
+}, {
+  "x": 1579017600000,
+  "y": 623,
+  "sc": "949"
+}, {
+  "x": 1579104000000,
+  "y": 629,
+  "sc": "949"
+}, {
+  "x": 1579190400000,
+  "y": 639,
+  "sc": "950"
+}, {
+  "x": 1579449600000,
+  "y": 616,
+  "sc": "950"
+}, {
+  "x": 1579536000000,
+  "y": 644,
+  "sc": "952"
+}, {
+  "x": 1579622400000,
+  "y": 648,
+  "sc": "941"
+}, {
+  "x": 1579708800000,
+  "y": 644,
+  "sc": "941"
+}, {
+  "x": 1580659200000,
+  "y": 703,
+  "sc": "963"
+}, {
+  "x": 1580745600000,
+  "y": 673,
+  "sc": "963"
+}, {
+  "x": 1580832000000,
+  "y": 666,
+  "sc": "963"
+}, {
+  "x": 1580918400000,
+  "y": 674,
+  "sc": "966"
+}, {
+  "x": 1581004800000,
+  "y": 671,
+  "sc": "968"
+}, {
+  "x": 1581264000000,
+  "y": 670,
+  "sc": "968"
+}, {
+  "x": 1581350400000,
+  "y": 672,
+  "sc": "968"
+}, {
+  "x": 1581436800000,
+  "y": 658,
+  "sc": "968"
+}, {
+  "x": 1581523200000,
+  "y": 684,
+  "sc": "972"
+}, {
+  "x": 1581609600000,
+  "y": 691,
+  "sc": "973"
+}, {
+  "x": 1581868800000,
+  "y": 679,
+  "sc": "975"
+}, {
+  "x": 1581955200000,
+  "y": 680,
+  "sc": "976"
+}, {
+  "x": 1582041600000,
+  "y": 672,
+  "sc": "977"
+}, {
+  "x": 1582128000000,
+  "y": 623,
+  "sc": "979"
+}, {
+  "x": 1582214400000,
+  "y": 639,
+  "sc": "982"
+}, {
+  "x": 1582473600000,
+  "y": 650,
+  "sc": "984"
+}, {
+  "x": 1582560000000,
+  "y": 644,
+  "sc": "985"
+}, {
+  "x": 1582646400000,
+  "y": 662,
+  "sc": "986"
+}, {
+  "x": 1582732800000,
+  "y": 663,
+  "sc": "986"
+}, {
+  "x": 1582819200000,
+  "y": 660,
+  "sc": "992"
+}, {
+  "x": 1583078400000,
+  "y": 668,
+  "sc": "996"
+}, {
+  "x": 1583164800000,
+  "y": 664,
+  "sc": "998"
+}, {
+  "x": 1583251200000,
+  "y": 678,
+  "sc": "999"
+}, {
+  "x": 1583337600000,
+  "y": 683,
+  "sc": "1001"
+}, {
+  "x": 1583424000000,
+  "y": 679,
+  "sc": "1006"
+}, {
+  "x": 1583683200000,
+  "y": 668,
+  "sc": "1009"
+}, {
+  "x": 1583769600000,
+  "y": 666,
+  "sc": "1013"
+}, {
+  "x": 1583856000000,
+  "y": 664,
+  "sc": "1015"
+}, {
+  "x": 1583942400000,
+  "y": 670,
+  "sc": "1015"
+}, {
+  "x": 1584028800000,
+  "y": 686,
+  "sc": "1017"
+}, {
+  "x": 1584288000000,
+  "y": 707,
+  "sc": "1018"
+}, {
+  "x": 1584374400000,
+  "y": 711,
+  "sc": "1018"
+}, {
+  "x": 1584460800000,
+  "y": 708,
+  "sc": "1020"
+}, {
+  "x": 1584547200000,
+  "y": 712,
+  "sc": "1024"
+}, {
+  "x": 1584633600000,
+  "y": 712,
+  "sc": "1026"
+}, {
+  "x": 1584892800000,
+  "y": 713,
+  "sc": "1026"
+}, {
+  "x": 1584979200000,
+  "y": 718,
+  "sc": "1028"
+}, {
+  "x": 1585065600000,
+  "y": 712,
+  "sc": "1033"
+}, {
+  "x": 1585152000000,
+  "y": 703,
+  "sc": "1036"
+}, {
+  "x": 1585238400000,
+  "y": 710,
+  "sc": "1039"
+}, {
+  "x": 1585497600000,
+  "y": 700,
+  "sc": "1041"
+}, {
+  "x": 1585584000000,
+  "y": 694,
+  "sc": "1046"
+}, {
+  "x": 1585670400000,
+  "y": 687,
+  "sc": "1046"
+}, {
+  "x": 1585756800000,
+  "y": 699,
+  "sc": "1035"
+}, {
+  "x": 1585843200000,
+  "y": 680,
+  "sc": "1035"
+}, {
+  "x": 1586188800000,
+  "y": 682,
+  "sc": "1046"
+}, {
+  "x": 1586275200000,
+  "y": 695,
+  "sc": "1046"
+}, {
+  "x": 1586361600000,
+  "y": 710,
+  "sc": "1046"
+}, {
+  "x": 1586448000000,
+  "y": 692,
+  "sc": "1034"
+}, {
+  "x": 1586707200000,
+  "y": 690,
+  "sc": "1036"
+}, {
+  "x": 1586793600000,
+  "y": 699,
+  "sc": "1046"
+}, {
+  "x": 1586880000000,
+  "y": 693,
+  "sc": "1048"
+}, {
+  "x": 1586966400000,
+  "y": 703,
+  "sc": "1050"
+}, {
+  "x": 1587052800000,
+  "y": 703,
+  "sc": "1052"
+}, {
+  "x": 1587312000000,
+  "y": 729,
+  "sc": "1062"
+}, {
+  "x": 1587398400000,
+  "y": 740,
+  "sc": "1067"
+}, {
+  "x": 1587484800000,
+  "y": 726,
+  "sc": "1069"
+}, {
+  "x": 1587571200000,
+  "y": 700,
+  "sc": "1069"
+}, {
+  "x": 1587657600000,
+  "y": 682,
+  "sc": "1069"
+}, {
+  "x": 1587916800000,
+  "y": 674,
+  "sc": "1069"
+}, {
+  "x": 1588003200000,
+  "y": 637,
+  "sc": "1059"
+}, {
+  "x": 1588089600000,
+  "y": 622,
+  "sc": "1059"
+}, {
+  "x": 1588176000000,
+  "y": 659,
+  "sc": "1059"
+}, {
+  "x": 1588694400000,
+  "y": 726,
+  "sc": "1070"
+}, {
+  "x": 1588780800000,
+  "y": 696,
+  "sc": "1070"
+}, {
+  "x": 1588867200000,
+  "y": 702,
+  "sc": "1070"
+}, {
+  "x": 1589126400000,
+  "y": 723,
+  "sc": "1070"
+}, {
+  "x": 1589212800000,
+  "y": 679,
+  "sc": "1070"
+}, {
+  "x": 1589299200000,
+  "y": 681,
+  "sc": "1070"
+}, {
+  "x": 1589385600000,
+  "y": 692,
+  "sc": "1070"
+}, {
+  "x": 1589472000000,
+  "y": 721,
+  "sc": "1070"
+}, {
+  "x": 1589731200000,
+  "y": 590,
+  "sc": "1069"
+}, {
+  "x": 1589817600000,
+  "y": 627,
+  "sc": "1069"
+}, {
+  "x": 1589904000000,
+  "y": 635,
+  "sc": "1072"
+}, {
+  "x": 1589990400000,
+  "y": 528,
+  "sc": "1072"
+}, {
+  "x": 1590076800000,
+  "y": 540,
+  "sc": "1072"
+}, {
+  "x": 1590336000000,
+  "y": 460,
+  "sc": "1073"
+}, {
+  "x": 1590422400000,
+  "y": 538,
+  "sc": "1075"
+}, {
+  "x": 1590508800000,
+  "y": 481,
+  "sc": "1077"
+}, {
+  "x": 1590595200000,
+  "y": 588,
+  "sc": "1078"
+}, {
+  "x": 1590681600000,
+  "y": 590,
+  "sc": "1078"
+}, {
+  "x": 1590940800000,
+  "y": 600,
+  "sc": "1078"
+}, {
+  "x": 1591027200000,
+  "y": 570,
+  "sc": "1078"
+}, {
+  "x": 1591113600000,
+  "y": 572,
+  "sc": "1079"
+}, {
+  "x": 1591200000000,
+  "y": 602,
+  "sc": "1080"
+}, {
+  "x": 1591286400000,
+  "y": 635,
+  "sc": "1083"
+}, {
+  "x": 1591545600000,
+  "y": 538,
+  "sc": "1085"
+}, {
+  "x": 1591632000000,
+  "y": 640,
+  "sc": "1085"
+}, {
+  "x": 1591718400000,
+  "y": 621,
+  "sc": "1086"
+}, {
+  "x": 1591804800000,
+  "y": 660,
+  "sc": "1086"
+}, {
+  "x": 1591891200000,
+  "y": 676,
+  "sc": "1085"
+}, {
+  "x": 1592150400000,
+  "y": 660,
+  "sc": "1086"
+}, {
+  "x": 1592236800000,
+  "y": 673,
+  "sc": "1086"
+}, {
+  "x": 1592323200000,
+  "y": 680,
+  "sc": "1085"
+}, {
+  "x": 1592409600000,
+  "y": 666,
+  "sc": "1089"
+}, {
+  "x": 1592496000000,
+  "y": 570,
+  "sc": "1089"
+}, {
+  "x": 1592755200000,
+  "y": 591,
+  "sc": "1096"
+}, {
+  "x": 1592841600000,
+  "y": 606,
+  "sc": "1084"
+}, {
+  "x": 1592928000000,
+  "y": 596,
+  "sc": "1083"
+}, {
+  "x": 1593360000000,
+  "y": 650,
+  "sc": "1103"
+}, {
+  "x": 1593446400000,
+  "y": 656,
+  "sc": "1102"
+}, {
+  "x": 1593532800000,
+  "y": 639,
+  "sc": "1096"
+}, {
+  "x": 1593619200000,
+  "y": 646,
+  "sc": "1100"
+}, {
+  "x": 1593705600000,
+  "y": 620,
+  "sc": "1109"
+}, {
+  "x": 1593964800000,
+  "y": 568,
+  "sc": "1109"
+}, {
+  "x": 1594051200000,
+  "y": 580,
+  "sc": "1109"
+}, {
+  "x": 1594137600000,
+  "y": 587,
+  "sc": "1108"
+}, {
+  "x": 1594224000000,
+  "y": 610,
+  "sc": "1109"
+}, {
+  "x": 1594310400000,
+  "y": 680,
+  "sc": "1111"
+}, {
+  "x": 1594569600000,
+  "y": 685,
+  "sc": "1115"
+}, {
+  "x": 1594656000000,
+  "y": 692,
+  "sc": "1115"
+}, {
+  "x": 1594742400000,
+  "y": 673,
+  "sc": "1115"
+}, {
+  "x": 1594828800000,
+  "y": 682,
+  "sc": "1115"
+}, {
+  "x": 1594915200000,
+  "y": 712,
+  "sc": "1119"
+}, {
+  "x": 1595174400000,
+  "y": 691,
+  "sc": "1119"
+}, {
+  "x": 1595260800000,
+  "y": 673,
+  "sc": "1119"
+}, {
+  "x": 1595347200000,
+  "y": 687,
+  "sc": "1123"
+}, {
+  "x": 1595433600000,
+  "y": 695,
+  "sc": "1131"
+}, {
+  "x": 1595520000000,
+  "y": 706,
+  "sc": "1133"
+}, {
+  "x": 1595779200000,
+  "y": 717,
+  "sc": "1133"
+}, {
+  "x": 1595865600000,
+  "y": 746,
+  "sc": "1132"
+}, {
+  "x": 1595952000000,
+  "y": 754,
+  "sc": "1135"
+}, {
+  "x": 1596038400000,
+  "y": 724,
+  "sc": "1138"
+}, {
+  "x": 1596124800000,
+  "y": 734,
+  "sc": "1138"
+}, {
+  "x": 1596384000000,
+  "y": 739,
+  "sc": "1138"
+}, {
+  "x": 1596470400000,
+  "y": 733,
+  "sc": "1138"
+}, {
+  "x": 1596556800000,
+  "y": 745,
+  "sc": "1138"
+}, {
+  "x": 1596643200000,
+  "y": 742,
+  "sc": "1138"
+}, {
+  "x": 1596729600000,
+  "y": 738,
+  "sc": "1139"
+}, {
+  "x": 1596988800000,
+  "y": 740,
+  "sc": "1143"
+}, {
+  "x": 1597075200000,
+  "y": 735,
+  "sc": "1143"
+}, {
+  "x": 1597161600000,
+  "y": 731,
+  "sc": "1143"
+}, {
+  "x": 1597248000000,
+  "y": 736,
+  "sc": "1145"
+}, {
+  "x": 1597334400000,
+  "y": 717,
+  "sc": "1148"
+}, {
+  "x": 1597593600000,
+  "y": 670,
+  "sc": "1148"
+}, {
+  "x": 1597680000000,
+  "y": 724,
+  "sc": "1150"
+}, {
+  "x": 1597766400000,
+  "y": 682,
+  "sc": "1149"
+}, {
+  "x": 1597852800000,
+  "y": 728,
+  "sc": "1149"
+}, {
+  "x": 1597939200000,
+  "y": 729,
+  "sc": "1153"
+}, {
+  "x": 1598198400000,
+  "y": 723,
+  "sc": "1156"
+}, {
+  "x": 1598284800000,
+  "y": 722,
+  "sc": "1157"
+}, {
+  "x": 1598371200000,
+  "y": 665,
+  "sc": "1158"
+}, {
+  "x": 1598457600000,
+  "y": 688,
+  "sc": "1160"
+}, {
+  "x": 1598544000000,
+  "y": 678,
+  "sc": "1160"
+}, {
+  "x": 1598803200000,
+  "y": 667,
+  "sc": "1160"
+}, {
+  "x": 1598889600000,
+  "y": 670,
+  "sc": "1161"
+}, {
+  "x": 1598976000000,
+  "y": 674,
+  "sc": "1163"
+}, {
+  "x": 1599062400000,
+  "y": 658,
+  "sc": "1163"
+}, {
+  "x": 1599148800000,
+  "y": 667,
+  "sc": "1162"
+}, {
+  "x": 1599408000000,
+  "y": 668,
+  "sc": "1163"
+}, {
+  "x": 1599494400000,
+  "y": 695,
+  "sc": "1163"
+}, {
+  "x": 1599580800000,
+  "y": 657,
+  "sc": "1163"
+}, {
+  "x": 1599667200000,
+  "y": 531,
+  "sc": "1161"
+}, {
+  "x": 1599753600000,
+  "y": 527,
+  "sc": "1163"
+}, {
+  "x": 1600012800000,
+  "y": 524,
+  "sc": "1164"
+}, {
+  "x": 1600099200000,
+  "y": 483,
+  "sc": "1164"
+}, {
+  "x": 1600185600000,
+  "y": 462,
+  "sc": "1165"
+}, {
+  "x": 1600272000000,
+  "y": 480,
+  "sc": "1165"
+}, {
+  "x": 1600358400000,
+  "y": 468,
+  "sc": "1167"
+}, {
+  "x": 1600617600000,
+  "y": 497,
+  "sc": "1166"
+}, {
+  "x": 1600704000000,
+  "y": 502,
+  "sc": "1166"
+}, {
+  "x": 1600790400000,
+  "y": 508,
+  "sc": "1166"
+}, {
+  "x": 1600876800000,
+  "y": 501,
+  "sc": "1166"
+}, {
+  "x": 1600963200000,
+  "y": 490,
+  "sc": "1168"
+}, {
+  "x": 1601222400000,
+  "y": 465,
+  "sc": "1166"
+}, {
+  "x": 1601308800000,
+  "y": 472,
+  "sc": "1166"
+}, {
+  "x": 1601395200000,
+  "y": 460,
+  "sc": "1167"
+}, {
+  "x": 1602172800000,
+  "y": 631,
+  "sc": "1175"
+}, {
+  "x": 1602432000000,
+  "y": 522,
+  "sc": "1176"
+}, {
+  "x": 1602518400000,
+  "y": 511,
+  "sc": "1174"
+}, {
+  "x": 1602604800000,
+  "y": 495,
+  "sc": "1177"
+}, {
+  "x": 1602691200000,
+  "y": 505,
+  "sc": "1177"
+}, {
+  "x": 1602777600000,
+  "y": 451,
+  "sc": "1180"
+}, {
+  "x": 1603036800000,
+  "y": 450,
+  "sc": "1182"
+}, {
+  "x": 1603123200000,
+  "y": 464,
+  "sc": "1182"
+}, {
+  "x": 1603209600000,
+  "y": 397,
+  "sc": "1182"
+}, {
+  "x": 1603296000000,
+  "y": 385,
+  "sc": "1184"
+}, {
+  "x": 1603382400000,
+  "y": 405,
+  "sc": "1184"
+}, {
+  "x": 1603641600000,
+  "y": 425,
+  "sc": "1186"
+}, {
+  "x": 1603728000000,
+  "y": 441,
+  "sc": "1190"
+}, {
+  "x": 1603814400000,
+  "y": 410,
+  "sc": "1190"
+}, {
+  "x": 1603900800000,
+  "y": 404,
+  "sc": "1190"
+}, {
+  "x": 1603987200000,
+  "y": 398,
+  "sc": "1189"
+}, {
+  "x": 1604246400000,
+  "y": 396,
+  "sc": "1189"
+}, {
+  "x": 1604332800000,
+  "y": 400,
+  "sc": "1193"
+}, {
+  "x": 1604419200000,
+  "y": 390,
+  "sc": "1192"
+}, {
+  "x": 1604505600000,
+  "y": 394,
+  "sc": "1198"
+}, {
+  "x": 1604592000000,
+  "y": 356,
+  "sc": "1197"
+}, {
+  "x": 1604851200000,
+  "y": 343,
+  "sc": "1198"
+}, {
+  "x": 1604937600000,
+  "y": 338,
+  "sc": "1198"
+}, {
+  "x": 1605024000000,
+  "y": 347,
+  "sc": "1198"
+}, {
+  "x": 1605110400000,
+  "y": 336,
+  "sc": "1198"
+}, {
+  "x": 1605196800000,
+  "y": 351,
+  "sc": "1200"
+}, {
+  "x": 1605456000000,
+  "y": 362,
+  "sc": "1199"
+}, {
+  "x": 1605542400000,
+  "y": 374,
+  "sc": "1200"
+}, {
+  "x": 1605628800000,
+  "y": 370,
+  "sc": "1200"
+}, {
+  "x": 1605715200000,
+  "y": 359,
+  "sc": "1197"
+}, {
+  "x": 1605801600000,
+  "y": 370,
+  "sc": "1199"
+}, {
+  "x": 1606060800000,
+  "y": 367,
+  "sc": "1199"
+}, {
+  "x": 1606147200000,
+  "y": 358,
+  "sc": "1199"
+}, {
+  "x": 1606233600000,
+  "y": 364,
+  "sc": "1199"
+}, {
+  "x": 1606320000000,
+  "y": 370,
+  "sc": "1200"
+}, {
+  "x": 1606406400000,
+  "y": 374,
+  "sc": "1201"
+}, {
+  "x": 1606665600000,
+  "y": 373,
+  "sc": "1200"
+}, {
+  "x": 1606752000000,
+  "y": 356,
+  "sc": "1200"
+}, {
+  "x": 1606838400000,
+  "y": 362,
+  "sc": "1200"
+}, {
+  "x": 1606924800000,
+  "y": 349,
+  "sc": "1200"
+}, {
+  "x": 1607011200000,
+  "y": 346,
+  "sc": "1201"
+}, {
+  "x": 1607270400000,
+  "y": 358,
+  "sc": "1200"
+}, {
+  "x": 1607356800000,
+  "y": 350,
+  "sc": "1200"
+}, {
+  "x": 1607443200000,
+  "y": 355,
+  "sc": "1200"
+}, {
+  "x": 1607529600000,
+  "y": 432,
+  "sc": "1200"
+}, {
+  "x": 1607616000000,
+  "y": 449,
+  "sc": "1200"
+}, {
+  "x": 1607875200000,
+  "y": 418,
+  "sc": "1200"
+}, {
+  "x": 1607961600000,
+  "y": 428,
+  "sc": "1200"
+}, {
+  "x": 1608048000000,
+  "y": 419,
+  "sc": "1200"
+}, {
+  "x": 1608134400000,
+  "y": 411,
+  "sc": "1201"
+}, {
+  "x": 1608220800000,
+  "y": 426,
+  "sc": "1202"
+}, {
+  "x": 1608480000000,
+  "y": 437,
+  "sc": "1202"
+}, {
+  "x": 1608566400000,
+  "y": 421,
+  "sc": "1202"
+}, {
+  "x": 1608652800000,
+  "y": 433,
+  "sc": "1204"
+}, {
+  "x": 1608739200000,
+  "y": 416,
+  "sc": "1203"
+}, {
+  "x": 1608825600000,
+  "y": 435,
+  "sc": "1200"
+}, {
+  "x": 1609084800000,
+  "y": 427,
+  "sc": "1208"
+}, {
+  "x": 1609171200000,
+  "y": 399,
+  "sc": "1213"
+}, {
+  "x": 1609257600000,
+  "y": 409,
+  "sc": "1213"
+}, {
+  "x": 1609344000000,
+  "y": 394,
+  "sc": "1209"
+}, {
+  "x": 1609689600000,
+  "y": 415,
+  "sc": "1207"
+}, {
+  "x": 1609776000000,
+  "y": 397,
+  "sc": "1207"
+}, {
+  "x": 1609862400000,
+  "y": 381,
+  "sc": "1207"
+}, {
+  "x": 1609948800000,
+  "y": 374,
+  "sc": "1207"
+}, {
+  "x": 1610035200000,
+  "y": 382,
+  "sc": "1207"
+}, {
+  "x": 1610294400000,
+  "y": 341,
+  "sc": "1206"
+}, {
+  "x": 1610380800000,
+  "y": 325,
+  "sc": "1206"
+}, {
+  "x": 1610467200000,
+  "y": 328,
+  "sc": "1206"
+}, {
+  "x": 1610553600000,
+  "y": 348,
+  "sc": "1206"
+}, {
+  "x": 1610640000000,
+  "y": 374,
+  "sc": "1208"
+}, {
+  "x": 1610899200000,
+  "y": 412,
+  "sc": "1209"
+}, {
+  "x": 1610985600000,
+  "y": 430,
+  "sc": "1209"
+}, {
+  "x": 1611072000000,
+  "y": 457,
+  "sc": "1209"
+}, {
+  "x": 1611158400000,
+  "y": 470,
+  "sc": "1209"
+}, {
+  "x": 1611244800000,
+  "y": 481,
+  "sc": "1210"
+}, {
+  "x": 1611504000000,
+  "y": 496,
+  "sc": "1210"
+}, {
+  "x": 1611590400000,
+  "y": 437,
+  "sc": "1210"
+}, {
+  "x": 1611676800000,
+  "y": 418,
+  "sc": "1213"
+}, {
+  "x": 1611763200000,
+  "y": 427,
+  "sc": "1219"
+}, {
+  "x": 1611849600000,
+  "y": 434,
+  "sc": "1220"
+}, {
+  "x": 1612108800000,
+  "y": 434,
+  "sc": "1220"
+}, {
+  "x": 1612195200000,
+  "y": 440,
+  "sc": "1220"
+}, {
+  "x": 1612281600000,
+  "y": 439,
+  "sc": "1221"
+}, {
+  "x": 1612368000000,
+  "y": 437,
+  "sc": "1221"
+}, {
+  "x": 1612454400000,
+  "y": 446,
+  "sc": "1222"
+}, {
+  "x": 1612713600000,
+  "y": 473,
+  "sc": "1221"
+}, {
+  "x": 1612800000000,
+  "y": 482,
+  "sc": "1219"
+}, {
+  "x": 1612886400000,
+  "y": 453,
+  "sc": "1223"
+}, {
+  "x": 1613577600000,
+  "y": 466,
+  "sc": "1229"
+}, {
+  "x": 1613664000000,
+  "y": 458,
+  "sc": "1230"
+}, {
+  "x": 1613923200000,
+  "y": 465,
+  "sc": "1229"
+}, {
+  "x": 1614009600000,
+  "y": 491,
+  "sc": "1227"
+}, {
+  "x": 1614096000000,
+  "y": 506,
+  "sc": "1227"
+}, {
+  "x": 1614182400000,
+  "y": 519,
+  "sc": "1228"
+}, {
+  "x": 1614268800000,
+  "y": 475,
+  "sc": "1230"
+}, {
+  "x": 1614528000000,
+  "y": 515,
+  "sc": "1230"
+}, {
+  "x": 1614614400000,
+  "y": 541,
+  "sc": "1232"
+}, {
+  "x": 1614700800000,
+  "y": 561,
+  "sc": "1235"
+}, {
+  "x": 1614787200000,
+  "y": 590,
+  "sc": "1235"
+}, {
+  "x": 1614873600000,
+  "y": 586,
+  "sc": "1236"
+}, {
+  "x": 1615132800000,
+  "y": 540,
+  "sc": "1236"
+}, {
+  "x": 1615219200000,
+  "y": 540,
+  "sc": "1236"
+}, {
+  "x": 1615305600000,
+  "y": 533,
+  "sc": "1236"
+}, {
+  "x": 1615392000000,
+  "y": 526,
+  "sc": "1237"
+}, {
+  "x": 1615478400000,
+  "y": 526,
+  "sc": "1237"
+}, {
+  "x": 1615737600000,
+  "y": 528,
+  "sc": "1237"
+}, {
+  "x": 1615824000000,
+  "y": 526,
+  "sc": "1241"
+}, {
+  "x": 1615910400000,
+  "y": 555,
+  "sc": "1241"
+}, {
+  "x": 1615996800000,
+  "y": 564,
+  "sc": "1243"
+}, {
+  "x": 1616083200000,
+  "y": 590,
+  "sc": "1243"
+}, {
+  "x": 1616342400000,
+  "y": 593,
+  "sc": "1243"
+}, {
+  "x": 1616428800000,
+  "y": 585,
+  "sc": "1245"
+}, {
+  "x": 1616515200000,
+  "y": 707,
+  "sc": "1246"
+}, {
+  "x": 1616601600000,
+  "y": 705,
+  "sc": "1246"
+}, {
+  "x": 1616688000000,
+  "y": 650,
+  "sc": "1246"
+}, {
+  "x": 1616947200000,
+  "y": 716,
+  "sc": "1246"
+}, {
+  "x": 1617033600000,
+  "y": 707,
+  "sc": "1255"
+}, {
+  "x": 1617120000000,
+  "y": 733,
+  "sc": "1255"
+}, {
+  "x": 1617206400000,
+  "y": 759,
+  "sc": "1255"
+}, {
+  "x": 1617292800000,
+  "y": 735,
+  "sc": "1255"
+}, {
+  "x": 1617638400000,
+  "y": 745,
+  "sc": "1257"
+}, {
+  "x": 1617724800000,
+  "y": 808,
+  "sc": "1257"
+}, {
+  "x": 1617811200000,
+  "y": 807,
+  "sc": "1257"
+}, {
+  "x": 1617897600000,
+  "y": 860,
+  "sc": "1257"
+}, {
+  "x": 1618156800000,
+  "y": 847,
+  "sc": "1257"
+}, {
+  "x": 1618243200000,
+  "y": 881,
+  "sc": "1257"
+}, {
+  "x": 1618329600000,
+  "y": 895,
+  "sc": "1258"
+}, {
+  "x": 1618416000000,
+  "y": 893,
+  "sc": "1258"
+}, {
+  "x": 1618502400000,
+  "y": 895,
+  "sc": "1258"
+}, {
+  "x": 1618761600000,
+  "y": 886,
+  "sc": "1260"
+}, {
+  "x": 1618848000000,
+  "y": 840,
+  "sc": "1260"
+}, {
+  "x": 1618934400000,
+  "y": 827,
+  "sc": "1262"
+}, {
+  "x": 1619020800000,
+  "y": 811,
+  "sc": "1268"
+}, {
+  "x": 1619107200000,
+  "y": 815,
+  "sc": "1268"
+}, {
+  "x": 1619366400000,
+  "y": 861,
+  "sc": "1273"
+}, {
+  "x": 1619452800000,
+  "y": 859,
+  "sc": "1275"
+}, {
+  "x": 1619539200000,
+  "y": 929,
+  "sc": "1278"
+}, {
+  "x": 1619625600000,
+  "y": 892,
+  "sc": "1280"
+}, {
+  "x": 1619712000000,
+  "y": 943,
+  "sc": "1280"
+}, {
+  "x": 1620230400000,
+  "y": 1010,
+  "sc": "1289"
+}, {
+  "x": 1620316800000,
+  "y": 927,
+  "sc": "1289"
+}, {
+  "x": 1620576000000,
+  "y": 953,
+  "sc": "1300"
+}, {
+  "x": 1620662400000,
+  "y": 939,
+  "sc": "1300"
+}, {
+  "x": 1620748800000,
+  "y": 955,
+  "sc": "1300"
+}, {
+  "x": 1620835200000,
+  "y": 974,
+  "sc": "1300"
+}, {
+  "x": 1620921600000,
+  "y": 970,
+  "sc": "1300"
+}, {
+  "x": 1621180800000,
+  "y": 983,
+  "sc": "1300"
+}, {
+  "x": 1621267200000,
+  "y": 1011,
+  "sc": "1301"
+}, {
+  "x": 1621353600000,
+  "y": 1047,
+  "sc": "1300"
+}, {
+  "x": 1621440000000,
+  "y": 1053,
+  "sc": "1299"
+}, {
+  "x": 1621526400000,
+  "y": 1060,
+  "sc": "1299"
+}, {
+  "x": 1621785600000,
+  "y": 1035,
+  "sc": "1302"
+}, {
+  "x": 1621872000000,
+  "y": 990,
+  "sc": "1306"
+}, {
+  "x": 1621958400000,
+  "y": 1001,
+  "sc": "1308"
+}, {
+  "x": 1622044800000,
+  "y": 1008,
+  "sc": "1308"
+}, {
+  "x": 1622131200000,
+  "y": 1020,
+  "sc": "1308"
+}, {
+  "x": 1622390400000,
+  "y": 1016,
+  "sc": "1308"
+}, {
+  "x": 1622476800000,
+  "y": 1031,
+  "sc": "1314"
+}, {
+  "x": 1622563200000,
+  "y": 1014,
+  "sc": "1317"
+}, {
+  "x": 1622649600000,
+  "y": 1021,
+  "sc": "1318"
+}, {
+  "x": 1622736000000,
+  "y": 968,
+  "sc": "1325"
+}, {
+  "x": 1622995200000,
+  "y": 996,
+  "sc": "1328"
+}, {
+  "x": 1623081600000,
+  "y": 960,
+  "sc": "1329"
+}, {
+  "x": 1623168000000,
+  "y": 947,
+  "sc": "1333"
+}, {
+  "x": 1623254400000,
+  "y": 987,
+  "sc": "1334"
+}, {
+  "x": 1623340800000,
+  "y": 999,
+  "sc": "1336"
+}, {
+  "x": 1623686400000,
+  "y": 946,
+  "sc": "1339"
+}, {
+  "x": 1623772800000,
+  "y": 965,
+  "sc": "1342"
+}, {
+  "x": 1623859200000,
+  "y": 973,
+  "sc": "1342"
+}, {
+  "x": 1623945600000,
+  "y": 991,
+  "sc": "1344"
+}, {
+  "x": 1624204800000,
+  "y": 931,
+  "sc": "1347"
+}, {
+  "x": 1624291200000,
+  "y": 921,
+  "sc": "1347"
+}, {
+  "x": 1624377600000,
+  "y": 938,
+  "sc": "1347"
+}, {
+  "x": 1624464000000,
+  "y": 908,
+  "sc": "1345"
+}, {
+  "x": 1624550400000,
+  "y": 915,
+  "sc": "1346"
+}, {
+  "x": 1624809600000,
+  "y": 934,
+  "sc": "1346"
+}, {
+  "x": 1624896000000,
+  "y": 929,
+  "sc": "1347"
+}, {
+  "x": 1624982400000,
+  "y": 916,
+  "sc": "1349"
+}, {
+  "x": 1625068800000,
+  "y": 896,
+  "sc": "1348"
+}, {
+  "x": 1625155200000,
+  "y": 1004,
+  "sc": "1350"
+}, {
+  "x": 1625414400000,
+  "y": 992,
+  "sc": "1350"
+}, {
+  "x": 1625500800000,
+  "y": 989,
+  "sc": "1353"
+}, {
+  "x": 1625587200000,
+  "y": 918,
+  "sc": "1356"
+}, {
+  "x": 1625673600000,
+  "y": 953,
+  "sc": "1358"
+}, {
+  "x": 1625760000000,
+  "y": 913,
+  "sc": "1360"
+}, {
+  "x": 1626019200000,
+  "y": 899,
+  "sc": "1360"
+}, {
+  "x": 1626105600000,
+  "y": 924,
+  "sc": "1360"
+}, {
+  "x": 1626192000000,
+  "y": 937,
+  "sc": "1365"
+}, {
+  "x": 1626278400000,
+  "y": 925,
+  "sc": "1367"
+}, {
+  "x": 1626364800000,
+  "y": 918,
+  "sc": "1368"
+}, {
+  "x": 1626624000000,
+  "y": 933,
+  "sc": "1368"
+}, {
+  "x": 1626710400000,
+  "y": 924,
+  "sc": "1368"
+}, {
+  "x": 1626796800000,
+  "y": 922,
+  "sc": "1368"
+}, {
+  "x": 1626883200000,
+  "y": 908,
+  "sc": "1369"
+}, {
+  "x": 1626969600000,
+  "y": 903,
+  "sc": "1369"
+}, {
+  "x": 1627228800000,
+  "y": 899,
+  "sc": "1369"
+}, {
+  "x": 1627315200000,
+  "y": 894,
+  "sc": "1369"
+}, {
+  "x": 1627401600000,
+  "y": 905,
+  "sc": "1369"
+}, {
+  "x": 1627488000000,
+  "y": 923,
+  "sc": "1375"
+}, {
+  "x": 1627574400000,
+  "y": 915,
+  "sc": "1379"
+}, {
+  "x": 1627833600000,
+  "y": 908,
+  "sc": "1378"
+}, {
+  "x": 1627920000000,
+  "y": 942,
+  "sc": "1378"
+}, {
+  "x": 1628006400000,
+  "y": 920,
+  "sc": "1378"
+}, {
+  "x": 1628092800000,
+  "y": 927,
+  "sc": "1378"
+}, {
+  "x": 1628179200000,
+  "y": 900,
+  "sc": "1378"
+}, {
+  "x": 1628438400000,
+  "y": 876,
+  "sc": "1380"
+}, {
+  "x": 1628524800000,
+  "y": 843,
+  "sc": "1379"
+}, {
+  "x": 1628611200000,
+  "y": 873,
+  "sc": "1382"
+}, {
+  "x": 1628697600000,
+  "y": 882,
+  "sc": "1383"
+}, {
+  "x": 1628784000000,
+  "y": 896,
+  "sc": "1385"
+}, {
+  "x": 1629043200000,
+  "y": 922,
+  "sc": "1385"
+}, {
+  "x": 1629129600000,
+  "y": 969,
+  "sc": "1385"
+}, {
+  "x": 1629216000000,
+  "y": 970,
+  "sc": "1387"
+}, {
+  "x": 1629302400000,
+  "y": 946,
+  "sc": "1389"
+}, {
+  "x": 1629388800000,
+  "y": 972,
+  "sc": "1391"
+}, {
+  "x": 1629648000000,
+  "y": 921,
+  "sc": "1391"
+}, {
+  "x": 1629734400000,
+  "y": 921,
+  "sc": "1391"
+}, {
+  "x": 1629820800000,
+  "y": 977,
+  "sc": "1396"
+}, {
+  "x": 1629907200000,
+  "y": 975,
+  "sc": "1396"
+}, {
+  "x": 1629993600000,
+  "y": 973,
+  "sc": "1401"
+}, {
+  "x": 1630252800000,
+  "y": 981,
+  "sc": "1401"
+}, {
+  "x": 1630339200000,
+  "y": 974,
+  "sc": "1401"
+}, {
+  "x": 1630425600000,
+  "y": 977,
+  "sc": "1403"
+}, {
+  "x": 1630512000000,
+  "y": 975,
+  "sc": "1405"
+}, {
+  "x": 1630598400000,
+  "y": 1006,
+  "sc": "1408"
+}, {
+  "x": 1630857600000,
+  "y": 990,
+  "sc": "1409"
+}, {
+  "x": 1630944000000,
+  "y": 981,
+  "sc": "1409"
+}, {
+  "x": 1631030400000,
+  "y": 969,
+  "sc": "1415"
+}, {
+  "x": 1631116800000,
+  "y": 938,
+  "sc": "1419"
+}, {
+  "x": 1631203200000,
+  "y": 988,
+  "sc": "1419"
+}, {
+  "x": 1631462400000,
+  "y": 914,
+  "sc": "1419"
+}, {
+  "x": 1631548800000,
+  "y": 987,
+  "sc": "1419"
+}, {
+  "x": 1631635200000,
+  "y": 995,
+  "sc": "1423"
+}, {
+  "x": 1631721600000,
+  "y": 973,
+  "sc": "1425"
+}, {
+  "x": 1631808000000,
+  "y": 934,
+  "sc": "1429"
+}, {
+  "x": 1632240000000,
+  "y": 920,
+  "sc": "1438"
+}, {
+  "x": 1632326400000,
+  "y": 916,
+  "sc": "1441"
+}, {
+  "x": 1632412800000,
+  "y": 943,
+  "sc": "1455"
+}, {
+  "x": 1632672000000,
+  "y": 934,
+  "sc": "1457"
+}, {
+  "x": 1632758400000,
+  "y": 898,
+  "sc": "1458"
+}, {
+  "x": 1632844800000,
+  "y": 879,
+  "sc": "1466"
+}, {
+  "x": 1632931200000,
+  "y": 845,
+  "sc": "1466"
+}, {
+  "x": 1633622400000,
+  "y": 782,
+  "sc": "1482"
+}, {
+  "x": 1633881600000,
+  "y": 829,
+  "sc": "1486"
+}, {
+  "x": 1633968000000,
+  "y": 832,
+  "sc": "1488"
+}, {
+  "x": 1634054400000,
+  "y": 823,
+  "sc": "1493"
+}, {
+  "x": 1634140800000,
+  "y": 847,
+  "sc": "1501"
+}, {
+  "x": 1634227200000,
+  "y": 880,
+  "sc": "1504"
+}, {
+  "x": 1634486400000,
+  "y": 875,
+  "sc": "1506"
+}, {
+  "x": 1634572800000,
+  "y": 911,
+  "sc": "1515"
+}, {
+  "x": 1634659200000,
+  "y": 876,
+  "sc": "1516"
+}, {
+  "x": 1634745600000,
+  "y": 897,
+  "sc": "1522"
+}, {
+  "x": 1634832000000,
+  "y": 897,
+  "sc": "1527"
+}, {
+  "x": 1635091200000,
+  "y": 854,
+  "sc": "1530"
+}, {
+  "x": 1635177600000,
+  "y": 833,
+  "sc": "1531"
+}, {
+  "x": 1635264000000,
+  "y": 838,
+  "sc": "1533"
+}, {
+  "x": 1635350400000,
+  "y": 817,
+  "sc": "1536"
+}, {
+  "x": 1635436800000,
+  "y": 815,
+  "sc": "1538"
+}, {
+  "x": 1635696000000,
+  "y": 826,
+  "sc": "1539"
+}, {
+  "x": 1635782400000,
+  "y": 843,
+  "sc": "1540"
+}, {
+  "x": 1635868800000,
+  "y": 872,
+  "sc": "1550"
+}, {
+  "x": 1635955200000,
+  "y": 855,
+  "sc": "1554"
+}, {
+  "x": 1636041600000,
+  "y": 835,
+  "sc": "1557"
+}, {
+  "x": 1636300800000,
+  "y": 860,
+  "sc": "1558"
+}, {
+  "x": 1636387200000,
+  "y": 983,
+  "sc": "1562"
+}, {
+  "x": 1636473600000,
+  "y": 1042,
+  "sc": "1564"
+}, {
+  "x": 1636560000000,
+  "y": 997,
+  "sc": "1571"
+}, {
+  "x": 1636646400000,
+  "y": 953,
+  "sc": "1573"
+}, {
+  "x": 1636905600000,
+  "y": 968,
+  "sc": "1576"
+}, {
+  "x": 1636992000000,
+  "y": 960,
+  "sc": "1578"
+}, {
+  "x": 1637078400000,
+  "y": 974,
+  "sc": "1588"
+}, {
+  "x": 1637164800000,
+  "y": 973,
+  "sc": "1591"
+}, {
+  "x": 1637251200000,
+  "y": 957,
+  "sc": "1600"
+}, {
+  "x": 1637510400000,
+  "y": 892,
+  "sc": "1600"
+}, {
+  "x": 1637596800000,
+  "y": 831,
+  "sc": "1600"
+}, {
+  "x": 1637683200000,
+  "y": 829,
+  "sc": "1618"
+}, {
+  "x": 1637769600000,
+  "y": 818,
+  "sc": "1624"
+}, {
+  "x": 1637856000000,
+  "y": 764,
+  "sc": "1633"
+}, {
+  "x": 1638115200000,
+  "y": 802,
+  "sc": "1637"
+}, {
+  "x": 1638201600000,
+  "y": 862,
+  "sc": "1640"
+}, {
+  "x": 1638288000000,
+  "y": 957,
+  "sc": "1648"
+}, {
+  "x": 1638374400000,
+  "y": 854,
+  "sc": "1648"
+}, {
+  "x": 1638460800000,
+  "y": 823,
+  "sc": "1651"
+}, {
+  "x": 1638720000000,
+  "y": 753,
+  "sc": "1652"
+}, {
+  "x": 1638806400000,
+  "y": 724,
+  "sc": "1654"
+}, {
+  "x": 1638892800000,
+  "y": 702,
+  "sc": "1657"
+}, {
+  "x": 1638979200000,
+  "y": 682,
+  "sc": "1663"
+}, {
+  "x": 1639065600000,
+  "y": 734,
+  "sc": "1665"
+}, {
+  "x": 1639324800000,
+  "y": 736,
+  "sc": "1665"
+}, {
+  "x": 1639411200000,
+  "y": 641,
+  "sc": "1665"
+}, {
+  "x": 1639497600000,
+  "y": 612,
+  "sc": "1670"
+}, {
+  "x": 1639584000000,
+  "y": 668,
+  "sc": "1675"
+}, {
+  "x": 1639670400000,
+  "y": 706,
+  "sc": "1678"
+}, {
+  "x": 1639929600000,
+  "y": 669,
+  "sc": "1675"
+}, {
+  "x": 1640016000000,
+  "y": 670,
+  "sc": "1675"
+}, {
+  "x": 1640102400000,
+  "y": 644,
+  "sc": "1674"
+}, {
+  "x": 1640188800000,
+  "y": 635,
+  "sc": "1675"
+}, {
+  "x": 1640275200000,
+  "y": 645,
+  "sc": "1676"
+}, {
+  "x": 1640534400000,
+  "y": 838,
+  "sc": "1679"
+}, {
+  "x": 1640620800000,
+  "y": 767,
+  "sc": "1683"
+}, {
+  "x": 1640707200000,
+  "y": 907,
+  "sc": "1693"
+}, {
+  "x": 1640793600000,
+  "y": 872,
+  "sc": "1692"
+}, {
+  "x": 1640880000000,
+  "y": 898,
+  "sc": "1692"
+}, {
+  "x": 1641225600000,
+  "y": 836,
+  "sc": "1692"
+}, {
+  "x": 1641312000000,
+  "y": 851,
+  "sc": "1692"
+}, {
+  "x": 1641398400000,
+  "y": 922,
+  "sc": "1693"
+}, {
+  "x": 1641484800000,
+  "y": 856,
+  "sc": "1693"
+}, {
+  "x": 1641744000000,
+  "y": 927,
+  "sc": "1694"
+}, {
+  "x": 1641830400000,
+  "y": 1015,
+  "sc": "1696"
+}, {
+  "x": 1641916800000,
+  "y": 1112,
+  "sc": "1698"
+}, {
+  "x": 1642003200000,
+  "y": 1034,
+  "sc": "1700"
+}, {
+  "x": 1642089600000,
+  "y": 1077,
+  "sc": "1702"
+}, {
+  "x": 1642348800000,
+  "y": 1029,
+  "sc": "1704"
+}, {
+  "x": 1642435200000,
+  "y": 910,
+  "sc": "1704"
+}, {
+  "x": 1642521600000,
+  "y": 917,
+  "sc": "1706"
+}, {
+  "x": 1642608000000,
+  "y": 865,
+  "sc": "1713"
+}, {
+  "x": 1642694400000,
+  "y": 894,
+  "sc": "1717"
+}, {
+  "x": 1642953600000,
+  "y": 924,
+  "sc": "1718"
+}, {
+  "x": 1643040000000,
+  "y": 903,
+  "sc": "1718"
+}, {
+  "x": 1643126400000,
+  "y": 881,
+  "sc": "1724"
+}, {
+  "x": 1643212800000,
+  "y": 766,
+  "sc": "1722"
+}, {
+  "x": 1643299200000,
+  "y": 886,
+  "sc": "1725"
+}, {
+  "x": 1644163200000,
+  "y": 769,
+  "sc": "1736"
+}, {
+  "x": 1644249600000,
+  "y": 826,
+  "sc": "1736"
+}, {
+  "x": 1644336000000,
+  "y": 817,
+  "sc": "1737"
+}, {
+  "x": 1644422400000,
+  "y": 818,
+  "sc": "1738"
+}, {
+  "x": 1644508800000,
+  "y": 843,
+  "sc": "1741"
+}, {
+  "x": 1644768000000,
+  "y": 813,
+  "sc": "1741"
+}, {
+  "x": 1644854400000,
+  "y": 839,
+  "sc": "1744"
+}, {
+  "x": 1644940800000,
+  "y": 877,
+  "sc": "1747"
+}, {
+  "x": 1645027200000,
+  "y": 810,
+  "sc": "1748"
+}, {
+  "x": 1645113600000,
+  "y": 754,
+  "sc": "1751"
+}, {
+  "x": 1645372800000,
+  "y": 830,
+  "sc": "1752"
+}, {
+  "x": 1645459200000,
+  "y": 770,
+  "sc": "1757"
+}, {
+  "x": 1645545600000,
+  "y": 818,
+  "sc": "1757"
+}, {
+  "x": 1645632000000,
+  "y": 785,
+  "sc": "1759"
+}, {
+  "x": 1645718400000,
+  "y": 770,
+  "sc": "1763"
+}, {
+  "x": 1645977600000,
+  "y": 693,
+  "sc": "1770"
+}, {
+  "x": 1646064000000,
+  "y": 657,
+  "sc": "1777"
+}, {
+  "x": 1646150400000,
+  "y": 768,
+  "sc": "1785"
+}, {
+  "x": 1646236800000,
+  "y": 760,
+  "sc": "1785"
+}, {
+  "x": 1646323200000,
+  "y": 752,
+  "sc": "1785"
+}, {
+  "x": 1646582400000,
+  "y": 848,
+  "sc": "1798"
+}, {
+  "x": 1646668800000,
+  "y": 836,
+  "sc": "1798"
+}, {
+  "x": 1646755200000,
+  "y": 900,
+  "sc": "1800"
+}, {
+  "x": 1646841600000,
+  "y": 924,
+  "sc": "1803"
+}, {
+  "x": 1646928000000,
+  "y": 922,
+  "sc": "1802"
+}, {
+  "x": 1647187200000,
+  "y": 908,
+  "sc": "1814"
+}, {
+  "x": 1647273600000,
+  "y": 922,
+  "sc": "1824"
+}, {
+  "x": 1647360000000,
+  "y": 937,
+  "sc": "1827"
+}, {
+  "x": 1647446400000,
+  "y": 952,
+  "sc": "1832"
+}, {
+  "x": 1647532800000,
+  "y": 935,
+  "sc": "1830"
+}, {
+  "x": 1647792000000,
+  "y": 1015,
+  "sc": "1835"
+}, {
+  "x": 1647878400000,
+  "y": 936,
+  "sc": "1836"
+}, {
+  "x": 1647964800000,
+  "y": 997,
+  "sc": "1838"
+}, {
+  "x": 1648051200000,
+  "y": 1041,
+  "sc": "1840"
+}, {
+  "x": 1648137600000,
+  "y": 1019,
+  "sc": "1840"
+}, {
+  "x": 1648396800000,
+  "y": 997,
+  "sc": "1850"
+}, {
+  "x": 1648483200000,
+  "y": 990,
+  "sc": "1859"
+}, {
+  "x": 1648569600000,
+  "y": 991,
+  "sc": "1864"
+}, {
+  "x": 1648656000000,
+  "y": 896,
+  "sc": "1865"
+}, {
+  "x": 1648742400000,
+  "y": 831,
+  "sc": "1864"
+}, {
+  "x": 1649174400000,
+  "y": 834,
+  "sc": "1865"
+}, {
+  "x": 1649260800000,
+  "y": 910,
+  "sc": "1866"
+}, {
+  "x": 1649347200000,
+  "y": 829,
+  "sc": "1866"
+}, {
+  "x": 1649606400000,
+  "y": 814,
+  "sc": "1876"
+}, {
+  "x": 1649692800000,
+  "y": 733,
+  "sc": "1882"
+}, {
+  "x": 1649779200000,
+  "y": 707,
+  "sc": "1882"
+}, {
+  "x": 1649865600000,
+  "y": 709,
+  "sc": "1883"
+}, {
+  "x": 1649952000000,
+  "y": 689,
+  "sc": "1883"
+}, {
+  "x": 1650211200000,
+  "y": 768,
+  "sc": "1889"
+}, {
+  "x": 1650297600000,
+  "y": 798,
+  "sc": "1890"
+}, {
+  "x": 1650384000000,
+  "y": 906,
+  "sc": "1894"
+}, {
+  "x": 1650470400000,
+  "y": 820,
+  "sc": "1894"
+}, {
+  "x": 1650556800000,
+  "y": 801,
+  "sc": "1895"
+}, {
+  "x": 1650816000000,
+  "y": 793,
+  "sc": "1903"
+}, {
+  "x": 1650902400000,
+  "y": 786,
+  "sc": "1909"
+}, {
+  "x": 1650988800000,
+  "y": 881,
+  "sc": "1910"
+}, {
+  "x": 1651075200000,
+  "y": 859,
+  "sc": "1910"
+}, {
+  "x": 1651161600000,
+  "y": 885,
+  "sc": "1910"
+}, {
+  "x": 1651680000000,
+  "y": 925,
+  "sc": "1910"
+}, {
+  "x": 1651766400000,
+  "y": 929,
+  "sc": "1910"
+}, {
+  "x": 1652025600000,
+  "y": 935,
+  "sc": "1912"
+}, {
+  "x": 1652112000000,
+  "y": 975,
+  "sc": "1912"
+}, {
+  "x": 1652198400000,
+  "y": 1037,
+  "sc": "1912"
+}, {
+  "x": 1652284800000,
+  "y": 1093,
+  "sc": "1911"
+}, {
+  "x": 1652371200000,
+  "y": 1090,
+  "sc": "1911"
+}, {
+  "x": 1652630400000,
+  "y": 1074,
+  "sc": "1924"
+}, {
+  "x": 1652716800000,
+  "y": 1035,
+  "sc": "1924"
+}, {
+  "x": 1652803200000,
+  "y": 1054,
+  "sc": "1926"
+}, {
+  "x": 1652889600000,
+  "y": 1098,
+  "sc": "1925"
+}, {
+  "x": 1652976000000,
+  "y": 1057,
+  "sc": "1925"
+}, {
+  "x": 1653235200000,
+  "y": 1015,
+  "sc": "1937"
+}, {
+  "x": 1653321600000,
+  "y": 865,
+  "sc": "1938"
+}, {
+  "x": 1653408000000,
+  "y": 834,
+  "sc": "1941"
+}, {
+  "x": 1653494400000,
+  "y": 858,
+  "sc": "1941"
+}, {
+  "x": 1653580800000,
+  "y": 840,
+  "sc": "1941"
+}, {
+  "x": 1653840000000,
+  "y": 835,
+  "sc": "1943"
+}, {
+  "x": 1653926400000,
+  "y": 842,
+  "sc": "1943"
+}, {
+  "x": 1654012800000,
+  "y": 888,
+  "sc": "1946"
+}, {
+  "x": 1654099200000,
+  "y": 939,
+  "sc": "1951"
+}, {
+  "x": 1654444800000,
+  "y": 1019,
+  "sc": "1959"
+}, {
+  "x": 1654531200000,
+  "y": 943,
+  "sc": "1960"
+}, {
+  "x": 1654617600000,
+  "y": 945,
+  "sc": "1966"
+}, {
+  "x": 1654704000000,
+  "y": 944,
+  "sc": "1966"
+}, {
+  "x": 1654790400000,
+  "y": 899,
+  "sc": "1966"
+}, {
+  "x": 1655049600000,
+  "y": 984,
+  "sc": "1968"
+}, {
+  "x": 1655136000000,
+  "y": 877,
+  "sc": "1969"
+}, {
+  "x": 1655222400000,
+  "y": 843,
+  "sc": "1976"
+}, {
+  "x": 1655308800000,
+  "y": 908,
+  "sc": "1976"
+}, {
+  "x": 1655395200000,
+  "y": 842,
+  "sc": "1974"
+}, {
+  "x": 1655654400000,
+  "y": 821,
+  "sc": "1975"
+}, {
+  "x": 1655740800000,
+  "y": 740,
+  "sc": "1975"
+}, {
+  "x": 1655827200000,
+  "y": 685,
+  "sc": "1975"
+}, {
+  "x": 1655913600000,
+  "y": 722,
+  "sc": "1979"
+}, {
+  "x": 1656000000000,
+  "y": 757,
+  "sc": "1979"
+}, {
+  "x": 1656259200000,
+  "y": 722,
+  "sc": "1979"
+}, {
+  "x": 1656345600000,
+  "y": 717,
+  "sc": "1979"
+}, {
+  "x": 1656432000000,
+  "y": 608,
+  "sc": "1987"
+}, {
+  "x": 1656518400000,
+  "y": 666,
+  "sc": "1992"
+}, {
+  "x": 1656604800000,
+  "y": 749,
+  "sc": "1991"
+}, {
+  "x": 1656864000000,
+  "y": 874,
+  "sc": "1991"
+}, {
+  "x": 1656950400000,
+  "y": 891,
+  "sc": "1991"
+}, {
+  "x": 1657036800000,
+  "y": 883,
+  "sc": "1991"
+}, {
+  "x": 1657123200000,
+  "y": 948,
+  "sc": "1993"
+}, {
+  "x": 1657209600000,
+  "y": 1015,
+  "sc": "1994"
+}, {
+  "x": 1657468800000,
+  "y": 977,
+  "sc": "1994"
+}, {
+  "x": 1657555200000,
+  "y": 978,
+  "sc": "1994"
+}, {
+  "x": 1657641600000,
+  "y": 964,
+  "sc": "1994"
+}, {
+  "x": 1657728000000,
+  "y": 1064,
+  "sc": "1996"
+}, {
+  "x": 1657814400000,
+  "y": 1076,
+  "sc": "1996"
+}, {
+  "x": 1658073600000,
+  "y": 1051,
+  "sc": "1996"
+}, {
+  "x": 1658160000000,
+  "y": 1093,
+  "sc": "1998"
+}, {
+  "x": 1658246400000,
+  "y": 1125,
+  "sc": "2000"
+}, {
+  "x": 1658332800000,
+  "y": 1224,
+  "sc": "2001"
+}, {
+  "x": 1658419200000,
+  "y": 1222,
+  "sc": "2003"
+}, {
+  "x": 1658678400000,
+  "y": 1296,
+  "sc": "2004"
+}, {
+  "x": 1658764800000,
+  "y": 1287,
+  "sc": "2005"
+}, {
+  "x": 1658851200000,
+  "y": 1216,
+  "sc": "2008"
+}, {
+  "x": 1658937600000,
+  "y": 1265,
+  "sc": "2012"
+}, {
+  "x": 1659024000000,
+  "y": 1187,
+  "sc": "2019"
+}, {
+  "x": 1659283200000,
+  "y": 1185,
+  "sc": "2018"
+}, {
+  "x": 1659369600000,
+  "y": 1158,
+  "sc": "2018"
+}, {
+  "x": 1659456000000,
+  "y": 1209,
+  "sc": "2018"
+}, {
+  "x": 1659542400000,
+  "y": 1227,
+  "sc": "2018"
+}, {
+  "x": 1659628800000,
+  "y": 1235,
+  "sc": "2016"
+}, {
+  "x": 1659888000000,
+  "y": 1241,
+  "sc": "2019"
+}, {
+  "x": 1659974400000,
+  "y": 1188,
+  "sc": "2020"
+}, {
+  "x": 1660060800000,
+  "y": 1207,
+  "sc": "2026"
+}, {
+  "x": 1660147200000,
+  "y": 1275,
+  "sc": "2028"
+}, {
+  "x": 1660233600000,
+  "y": 1291,
+  "sc": "2029"
+}, {
+  "x": 1660492800000,
+  "y": 1256,
+  "sc": "2029"
+}, {
+  "x": 1660579200000,
+  "y": 1229,
+  "sc": "2029"
+}, {
+  "x": 1660665600000,
+  "y": 1246,
+  "sc": "2029"
+}, {
+  "x": 1660752000000,
+  "y": 1253,
+  "sc": "2033"
+}, {
+  "x": 1660838400000,
+  "y": 1262,
+  "sc": "2036"
+}, {
+  "x": 1661097600000,
+  "y": 1280,
+  "sc": "2040"
+}, {
+  "x": 1661184000000,
+  "y": 1239,
+  "sc": "2041"
+}, {
+  "x": 1661270400000,
+  "y": 1278,
+  "sc": "2045"
+}, {
+  "x": 1661356800000,
+  "y": 1284,
+  "sc": "2045"
+}, {
+  "x": 1661443200000,
+  "y": 1237,
+  "sc": "2047"
+}, {
+  "x": 1661702400000,
+  "y": 1267,
+  "sc": "2048"
+}, {
+  "x": 1661788800000,
+  "y": 1236,
+  "sc": "2050"
+}, {
+  "x": 1661875200000,
+  "y": 1098,
+  "sc": "2050"
+}, {
+  "x": 1661961600000,
+  "y": 1167,
+  "sc": "2052"
+}, {
+  "x": 1662048000000,
+  "y": 1227,
+  "sc": "2057"
+}, {
+  "x": 1662307200000,
+  "y": 1162,
+  "sc": "2056"
+}, {
+  "x": 1662393600000,
+  "y": 1069,
+  "sc": "2059"
+}, {
+  "x": 1662480000000,
+  "y": 1120,
+  "sc": "2063"
+}, {
+  "x": 1662566400000,
+  "y": 1136,
+  "sc": "2064"
+}, {
+  "x": 1662652800000,
+  "y": 1156,
+  "sc": "2067"
+}, {
+  "x": 1662998400000,
+  "y": 1005,
+  "sc": "2069"
+}, {
+  "x": 1663084800000,
+  "y": 1075,
+  "sc": "2071"
+}, {
+  "x": 1663171200000,
+  "y": 1058,
+  "sc": "2071"
+}, {
+  "x": 1663257600000,
+  "y": 1022,
+  "sc": "2074"
+}, {
+  "x": 1663516800000,
+  "y": 993,
+  "sc": "2077"
+}, {
+  "x": 1663603200000,
+  "y": 1018,
+  "sc": "2077"
+}, {
+  "x": 1663689600000,
+  "y": 1064,
+  "sc": "2079"
+}, {
+  "x": 1663776000000,
+  "y": 1133,
+  "sc": "2077"
+}, {
+  "x": 1663862400000,
+  "y": 1032,
+  "sc": "2081"
+}, {
+  "x": 1664121600000,
+  "y": 1002,
+  "sc": "2078"
+}, {
+  "x": 1664208000000,
+  "y": 1017,
+  "sc": "2078"
+}, {
+  "x": 1664294400000,
+  "y": 982,
+  "sc": "2084"
+}, {
+  "x": 1664380800000,
+  "y": 1012,
+  "sc": "2089"
+}, {
+  "x": 1664467200000,
+  "y": 1009,
+  "sc": "2094"
+}, {
+  "x": 1665331200000,
+  "y": 1057,
+  "sc": "2102"
+}, {
+  "x": 1665417600000,
+  "y": 1087,
+  "sc": "2106"
+}, {
+  "x": 1665504000000,
+  "y": 1145,
+  "sc": "2110"
+}, {
+  "x": 1665590400000,
+  "y": 1186,
+  "sc": "2113"
+}, {
+  "x": 1665676800000,
+  "y": 1153,
+  "sc": "2114"
+}, {
+  "x": 1665936000000,
+  "y": 1166,
+  "sc": "2116"
+}, {
+  "x": 1666022400000,
+  "y": 1206,
+  "sc": "2116"
+}, {
+  "x": 1666108800000,
+  "y": 1233,
+  "sc": "2121"
+}, {
+  "x": 1666195200000,
+  "y": 1210,
+  "sc": "2121"
+}, {
+  "x": 1666281600000,
+  "y": 1156,
+  "sc": "2123"
+}, {
+  "x": 1666540800000,
+  "y": 1305,
+  "sc": "2123"
+}, {
+  "x": 1666627200000,
+  "y": 1330,
+  "sc": "2123"
+}, {
+  "x": 1666713600000,
+  "y": 1458,
+  "sc": "2123"
+}, {
+  "x": 1666800000000,
+  "y": 1420,
+  "sc": "2128"
+}, {
+  "x": 1666886400000,
+  "y": 1337,
+  "sc": "2135"
+}, {
+  "x": 1667145600000,
+  "y": 1399,
+  "sc": "2136"
+}, {
+  "x": 1667232000000,
+  "y": 1290,
+  "sc": "2135"
+}, {
+  "x": 1667318400000,
+  "y": 1368,
+  "sc": "2137"
+}, {
+  "x": 1667404800000,
+  "y": 1440,
+  "sc": "2134"
+}, {
+  "x": 1667491200000,
+  "y": 1415,
+  "sc": "2134"
+}, {
+  "x": 1667750400000,
+  "y": 1380,
+  "sc": "2136"
+}, {
+  "x": 1667836800000,
+  "y": 1340,
+  "sc": "2136"
+}, {
+  "x": 1667923200000,
+  "y": 1278,
+  "sc": "2136"
+}, {
+  "x": 1668009600000,
+  "y": 1201,
+  "sc": "2138"
+}, {
+  "x": 1668096000000,
+  "y": 1233,
+  "sc": "2139"
+}, {
+  "x": 1668355200000,
+  "y": 1250,
+  "sc": "2139"
+}, {
+  "x": 1668441600000,
+  "y": 1265,
+  "sc": "2139"
+}, {
+  "x": 1668528000000,
+  "y": 1275,
+  "sc": "2143"
+}, {
+  "x": 1668614400000,
+  "y": 1336,
+  "sc": "2143"
+}, {
+  "x": 1668700800000,
+  "y": 1255,
+  "sc": "2146"
+}, {
+  "x": 1668960000000,
+  "y": 1347,
+  "sc": "2149"
+}, {
+  "x": 1669046400000,
+  "y": 1231,
+  "sc": "2146"
+}, {
+  "x": 1669132800000,
+  "y": 1208,
+  "sc": "2147"
+}, {
+  "x": 1669219200000,
+  "y": 1311,
+  "sc": "2147"
+}, {
+  "x": 1669305600000,
+  "y": 1243,
+  "sc": "2146"
+}, {
+  "x": 1669564800000,
+  "y": 1254,
+  "sc": "2146"
+}, {
+  "x": 1669651200000,
+  "y": 1189,
+  "sc": "2146"
+}, {
+  "x": 1669737600000,
+  "y": 1303,
+  "sc": "2152"
+}, {
+  "x": 1669824000000,
+  "y": 1267,
+  "sc": "2155"
+}, {
+  "x": 1669910400000,
+  "y": 1289,
+  "sc": "2155"
+}, {
+  "x": 1670169600000,
+  "y": 1138,
+  "sc": "2153"
+}, {
+  "x": 1670256000000,
+  "y": 1056,
+  "sc": "2155"
+}, {
+  "x": 1670342400000,
+  "y": 1069,
+  "sc": "2153"
+}, {
+  "x": 1670428800000,
+  "y": 1080,
+  "sc": "2153"
+}, {
+  "x": 1670515200000,
+  "y": 1056,
+  "sc": "2153"
+}, {
+  "x": 1670774400000,
+  "y": 1092,
+  "sc": "2152"
+}, {
+  "x": 1670860800000,
+  "y": 1064,
+  "sc": "2152"
+}, {
+  "x": 1670947200000,
+  "y": 1038,
+  "sc": "2156"
+}, {
+  "x": 1671033600000,
+  "y": 1199,
+  "sc": "2156"
+}, {
+  "x": 1671120000000,
+  "y": 1104,
+  "sc": "2159"
+}, {
+  "x": 1671379200000,
+  "y": 1201,
+  "sc": "2157"
+}, {
+  "x": 1671465600000,
+  "y": 1203,
+  "sc": "2156"
+}, {
+  "x": 1671552000000,
+  "y": 1068,
+  "sc": "2158"
+}, {
+  "x": 1671638400000,
+  "y": 925,
+  "sc": "2159"
+}, {
+  "x": 1671724800000,
+  "y": 954,
+  "sc": "2161"
+}, {
+  "x": 1671984000000,
+  "y": 1108,
+  "sc": "2163"
+}, {
+  "x": 1672070400000,
+  "y": 971,
+  "sc": "2164"
+}, {
+  "x": 1672156800000,
+  "y": 1083,
+  "sc": "2164"
+}, {
+  "x": 1672243200000,
+  "y": 1061,
+  "sc": "2164"
+}, {
+  "x": 1672329600000,
+  "y": 1158,
+  "sc": "2168"
+}, {
+  "x": 1672675200000,
+  "y": 1229,
+  "sc": "2168"
+}, {
+  "x": 1672761600000,
+  "y": 1154,
+  "sc": "2168"
+}, {
+  "x": 1672848000000,
+  "y": 1178,
+  "sc": "2168"
+}, {
+  "x": 1672934400000,
+  "y": 1148,
+  "sc": "2167"
+}, {
+  "x": 1673193600000,
+  "y": 1120,
+  "sc": "2167"
+}, {
+  "x": 1673280000000,
+  "y": 1054,
+  "sc": "2167"
+}, {
+  "x": 1673366400000,
+  "y": 995,
+  "sc": "2168"
+}, {
+  "x": 1673452800000,
+  "y": 835,
+  "sc": "2173"
+}, {
+  "x": 1673539200000,
+  "y": 755,
+  "sc": "2172"
+}, {
+  "x": 1673798400000,
+  "y": 769,
+  "sc": "2172"
+}, {
+  "x": 1673884800000,
+  "y": 755,
+  "sc": "2171"
+}, {
+  "x": 1673971200000,
+  "y": 707,
+  "sc": "2173"
+}, {
+  "x": 1674057600000,
+  "y": 771,
+  "sc": "2175"
+}, {
+  "x": 1674144000000,
+  "y": 681,
+  "sc": "2178"
+}, {
+  "x": 1675008000000,
+  "y": 567,
+  "sc": "2184"
+}, {
+  "x": 1675094400000,
+  "y": 537,
+  "sc": "2185"
+}, {
+  "x": 1675180800000,
+  "y": 595,
+  "sc": "2182"
+}, {
+  "x": 1675267200000,
+  "y": 619,
+  "sc": "2179"
+}, {
+  "x": 1675353600000,
+  "y": 646,
+  "sc": "2180"
+}, {
+  "x": 1675612800000,
+  "y": 692,
+  "sc": "2182"
+}, {
+  "x": 1675699200000,
+  "y": 686,
+  "sc": "2182"
+}, {
+  "x": 1675785600000,
+  "y": 656,
+  "sc": "2187"
+}, {
+  "x": 1675872000000,
+  "y": 662,
+  "sc": "2187"
+}, {
+  "x": 1675958400000,
+  "y": 628,
+  "sc": "2187"
+}, {
+  "x": 1676217600000,
+  "y": 624,
+  "sc": "2189"
+}, {
+  "x": 1676304000000,
+  "y": 581,
+  "sc": "2190"
+}, {
+  "x": 1676390400000,
+  "y": 574,
+  "sc": "2194"
+}, {
+  "x": 1676476800000,
+  "y": 554,
+  "sc": "2193"
+}, {
+  "x": 1676563200000,
+  "y": 547,
+  "sc": "2195"
+}, {
+  "x": 1676822400000,
+  "y": 576,
+  "sc": "2196"
+}, {
+  "x": 1676908800000,
+  "y": 524,
+  "sc": "2198"
+}, {
+  "x": 1676995200000,
+  "y": 537,
+  "sc": "2198"
+}, {
+  "x": 1677081600000,
+  "y": 564,
+  "sc": "2203"
+}, {
+  "x": 1677168000000,
+  "y": 513,
+  "sc": "2205"
+}, {
+  "x": 1677427200000,
+  "y": 580,
+  "sc": "2205"
+}, {
+  "x": 1677513600000,
+  "y": 590,
+  "sc": "2214"
+}, {
+  "x": 1677600000000,
+  "y": 666,
+  "sc": "2217"
+}, {
+  "x": 1677686400000,
+  "y": 608,
+  "sc": "2217"
+}, {
+  "x": 1677772800000,
+  "y": 635,
+  "sc": "2217"
+}, {
+  "x": 1678032000000,
+  "y": 850,
+  "sc": "2226"
+}, {
+  "x": 1678118400000,
+  "y": 810,
+  "sc": "2228"
+}, {
+  "x": 1678204800000,
+  "y": 888,
+  "sc": "2228"
+}, {
+  "x": 1678291200000,
+  "y": 968,
+  "sc": "2229"
+}, {
+  "x": 1678377600000,
+  "y": 1042,
+  "sc": "2229"
+}, {
+  "x": 1678636800000,
+  "y": 896,
+  "sc": "2238"
+}, {
+  "x": 1678723200000,
+  "y": 939,
+  "sc": "2237"
+}, {
+  "x": 1678809600000,
+  "y": 996,
+  "sc": "2239"
+}, {
+  "x": 1678896000000,
+  "y": 1069,
+  "sc": "2240"
+}, {
+  "x": 1678982400000,
+  "y": 1105,
+  "sc": "2240"
+}, {
+  "x": 1679241600000,
+  "y": 1037,
+  "sc": "2245"
+}, {
+  "x": 1679328000000,
+  "y": 1139,
+  "sc": "2249"
+}, {
+  "x": 1679414400000,
+  "y": 1128,
+  "sc": "2252"
+}, {
+  "x": 1679500800000,
+  "y": 1076,
+  "sc": "2258"
+}, {
+  "x": 1679587200000,
+  "y": 1106,
+  "sc": "2258"
+}, {
+  "x": 1679846400000,
+  "y": 1125,
+  "sc": "2269"
+}, {
+  "x": 1679932800000,
+  "y": 1085,
+  "sc": "2279"
+}, {
+  "x": 1680019200000,
+  "y": 1065,
+  "sc": "2285"
+}, {
+  "x": 1680105600000,
+  "y": 1052,
+  "sc": "2281"
+}, {
+  "x": 1680192000000,
+  "y": 1023,
+  "sc": "2281"
+}, {
+  "x": 1680451200000,
+  "y": 1008,
+  "sc": "2281"
+}, {
+  "x": 1680537600000,
+  "y": 994,
+  "sc": "2285"
+}, {
+  "x": 1680710400000,
+  "y": 1017,
+  "sc": "2287"
+}, {
+  "x": 1680796800000,
+  "y": 1013,
+  "sc": "2287"
+}, {
+  "x": 1681056000000,
+  "y": 1053,
+  "sc": "2285"
+}, {
+  "x": 1681142400000,
+  "y": 1082,
+  "sc": "2285"
+}, {
+  "x": 1681228800000,
+  "y": 1109,
+  "sc": "2284"
+}, {
+  "x": 1681315200000,
+  "y": 1164,
+  "sc": "2285"
+}, {
+  "x": 1681401600000,
+  "y": 1166,
+  "sc": "2285"
+}, {
+  "x": 1681660800000,
+  "y": 1182,
+  "sc": "2286"
+}, {
+  "x": 1681747200000,
+  "y": 1077,
+  "sc": "2289"
+}, {
+  "x": 1681833600000,
+  "y": 1085,
+  "sc": "2289"
+}, {
+  "x": 1681920000000,
+  "y": 1114,
+  "sc": "2289"
+}, {
+  "x": 1682006400000,
+  "y": 1100,
+  "sc": "2289"
+}, {
+  "x": 1682265600000,
+  "y": 1117,
+  "sc": "2288"
+}, {
+  "x": 1682352000000,
+  "y": 1052,
+  "sc": "2288"
+}, {
+  "x": 1682438400000,
+  "y": 1087,
+  "sc": "2288"
+}, {
+  "x": 1682524800000,
+  "y": 1070,
+  "sc": "2288"
+}, {
+  "x": 1682611200000,
+  "y": 1079,
+  "sc": "2288"
+}, {
+  "x": 1683129600000,
+  "y": 988,
+  "sc": "2289"
+}, {
+  "x": 1683216000000,
+  "y": 969,
+  "sc": "2287"
+}, {
+  "x": 1683475200000,
+  "y": 894,
+  "sc": "2287"
+}, {
+  "x": 1683561600000,
+  "y": 842,
+  "sc": "2285"
+}, {
+  "x": 1683648000000,
+  "y": 882,
+  "sc": "2285"
+}, {
+  "x": 1683734400000,
+  "y": 859,
+  "sc": "2285"
+}, {
+  "x": 1683820800000,
+  "y": 900,
+  "sc": "2285"
+}, {
+  "x": 1684080000000,
+  "y": 809,
+  "sc": "2290"
+}, {
+  "x": 1684166400000,
+  "y": 895,
+  "sc": "2291"
+}, {
+  "x": 1684252800000,
+  "y": 898,
+  "sc": "2293"
+}, {
+  "x": 1684339200000,
+  "y": 953,
+  "sc": "2293"
+}, {
+  "x": 1684425600000,
+  "y": 994,
+  "sc": "2293"
+}, {
+  "x": 1684684800000,
+  "y": 930,
+  "sc": "2299"
+}, {
+  "x": 1684771200000,
+  "y": 1007,
+  "sc": "2299"
+}, {
+  "x": 1684857600000,
+  "y": 1009,
+  "sc": "2299"
+}, {
+  "x": 1684944000000,
+  "y": 991,
+  "sc": "2298"
+}, {
+  "x": 1685030400000,
+  "y": 1087,
+  "sc": "2298"
+}, {
+  "x": 1685289600000,
+  "y": 1104,
+  "sc": "2301"
+}, {
+  "x": 1685376000000,
+  "y": 1130,
+  "sc": "2300"
+}, {
+  "x": 1685462400000,
+  "y": 1206,
+  "sc": "2300"
+}, {
+  "x": 1685548800000,
+  "y": 1194,
+  "sc": "2305"
+}, {
+  "x": 1685635200000,
+  "y": 1227,
+  "sc": "2311"
+}, {
+  "x": 1685894400000,
+  "y": 1250,
+  "sc": "2311"
+}, {
+  "x": 1685980800000,
+  "y": 1120,
+  "sc": "2312"
+}, {
+  "x": 1686067200000,
+  "y": 1170,
+  "sc": "2315"
+}, {
+  "x": 1686153600000,
+  "y": 1057,
+  "sc": "2319"
+}, {
+  "x": 1686240000000,
+  "y": 1067,
+  "sc": "2320"
+}, {
+  "x": 1686499200000,
+  "y": 1099,
+  "sc": "2319"
+}, {
+  "x": 1686585600000,
+  "y": 1124,
+  "sc": "2318"
+}, {
+  "x": 1686672000000,
+  "y": 1153,
+  "sc": "2326"
+}, {
+  "x": 1686758400000,
+  "y": 1010,
+  "sc": "2334"
+}, {
+  "x": 1686844800000,
+  "y": 968,
+  "sc": "2339"
+}, {
+  "x": 1687104000000,
+  "y": 1036,
+  "sc": "2340"
+}, {
+  "x": 1687190400000,
+  "y": 1007,
+  "sc": "2342"
+}, {
+  "x": 1687276800000,
+  "y": 919,
+  "sc": "2346"
+}, {
+  "x": 1687708800000,
+  "y": 838,
+  "sc": "2352"
+}, {
+  "x": 1687795200000,
+  "y": 836,
+  "sc": "2353"
+}, {
+  "x": 1687881600000,
+  "y": 898,
+  "sc": "2361"
+}, {
+  "x": 1687968000000,
+  "y": 932,
+  "sc": "2365"
+}, {
+  "x": 1688054400000,
+  "y": 1018,
+  "sc": "2367"
+}, {
+  "x": 1688313600000,
+  "y": 898,
+  "sc": "2365"
+}, {
+  "x": 1688400000000,
+  "y": 1022,
+  "sc": "2367"
+}, {
+  "x": 1688486400000,
+  "y": 1037,
+  "sc": "2366"
+}, {
+  "x": 1688572800000,
+  "y": 990,
+  "sc": "2365"
+}, {
+  "x": 1688659200000,
+  "y": 1003,
+  "sc": "2367"
+}, {
+  "x": 1688918400000,
+  "y": 938,
+  "sc": "2366"
+}, {
+  "x": 1689004800000,
+  "y": 892,
+  "sc": "2378"
+}, {
+  "x": 1689091200000,
+  "y": 896,
+  "sc": "2379"
+}, {
+  "x": 1689177600000,
+  "y": 840,
+  "sc": "2382"
+}, {
+  "x": 1689264000000,
+  "y": 817,
+  "sc": "2385"
+}, {
+  "x": 1689523200000,
+  "y": 939,
+  "sc": "2386"
+}, {
+  "x": 1689609600000,
+  "y": 981,
+  "sc": "2386"
+}, {
+  "x": 1689696000000,
+  "y": 953,
+  "sc": "2386"
+}, {
+  "x": 1689782400000,
+  "y": 872,
+  "sc": "2388"
+}, {
+  "x": 1689868800000,
+  "y": 917,
+  "sc": "2389"
+}, {
+  "x": 1690128000000,
+  "y": 858,
+  "sc": "2389"
+}, {
+  "x": 1690214400000,
+  "y": 907,
+  "sc": "2397"
+}, {
+  "x": 1690300800000,
+  "y": 804,
+  "sc": "2398"
+}, {
+  "x": 1690387200000,
+  "y": 825,
+  "sc": "2404"
+}, {
+  "x": 1690473600000,
+  "y": 681,
+  "sc": "2404"
+}, {
+  "x": 1690732800000,
+  "y": 711,
+  "sc": "2404"
+}, {
+  "x": 1690819200000,
+  "y": 733,
+  "sc": "2404"
+}, {
+  "x": 1690905600000,
+  "y": 765,
+  "sc": "2404"
+}, {
+  "x": 1690992000000,
+  "y": 680,
+  "sc": "2404"
+}, {
+  "x": 1691078400000,
+  "y": 637,
+  "sc": "2404"
+}, {
+  "x": 1691337600000,
+  "y": 666,
+  "sc": "2407"
+}, {
+  "x": 1691424000000,
+  "y": 786,
+  "sc": "2407"
+}, {
+  "x": 1691510400000,
+  "y": 788,
+  "sc": "2409"
+}, {
+  "x": 1691596800000,
+  "y": 567,
+  "sc": "2409"
+}, {
+  "x": 1691683200000,
+  "y": 732,
+  "sc": "2410"
+}, {
+  "x": 1691942400000,
+  "y": 804,
+  "sc": "2412"
+}, {
+  "x": 1692028800000,
+  "y": 879,
+  "sc": "2412"
+}, {
+  "x": 1692115200000,
+  "y": 833,
+  "sc": "2414"
+}, {
+  "x": 1692201600000,
+  "y": 891,
+  "sc": "2413"
+}, {
+  "x": 1692288000000,
+  "y": 774,
+  "sc": "2419"
+}, {
+  "x": 1692547200000,
+  "y": 817,
+  "sc": "2423"
+}, {
+  "x": 1692633600000,
+  "y": 831,
+  "sc": "2425"
+}, {
+  "x": 1692720000000,
+  "y": 803,
+  "sc": "2431"
+}, {
+  "x": 1692806400000,
+  "y": 753,
+  "sc": "2434"
+}, {
+  "x": 1692892800000,
+  "y": 742,
+  "sc": "2433"
+}, {
+  "x": 1693152000000,
+  "y": 718,
+  "sc": "2433"
+}, {
+  "x": 1693238400000,
+  "y": 727,
+  "sc": "2433"
+}, {
+  "x": 1693324800000,
+  "y": 736,
+  "sc": "2438"
+}, {
+  "x": 1693411200000,
+  "y": 707,
+  "sc": "2443"
+}, {
+  "x": 1693497600000,
+  "y": 712,
+  "sc": "2448"
+}, {
+  "x": 1693756800000,
+  "y": 720,
+  "sc": "2451"
+}, {
+  "x": 1693843200000,
+  "y": 680,
+  "sc": "2451"
+}, {
+  "x": 1693929600000,
+  "y": 718,
+  "sc": "2451"
+}, {
+  "x": 1694016000000,
+  "y": 667,
+  "sc": "2451"
+}, {
+  "x": 1694102400000,
+  "y": 761,
+  "sc": "2457"
+}, {
+  "x": 1694361600000,
+  "y": 804,
+  "sc": "2458"
+}, {
+  "x": 1694448000000,
+  "y": 831,
+  "sc": "2458"
+}, {
+  "x": 1694534400000,
+  "y": 852,
+  "sc": "2460"
+}, {
+  "x": 1694620800000,
+  "y": 834,
+  "sc": "2465"
+}, {
+  "x": 1694707200000,
+  "y": 900,
+  "sc": "2466"
+}, {
+  "x": 1694966400000,
+  "y": 934,
+  "sc": "2465"
+}, {
+  "x": 1695052800000,
+  "y": 922,
+  "sc": "2469"
+}, {
+  "x": 1695139200000,
+  "y": 939,
+  "sc": "2472"
+}, {
+  "x": 1695225600000,
+  "y": 904,
+  "sc": "2476"
+}, {
+  "x": 1695312000000,
+  "y": 901,
+  "sc": "2476"
+}, {
+  "x": 1695571200000,
+  "y": 919,
+  "sc": "2476"
+}, {
+  "x": 1695657600000,
+  "y": 917,
+  "sc": "2476"
+}, {
+  "x": 1695744000000,
+  "y": 921,
+  "sc": "2478"
+}, {
+  "x": 1695830400000,
+  "y": 940,
+  "sc": "2478"
+}, {
+  "x": 1696780800000,
+  "y": 879,
+  "sc": "2486"
+}, {
+  "x": 1696867200000,
+  "y": 950,
+  "sc": "2484"
+}, {
+  "x": 1696953600000,
+  "y": 975,
+  "sc": "2489"
+}, {
+  "x": 1697040000000,
+  "y": 955,
+  "sc": "2487"
+}, {
+  "x": 1697126400000,
+  "y": 929,
+  "sc": "2490"
+}, {
+  "x": 1697385600000,
+  "y": 957,
+  "sc": "2490"
+}, {
+  "x": 1697472000000,
+  "y": 887,
+  "sc": "2490"
+}, {
+  "x": 1697558400000,
+  "y": 905,
+  "sc": "2494"
+}]; /*同类排名百分比*/
+var Data_rateInSimilarPersent = [
+  [1563984000000, 77.4900],
+  [1564070400000, 65.9100],
+  [1564329600000, 63.0500],
+  [1564416000000, 63.1700],
+  [1564502400000, 59.9500],
+  [1564588800000, 59.3600],
+  [1564675200000, 60.1900],
+  [1564934400000, 60.6700],
+  [1565020800000, 56.3800],
+  [1565107200000, 57.3300],
+  [1565193600000, 57.7400],
+  [1565280000000, 58.6200],
+  [1565539200000, 58.6700],
+  [1565625600000, 58.5500],
+  [1565712000000, 57.8400],
+  [1565798400000, 55.1100],
+  [1565884800000, 54.9800],
+  [1566144000000, 53.7300],
+  [1566230400000, 55.6200],
+  [1566316800000, 57.0900],
+  [1566403200000, 56.4300],
+  [1566489600000, 56.1200],
+  [1566748800000, 52.0600],
+  [1566835200000, 55.0900],
+  [1566921600000, 52.4000],
+  [1567008000000, 52.0500],
+  [1567094400000, 53.2200],
+  [1567353600000, 51.4600],
+  [1567440000000, 49.2400],
+  [1567526400000, 49.2400],
+  [1567612800000, 48.3800],
+  [1567699200000, 45.0100],
+  [1567958400000, 39.3300],
+  [1568044800000, 37.9400],
+  [1568131200000, 38.0800],
+  [1568217600000, 40.4200],
+  [1568563200000, 37.0200],
+  [1568649600000, 38.1800],
+  [1568736000000, 37.2500],
+  [1568822400000, 34.6000],
+  [1568908800000, 36.7900],
+  [1569168000000, 37.4400],
+  [1569254400000, 38.2500],
+  [1569340800000, 41.4700],
+  [1569427200000, 45.8800],
+  [1569513600000, 44.5200],
+  [1569772800000, 40.7800],
+  [1570464000000, 40.2700],
+  [1570550400000, 38.2500],
+  [1570636800000, 35.8700],
+  [1570723200000, 37.6400],
+  [1570982400000, 35.6000],
+  [1571068800000, 41.5200],
+  [1571155200000, 43.9700],
+  [1571241600000, 43.7400],
+  [1571328000000, 42.1600],
+  [1571587200000, 42.2800],
+  [1571673600000, 39.4100],
+  [1571760000000, 40.3800],
+  [1571846400000, 39.8200],
+  [1571932800000, 40.1600],
+  [1572192000000, 39.0600],
+  [1572278400000, 40.0700],
+  [1572364800000, 43.1000],
+  [1572451200000, 51.2300],
+  [1572537600000, 52.1700],
+  [1572796800000, 53.2300],
+  [1572883200000, 52.1700],
+  [1572969600000, 51.1700],
+  [1573056000000, 49.3900],
+  [1573142400000, 49.6700],
+  [1573401600000, 53.6500],
+  [1573488000000, 50.2200],
+  [1573574400000, 50.2200],
+  [1573660800000, 51.4900],
+  [1573747200000, 48.4000],
+  [1574006400000, 44.8100],
+  [1574092800000, 45.2500],
+  [1574179200000, 44.8200],
+  [1574265600000, 45.2300],
+  [1574352000000, 41.8200],
+  [1574611200000, 41.6700],
+  [1574697600000, 47.9700],
+  [1574784000000, 44.3600],
+  [1574870400000, 46.2200],
+  [1574956800000, 44.1700],
+  [1575216000000, 42.4400],
+  [1575302400000, 44.5200],
+  [1575388800000, 44.8400],
+  [1575475200000, 43.2100],
+  [1575561600000, 39.9400],
+  [1575820800000, 45.2500],
+  [1575907200000, 43.4300],
+  [1575993600000, 45.0500],
+  [1576080000000, 39.6300],
+  [1576166400000, 40.4900],
+  [1576425600000, 41.2900],
+  [1576512000000, 45.1700],
+  [1576598400000, 43.4500],
+  [1576684800000, 41.6800],
+  [1576771200000, 44.8100],
+  [1577030400000, 47.7600],
+  [1577116800000, 45.9300],
+  [1577203200000, 42.6100],
+  [1577289600000, 34.9400],
+  [1577376000000, 40.0600],
+  [1577635200000, 39.4300],
+  [1577721600000, 40.3400],
+  [1577894400000, 38.3700],
+  [1577980800000, 36.6800],
+  [1578240000000, 34.4600],
+  [1578326400000, 34.2500],
+  [1578412800000, 34.2800],
+  [1578499200000, 34.7000],
+  [1578585600000, 36.0800],
+  [1578844800000, 35.2300],
+  [1578931200000, 34.7700],
+  [1579017600000, 34.3500],
+  [1579104000000, 33.7200],
+  [1579190400000, 32.7400],
+  [1579449600000, 35.1600],
+  [1579536000000, 32.3500],
+  [1579622400000, 31.1400],
+  [1579708800000, 31.5600],
+  [1580659200000, 27.0000],
+  [1580745600000, 30.1100],
+  [1580832000000, 30.8400],
+  [1580918400000, 30.2300],
+  [1581004800000, 30.6800],
+  [1581264000000, 30.7900],
+  [1581350400000, 30.5800],
+  [1581436800000, 32.0200],
+  [1581523200000, 29.6300],
+  [1581609600000, 28.9800],
+  [1581868800000, 30.3600],
+  [1581955200000, 30.3300],
+  [1582041600000, 31.2200],
+  [1582128000000, 36.3600],
+  [1582214400000, 34.9300],
+  [1582473600000, 33.9400],
+  [1582560000000, 34.6200],
+  [1582646400000, 32.8600],
+  [1582732800000, 32.7600],
+  [1582819200000, 33.4700],
+  [1583078400000, 32.9300],
+  [1583164800000, 33.4700],
+  [1583251200000, 32.1300],
+  [1583337600000, 31.7700],
+  [1583424000000, 32.5000],
+  [1583683200000, 33.8000],
+  [1583769600000, 34.2500],
+  [1583856000000, 34.5800],
+  [1583942400000, 33.9900],
+  [1584028800000, 32.5500],
+  [1584288000000, 30.5500],
+  [1584374400000, 30.1600],
+  [1584460800000, 30.5900],
+  [1584547200000, 30.4700],
+  [1584633600000, 30.6000],
+  [1584892800000, 30.5100],
+  [1584979200000, 30.1600],
+  [1585065600000, 31.0700],
+  [1585152000000, 32.1400],
+  [1585238400000, 31.6700],
+  [1585497600000, 32.7600],
+  [1585584000000, 33.6500],
+  [1585670400000, 34.3200],
+  [1585756800000, 32.4600],
+  [1585843200000, 34.3000],
+  [1586188800000, 34.8000],
+  [1586275200000, 33.5600],
+  [1586361600000, 32.1200],
+  [1586448000000, 33.0800],
+  [1586707200000, 33.4000],
+  [1586793600000, 33.1700],
+  [1586880000000, 33.8700],
+  [1586966400000, 33.0500],
+  [1587052800000, 33.1700],
+  [1587312000000, 31.3600],
+  [1587398400000, 30.6500],
+  [1587484800000, 32.0900],
+  [1587571200000, 34.5200],
+  [1587657600000, 36.2000],
+  [1587916800000, 36.9500],
+  [1588003200000, 39.8500],
+  [1588089600000, 41.2700],
+  [1588176000000, 37.7700],
+  [1588694400000, 32.1500],
+  [1588780800000, 34.9500],
+  [1588867200000, 34.3900],
+  [1589126400000, 32.4300],
+  [1589212800000, 36.5400],
+  [1589299200000, 36.3600],
+  [1589385600000, 35.3300],
+  [1589472000000, 32.6200],
+  [1589731200000, 44.8100],
+  [1589817600000, 41.3500],
+  [1589904000000, 40.7600],
+  [1589990400000, 50.7500],
+  [1590076800000, 49.6300],
+  [1590336000000, 57.1300],
+  [1590422400000, 49.9500],
+  [1590508800000, 55.3400],
+  [1590595200000, 45.4500],
+  [1590681600000, 45.2700],
+  [1590940800000, 44.3400],
+  [1591027200000, 47.1200],
+  [1591113600000, 46.9900],
+  [1591200000000, 44.2600],
+  [1591286400000, 41.3700],
+  [1591545600000, 50.4100],
+  [1591632000000, 41.0100],
+  [1591718400000, 42.8200],
+  [1591804800000, 39.2300],
+  [1591891200000, 37.7000],
+  [1592150400000, 39.2300],
+  [1592236800000, 38.0300],
+  [1592323200000, 37.3300],
+  [1592409600000, 38.8400],
+  [1592496000000, 47.6600],
+  [1592755200000, 46.0800],
+  [1592841600000, 44.1000],
+  [1592928000000, 44.9700],
+  [1593360000000, 41.0700],
+  [1593446400000, 40.4700],
+  [1593532800000, 41.7000],
+  [1593619200000, 41.2700],
+  [1593705600000, 44.0900],
+  [1593964800000, 48.7800],
+  [1594051200000, 47.7000],
+  [1594137600000, 47.0200],
+  [1594224000000, 45.0000],
+  [1594310400000, 38.7900],
+  [1594569600000, 38.5700],
+  [1594656000000, 37.9400],
+  [1594742400000, 39.6400],
+  [1594828800000, 38.8300],
+  [1594915200000, 36.3700],
+  [1595174400000, 38.2500],
+  [1595260800000, 39.8600],
+  [1595347200000, 38.8200],
+  [1595433600000, 38.5500],
+  [1595520000000, 37.6900],
+  [1595779200000, 36.7200],
+  [1595865600000, 34.1000],
+  [1595952000000, 33.5700],
+  [1596038400000, 36.3800],
+  [1596124800000, 35.5000],
+  [1596384000000, 35.0600],
+  [1596470400000, 35.5900],
+  [1596556800000, 34.5300],
+  [1596643200000, 34.8000],
+  [1596729600000, 35.2100],
+  [1596988800000, 35.2600],
+  [1597075200000, 35.7000],
+  [1597161600000, 36.0500],
+  [1597248000000, 35.7200],
+  [1597334400000, 37.5400],
+  [1597593600000, 41.6400],
+  [1597680000000, 37.0400],
+  [1597766400000, 40.6400],
+  [1597852800000, 36.6400],
+  [1597939200000, 36.7700],
+  [1598198400000, 37.4600],
+  [1598284800000, 37.6000],
+  [1598371200000, 42.5700],
+  [1598457600000, 40.6900],
+  [1598544000000, 41.5500],
+  [1598803200000, 42.500],
+  [1598889600000, 42.2900],
+  [1598976000000, 42.0500],
+  [1599062400000, 43.4200],
+  [1599148800000, 42.6000],
+  [1599408000000, 42.5600],
+  [1599494400000, 40.2400],
+  [1599580800000, 43.5100],
+  [1599667200000, 54.2600],
+  [1599753600000, 54.6900],
+  [1600012800000, 54.9800],
+  [1600099200000, 58.5100],
+  [1600185600000, 60.3400],
+  [1600272000000, 58.8000],
+  [1600358400000, 59.9000],
+  [1600617600000, 57.3800],
+  [1600704000000, 56.9500],
+  [1600790400000, 56.4300],
+  [1600876800000, 57.0300],
+  [1600963200000, 58.0500],
+  [1601222400000, 60.1200],
+  [1601308800000, 59.5200],
+  [1601395200000, 60.5800],
+  [1602172800000, 46.3000],
+  [1602432000000, 55.6100],
+  [1602518400000, 56.4700],
+  [1602604800000, 57.9400],
+  [1602691200000, 57.0900],
+  [1602777600000, 61.7800],
+  [1603036800000, 61.9300],
+  [1603123200000, 60.7400],
+  [1603209600000, 66.4100],
+  [1603296000000, 67.4800],
+  [1603382400000, 65.7900],
+  [1603641600000, 64.1700],
+  [1603728000000, 62.9400],
+  [1603814400000, 65.5500],
+  [1603900800000, 66.0500],
+  [1603987200000, 66.5300],
+  [1604246400000, 66.6900],
+  [1604332800000, 66.4700],
+  [1604419200000, 67.2800],
+  [1604505600000, 67.1100],
+  [1604592000000, 70.2600],
+  [1604851200000, 71.3700],
+  [1604937600000, 71.7900],
+  [1605024000000, 71.0400],
+  [1605110400000, 71.9500],
+  [1605196800000, 70.7500],
+  [1605456000000, 69.8100],
+  [1605542400000, 68.8300],
+  [1605628800000, 69.1700],
+  [1605715200000, 70.0100],
+  [1605801600000, 69.1400],
+  [1606060800000, 69.3900],
+  [1606147200000, 70.1400],
+  [1606233600000, 69.6400],
+  [1606320000000, 69.1700],
+  [1606406400000, 68.8600],
+  [1606665600000, 68.9200],
+  [1606752000000, 70.3300],
+  [1606838400000, 69.8300],
+  [1606924800000, 70.9200],
+  [1607011200000, 71.1900],
+  [1607270400000, 70.1700],
+  [1607356800000, 70.8300],
+  [1607443200000, 70.4200],
+  [1607529600000, 64.00],
+  [1607616000000, 62.5800],
+  [1607875200000, 65.1700],
+  [1607961600000, 64.3300],
+  [1608048000000, 65.0800],
+  [1608134400000, 65.7800],
+  [1608220800000, 64.5600],
+  [1608480000000, 63.6400],
+  [1608566400000, 64.9800],
+  [1608652800000, 64.0400],
+  [1608739200000, 65.4200],
+  [1608825600000, 63.7500],
+  [1609084800000, 64.6500],
+  [1609171200000, 67.1100],
+  [1609257600000, 66.2800],
+  [1609344000000, 67.4100],
+  [1609689600000, 65.6200],
+  [1609776000000, 67.1100],
+  [1609862400000, 68.4300],
+  [1609948800000, 69.0100],
+  [1610035200000, 68.3500],
+  [1610294400000, 71.7200],
+  [1610380800000, 73.0500],
+  [1610467200000, 72.8000],
+  [1610553600000, 71.1400],
+  [1610640000000, 69.0400],
+  [1610899200000, 65.9200],
+  [1610985600000, 64.4300],
+  [1611072000000, 62.2000],
+  [1611158400000, 61.1200],
+  [1611244800000, 60.2500],
+  [1611504000000, 59.0100],
+  [1611590400000, 63.8800],
+  [1611676800000, 65.5400],
+  [1611763200000, 64.9700],
+  [1611849600000, 64.4300],
+  [1612108800000, 64.4300],
+  [1612195200000, 63.9300],
+  [1612281600000, 64.0500],
+  [1612368000000, 64.2100],
+  [1612454400000, 63.5000],
+  [1612713600000, 61.2600],
+  [1612800000000, 60.4600],
+  [1612886400000, 62.9600],
+  [1613577600000, 62.0800],
+  [1613664000000, 62.7600],
+  [1613923200000, 62.1600],
+  [1614009600000, 59.9800],
+  [1614096000000, 58.7600],
+  [1614182400000, 57.7400],
+  [1614268800000, 61.3800],
+  [1614528000000, 58.1300],
+  [1614614400000, 56.0900],
+  [1614700800000, 54.5700],
+  [1614787200000, 52.2300],
+  [1614873600000, 52.5900],
+  [1615132800000, 56.3100],
+  [1615219200000, 56.3100],
+  [1615305600000, 56.8800],
+  [1615392000000, 57.4800],
+  [1615478400000, 57.4800],
+  [1615737600000, 57.3200],
+  [1615824000000, 57.6100],
+  [1615910400000, 55.2800],
+  [1615996800000, 54.6300],
+  [1616083200000, 52.5300],
+  [1616342400000, 52.2900],
+  [1616428800000, 53.0100],
+  [1616515200000, 43.2600],
+  [1616601600000, 43.4200],
+  [1616688000000, 47.8300],
+  [1616947200000, 42.5400],
+  [1617033600000, 43.6700],
+  [1617120000000, 41.5900],
+  [1617206400000, 39.5200],
+  [1617292800000, 41.4300],
+  [1617638400000, 40.7300],
+  [1617724800000, 35.7200],
+  [1617811200000, 35.8000],
+  [1617897600000, 31.5800],
+  [1618156800000, 32.6200],
+  [1618243200000, 29.9100],
+  [1618329600000, 28.8600],
+  [1618416000000, 29.0100],
+  [1618502400000, 28.8600],
+  [1618761600000, 29.6800],
+  [1618848000000, 33.3300],
+  [1618934400000, 34.4700],
+  [1619020800000, 36.0400],
+  [1619107200000, 35.7300],
+  [1619366400000, 32.3600],
+  [1619452800000, 32.6300],
+  [1619539200000, 27.3100],
+  [1619625600000, 30.3100],
+  [1619712000000, 26.3300],
+  [1620230400000, 21.6400],
+  [1620316800000, 28.0800],
+  [1620576000000, 26.6900],
+  [1620662400000, 27.7700],
+  [1620748800000, 26.5400],
+  [1620835200000, 25.0800],
+  [1620921600000, 25.3800],
+  [1621180800000, 24.3800],
+  [1621267200000, 22.2900],
+  [1621353600000, 19.4600],
+  [1621440000000, 18.9400],
+  [1621526400000, 18.4000],
+  [1621785600000, 20.5100],
+  [1621872000000, 24.2000],
+  [1621958400000, 23.4700],
+  [1622044800000, 22.9400],
+  [1622131200000, 22.0200],
+  [1622390400000, 22.3200],
+  [1622476800000, 21.5400],
+  [1622563200000, 23.0100],
+  [1622649600000, 22.5300],
+  [1622736000000, 26.9400],
+  [1622995200000, 25.00],
+  [1623081600000, 27.7700],
+  [1623168000000, 28.9600],
+  [1623254400000, 26.0100],
+  [1623340800000, 25.2200],
+  [1623686400000, 29.3500],
+  [1623772800000, 28.0900],
+  [1623859200000, 27.5000],
+  [1623945600000, 26.2600],
+  [1624204800000, 30.8800],
+  [1624291200000, 31.6300],
+  [1624377600000, 30.3600],
+  [1624464000000, 32.4900],
+  [1624550400000, 32.0200],
+  [1624809600000, 30.6100],
+  [1624896000000, 31.0300],
+  [1624982400000, 32.1000],
+  [1625068800000, 33.5300],
+  [1625155200000, 25.6300],
+  [1625414400000, 26.5200],
+  [1625500800000, 26.9000],
+  [1625587200000, 32.3000],
+  [1625673600000, 29.8200],
+  [1625760000000, 32.8700],
+  [1626019200000, 33.9000],
+  [1626105600000, 32.0600],
+  [1626192000000, 31.3600],
+  [1626278400000, 32.3300],
+  [1626364800000, 32.8900],
+  [1626624000000, 31.8000],
+  [1626710400000, 32.4600],
+  [1626796800000, 32.6000],
+  [1626883200000, 33.6700],
+  [1626969600000, 34.0400],
+  [1627228800000, 34.3300],
+  [1627315200000, 34.7000],
+  [1627401600000, 33.8900],
+  [1627488000000, 32.8700],
+  [1627574400000, 33.6500],
+  [1627833600000, 34.1100],
+  [1627920000000, 31.6400],
+  [1628006400000, 33.2400],
+  [1628092800000, 32.7300],
+  [1628179200000, 34.6900],
+  [1628438400000, 36.5200],
+  [1628524800000, 38.8700],
+  [1628611200000, 36.8300],
+  [1628697600000, 36.2300],
+  [1628784000000, 35.3100],
+  [1629043200000, 33.4300],
+  [1629129600000, 30.0400],
+  [1629216000000, 30.0600],
+  [1629302400000, 31.8900],
+  [1629388800000, 30.1200],
+  [1629648000000, 33.7900],
+  [1629734400000, 33.7900],
+  [1629820800000, 30.0100],
+  [1629907200000, 30.1600],
+  [1629993600000, 30.5500],
+  [1630252800000, 29.9800],
+  [1630339200000, 30.4800],
+  [1630425600000, 30.3600],
+  [1630512000000, 30.6000],
+  [1630598400000, 28.5500],
+  [1630857600000, 29.7400],
+  [1630944000000, 30.3800],
+  [1631030400000, 31.5200],
+  [1631116800000, 33.9000],
+  [1631203200000, 30.3700],
+  [1631462400000, 35.5900],
+  [1631548800000, 30.4400],
+  [1631635200000, 30.0800],
+  [1631721600000, 31.7200],
+  [1631808000000, 34.6400],
+  [1632240000000, 36.0200],
+  [1632326400000, 36.4300],
+  [1632412800000, 35.1900],
+  [1632672000000, 35.9000],
+  [1632758400000, 38.4100],
+  [1632844800000, 40.0400],
+  [1632931200000, 42.3600],
+  [1633622400000, 47.2300],
+  [1633881600000, 44.2100],
+  [1633968000000, 44.0900],
+  [1634054400000, 44.8800],
+  [1634140800000, 43.5700],
+  [1634227200000, 41.4900],
+  [1634486400000, 41.9000],
+  [1634572800000, 39.8700],
+  [1634659200000, 42.2200],
+  [1634745600000, 41.0600],
+  [1634832000000, 41.2600],
+  [1635091200000, 44.1800],
+  [1635177600000, 45.5900],
+  [1635264000000, 45.3400],
+  [1635350400000, 46.8100],
+  [1635436800000, 47.0100],
+  [1635696000000, 46.3300],
+  [1635782400000, 45.2600],
+  [1635868800000, 43.7400],
+  [1635955200000, 44.9800],
+  [1636041600000, 46.3700],
+  [1636300800000, 44.8000],
+  [1636387200000, 37.0700],
+  [1636473600000, 33.3800],
+  [1636560000000, 36.5400],
+  [1636646400000, 39.4200],
+  [1636905600000, 38.5800],
+  [1636992000000, 39.1600],
+  [1637078400000, 38.6600],
+  [1637164800000, 38.8400],
+  [1637251200000, 40.1900],
+  [1637510400000, 44.2500],
+  [1637596800000, 48.0600],
+  [1637683200000, 48.7600],
+  [1637769600000, 49.6300],
+  [1637856000000, 53.2100],
+  [1638115200000, 51.0100],
+  [1638201600000, 47.4400],
+  [1638288000000, 41.9300],
+  [1638374400000, 48.1800],
+  [1638460800000, 50.1500],
+  [1638720000000, 54.4200],
+  [1638806400000, 56.2300],
+  [1638892800000, 57.6300],
+  [1638979200000, 58.9900],
+  [1639065600000, 55.9200],
+  [1639324800000, 55.8000],
+  [1639411200000, 61.5000],
+  [1639497600000, 63.3500],
+  [1639584000000, 60.1200],
+  [1639670400000, 57.9300],
+  [1639929600000, 60.0600],
+  [1640016000000, 60.0],
+  [1640102400000, 61.5300],
+  [1640188800000, 62.0900],
+  [1640275200000, 61.5200],
+  [1640534400000, 50.0900],
+  [1640620800000, 54.4300],
+  [1640707200000, 46.4300],
+  [1640793600000, 48.4600],
+  [1640880000000, 46.9300],
+  [1641225600000, 50.5900],
+  [1641312000000, 49.7000],
+  [1641398400000, 45.5400],
+  [1641484800000, 49.4400],
+  [1641744000000, 45.2800],
+  [1641830400000, 40.1500],
+  [1641916800000, 34.5100],
+  [1642003200000, 39.1800],
+  [1642089600000, 36.7200],
+  [1642348800000, 39.6100],
+  [1642435200000, 46.6000],
+  [1642521600000, 46.2500],
+  [1642608000000, 49.5000],
+  [1642694400000, 47.9300],
+  [1642953600000, 46.2200],
+  [1643040000000, 47.4400],
+  [1643126400000, 48.9000],
+  [1643212800000, 55.5200],
+  [1643299200000, 48.6400],
+  [1644163200000, 55.7000],
+  [1644249600000, 52.4200],
+  [1644336000000, 52.9600],
+  [1644422400000, 52.9300],
+  [1644508800000, 51.5800],
+  [1644768000000, 53.3000],
+  [1644854400000, 51.8900],
+  [1644940800000, 49.8000],
+  [1645027200000, 53.6600],
+  [1645113600000, 56.9400],
+  [1645372800000, 52.6300],
+  [1645459200000, 56.1800],
+  [1645545600000, 53.4400],
+  [1645632000000, 55.3700],
+  [1645718400000, 56.3200],
+  [1645977600000, 60.8500],
+  [1646064000000, 63.0300],
+  [1646150400000, 56.9700],
+  [1646236800000, 57.4200],
+  [1646323200000, 57.8700],
+  [1646582400000, 52.8400],
+  [1646668800000, 53.5000],
+  [1646755200000, 50.0],
+  [1646841600000, 48.7500],
+  [1646928000000, 48.8300],
+  [1647187200000, 49.9400],
+  [1647273600000, 49.4500],
+  [1647360000000, 48.7100],
+  [1647446400000, 48.0300],
+  [1647532800000, 48.9100],
+  [1647792000000, 44.6900],
+  [1647878400000, 49.0200],
+  [1647964800000, 45.7600],
+  [1648051200000, 43.4200],
+  [1648137600000, 44.6200],
+  [1648396800000, 46.1100],
+  [1648483200000, 46.7500],
+  [1648569600000, 46.8300],
+  [1648656000000, 51.9600],
+  [1648742400000, 55.4200],
+  [1649174400000, 55.2800],
+  [1649260800000, 51.2300],
+  [1649347200000, 55.5700],
+  [1649606400000, 56.6100],
+  [1649692800000, 61.0500],
+  [1649779200000, 62.4300],
+  [1649865600000, 62.3500],
+  [1649952000000, 63.4100],
+  [1650211200000, 59.3400],
+  [1650297600000, 57.7800],
+  [1650384000000, 52.1600],
+  [1650470400000, 56.7100],
+  [1650556800000, 57.7300],
+  [1650816000000, 58.3300],
+  [1650902400000, 58.8300],
+  [1650988800000, 53.8700],
+  [1651075200000, 55.0300],
+  [1651161600000, 53.6600],
+  [1651680000000, 51.5700],
+  [1651766400000, 51.3600],
+  [1652025600000, 51.1000],
+  [1652112000000, 49.0100],
+  [1652198400000, 45.7600],
+  [1652284800000, 42.8000],
+  [1652371200000, 42.9600],
+  [1652630400000, 44.1800],
+  [1652716800000, 46.2100],
+  [1652803200000, 45.2800],
+  [1652889600000, 42.9600],
+  [1652976000000, 45.0900],
+  [1653235200000, 47.6000],
+  [1653321600000, 55.3700],
+  [1653408000000, 57.0300],
+  [1653494400000, 55.8000],
+  [1653580800000, 56.7200],
+  [1653840000000, 57.0300],
+  [1653926400000, 56.6600],
+  [1654012800000, 54.3700],
+  [1654099200000, 51.8700],
+  [1654444800000, 47.9800],
+  [1654531200000, 51.8900],
+  [1654617600000, 51.9300],
+  [1654704000000, 51.9800],
+  [1654790400000, 54.2700],
+  [1655049600000, 50.0],
+  [1655136000000, 55.4600],
+  [1655222400000, 57.3400],
+  [1655308800000, 54.0500],
+  [1655395200000, 57.3500],
+  [1655654400000, 58.4300],
+  [1655740800000, 62.5300],
+  [1655827200000, 65.3200],
+  [1655913600000, 63.5200],
+  [1656000000000, 61.7500],
+  [1656259200000, 63.5200],
+  [1656345600000, 63.7700],
+  [1656432000000, 69.4000],
+  [1656518400000, 66.5700],
+  [1656604800000, 62.3800],
+  [1656864000000, 56.1000],
+  [1656950400000, 55.2500],
+  [1657036800000, 55.6500],
+  [1657123200000, 52.4300],
+  [1657209600000, 49.1000],
+  [1657468800000, 51.0000],
+  [1657555200000, 50.9500],
+  [1657641600000, 51.6500],
+  [1657728000000, 46.6900],
+  [1657814400000, 46.0900],
+  [1658073600000, 47.3400],
+  [1658160000000, 45.3000],
+  [1658246400000, 43.7500],
+  [1658332800000, 38.8300],
+  [1658419200000, 38.9900],
+  [1658678400000, 35.3300],
+  [1658764800000, 35.8100],
+  [1658851200000, 39.4400],
+  [1658937600000, 37.1300],
+  [1659024000000, 41.2100],
+  [1659283200000, 41.2800],
+  [1659369600000, 42.6200],
+  [1659456000000, 40.0900],
+  [1659542400000, 39.2000],
+  [1659628800000, 38.7400],
+  [1659888000000, 38.5300],
+  [1659974400000, 41.1900],
+  [1660060800000, 40.4200],
+  [1660147200000, 37.1300],
+  [1660233600000, 36.3700],
+  [1660492800000, 38.1000],
+  [1660579200000, 39.4300],
+  [1660665600000, 38.5900],
+  [1660752000000, 38.3700],
+  [1660838400000, 38.0200],
+  [1661097600000, 37.2500],
+  [1661184000000, 39.2900],
+  [1661270400000, 37.5100],
+  [1661356800000, 37.2100],
+  [1661443200000, 39.5700],
+  [1661702400000, 38.1300],
+  [1661788800000, 39.7100],
+  [1661875200000, 46.4400],
+  [1661961600000, 43.1300],
+  [1662048000000, 40.3500],
+  [1662307200000, 43.4800],
+  [1662393600000, 48.0800],
+  [1662480000000, 45.7100],
+  [1662566400000, 44.9600],
+  [1662652800000, 44.0700],
+  [1662998400000, 51.4300],
+  [1663084800000, 48.0900],
+  [1663171200000, 48.9100],
+  [1663257600000, 50.7200],
+  [1663516800000, 52.1900],
+  [1663603200000, 50.9900],
+  [1663689600000, 48.8200],
+  [1663776000000, 45.4500],
+  [1663862400000, 50.4100],
+  [1664121600000, 51.7800],
+  [1664208000000, 51.0600],
+  [1664294400000, 52.8800],
+  [1664380800000, 51.5600],
+  [1664467200000, 51.8100],
+  [1665331200000, 49.7100],
+  [1665417600000, 48.3900],
+  [1665504000000, 45.7300],
+  [1665590400000, 43.8700],
+  [1665676800000, 45.4600],
+  [1665936000000, 44.9000],
+  [1666022400000, 43.0100],
+  [1666108800000, 41.8700],
+  [1666195200000, 42.9500],
+  [1666281600000, 45.5500],
+  [1666540800000, 38.5300],
+  [1666627200000, 37.3500],
+  [1666713600000, 31.3200],
+  [1666800000000, 33.2700],
+  [1666886400000, 37.3800],
+  [1667145600000, 34.5000],
+  [1667232000000, 39.5800],
+  [1667318400000, 35.9900],
+  [1667404800000, 32.5200],
+  [1667491200000, 33.6900],
+  [1667750400000, 35.3900],
+  [1667836800000, 37.2700],
+  [1667923200000, 40.1700],
+  [1668009600000, 43.8300],
+  [1668096000000, 42.3600],
+  [1668355200000, 41.5600],
+  [1668441600000, 40.8600],
+  [1668528000000, 40.5000],
+  [1668614400000, 37.6600],
+  [1668700800000, 41.5200],
+  [1668960000000, 37.3200],
+  [1669046400000, 42.6400],
+  [1669132800000, 43.7400],
+  [1669219200000, 38.9400],
+  [1669305600000, 42.0800],
+  [1669564800000, 41.5700],
+  [1669651200000, 44.5900],
+  [1669737600000, 39.4500],
+  [1669824000000, 41.2100],
+  [1669910400000, 40.1900],
+  [1670169600000, 47.1400],
+  [1670256000000, 51.0000],
+  [1670342400000, 50.3500],
+  [1670428800000, 49.8400],
+  [1670515200000, 50.9500],
+  [1670774400000, 49.2600],
+  [1670860800000, 50.5600],
+  [1670947200000, 51.8600],
+  [1671033600000, 44.3900],
+  [1671120000000, 48.8700],
+  [1671379200000, 44.3200],
+  [1671465600000, 44.2000],
+  [1671552000000, 50.5100],
+  [1671638400000, 57.1600],
+  [1671724800000, 55.8500],
+  [1671984000000, 48.7700],
+  [1672070400000, 55.1300],
+  [1672156800000, 49.9500],
+  [1672243200000, 50.9700],
+  [1672329600000, 46.5900],
+  [1672675200000, 43.3100],
+  [1672761600000, 46.7700],
+  [1672848000000, 45.6600],
+  [1672934400000, 47.0200],
+  [1673193600000, 48.3200],
+  [1673280000000, 51.3600],
+  [1673366400000, 54.1100],
+  [1673452800000, 61.5700],
+  [1673539200000, 65.2400],
+  [1673798400000, 64.5900],
+  [1673884800000, 65.2200],
+  [1673971200000, 67.4600],
+  [1674057600000, 64.5500],
+  [1674144000000, 68.7300],
+  [1675008000000, 74.0400],
+  [1675094400000, 75.4200],
+  [1675180800000, 72.7300],
+  [1675267200000, 71.5900],
+  [1675353600000, 70.3700],
+  [1675612800000, 68.2900],
+  [1675699200000, 68.5600],
+  [1675785600000, 70.0000],
+  [1675872000000, 69.7300],
+  [1675958400000, 71.2800],
+  [1676217600000, 71.4900],
+  [1676304000000, 73.4700],
+  [1676390400000, 73.8400],
+  [1676476800000, 74.7400],
+  [1676563200000, 75.0800],
+  [1676822400000, 73.7700],
+  [1676908800000, 76.1600],
+  [1676995200000, 75.5700],
+  [1677081600000, 74.4000],
+  [1677168000000, 76.7300],
+  [1677427200000, 73.7000],
+  [1677513600000, 73.3500],
+  [1677600000000, 69.9600],
+  [1677686400000, 72.5800],
+  [1677772800000, 71.3600],
+  [1678032000000, 61.8100],
+  [1678118400000, 63.6400],
+  [1678204800000, 60.1400],
+  [1678291200000, 56.5700],
+  [1678377600000, 53.2500],
+  [1678636800000, 59.9600],
+  [1678723200000, 58.0200],
+  [1678809600000, 55.5200],
+  [1678896000000, 52.2800],
+  [1678982400000, 50.6700],
+  [1679241600000, 53.8100],
+  [1679328000000, 49.3600],
+  [1679414400000, 49.9100],
+  [1679500800000, 52.3500],
+  [1679587200000, 51.0200],
+  [1679846400000, 50.4200],
+  [1679932800000, 52.3900],
+  [1680019200000, 53.3900],
+  [1680105600000, 53.8800],
+  [1680192000000, 55.1500],
+  [1680451200000, 55.8100],
+  [1680537600000, 56.5000],
+  [1680710400000, 55.5300],
+  [1680796800000, 55.7100],
+  [1681056000000, 53.9200],
+  [1681142400000, 52.6500],
+  [1681228800000, 51.4400],
+  [1681315200000, 49.0600],
+  [1681401600000, 48.9700],
+  [1681660800000, 48.2900],
+  [1681747200000, 52.9500],
+  [1681833600000, 52.6000],
+  [1681920000000, 51.3300],
+  [1682006400000, 51.9400],
+  [1682265600000, 51.1800],
+  [1682352000000, 54.0200],
+  [1682438400000, 52.4900],
+  [1682524800000, 53.2300],
+  [1682611200000, 52.8400],
+  [1683129600000, 56.8400],
+  [1683216000000, 57.6300],
+  [1683475200000, 60.9100],
+  [1683561600000, 63.1500],
+  [1683648000000, 61.4000],
+  [1683734400000, 62.4100],
+  [1683820800000, 60.6100],
+  [1684080000000, 64.6700],
+  [1684166400000, 60.9300],
+  [1684252800000, 60.8400],
+  [1684339200000, 58.4400],
+  [1684425600000, 56.6500],
+  [1684684800000, 59.5500],
+  [1684771200000, 56.2000],
+  [1684857600000, 56.1100],
+  [1684944000000, 56.8800],
+  [1685030400000, 52.7000],
+  [1685289600000, 52.0200],
+  [1685376000000, 50.8700],
+  [1685462400000, 47.5700],
+  [1685548800000, 48.2000],
+  [1685635200000, 46.9100],
+  [1685894400000, 45.9100],
+  [1685980800000, 51.5600],
+  [1686067200000, 49.4600],
+  [1686153600000, 54.4200],
+  [1686240000000, 54.0100],
+  [1686499200000, 52.6100],
+  [1686585600000, 51.5100],
+  [1686672000000, 50.4300],
+  [1686758400000, 56.7300],
+  [1686844800000, 58.6100],
+  [1687104000000, 55.7300],
+  [1687190400000, 57.0000],
+  [1687276800000, 60.8300],
+  [1687708800000, 64.3700],
+  [1687795200000, 64.4700],
+  [1687881600000, 61.9700],
+  [1687968000000, 60.5900],
+  [1688054400000, 56.9900],
+  [1688313600000, 62.0300],
+  [1688400000000, 56.8200],
+  [1688486400000, 56.1700],
+  [1688572800000, 58.1400],
+  [1688659200000, 57.6300],
+  [1688918400000, 60.3600],
+  [1689004800000, 62.4900],
+  [1689091200000, 62.3400],
+  [1689177600000, 64.7400],
+  [1689264000000, 65.7400],
+  [1689523200000, 60.6500],
+  [1689609600000, 58.8900],
+  [1689696000000, 60.0600],
+  [1689782400000, 63.4800],
+  [1689868800000, 61.6200],
+  [1690128000000, 64.0900],
+  [1690214400000, 62.1600],
+  [1690300800000, 66.4700],
+  [1690387200000, 65.6800],
+  [1690473600000, 71.6700],
+  [1690732800000, 70.4200],
+  [1690819200000, 69.5100],
+  [1690905600000, 68.1800],
+  [1690992000000, 71.7100],
+  [1691078400000, 73.5000],
+  [1691337600000, 72.3300],
+  [1691424000000, 67.3500],
+  [1691510400000, 67.2900],
+  [1691596800000, 76.4600],
+  [1691683200000, 69.6300],
+  [1691942400000, 66.6700],
+  [1692028800000, 63.5600],
+  [1692115200000, 65.4900],
+  [1692201600000, 63.0800],
+  [1692288000000, 68.0000],
+  [1692547200000, 66.2800],
+  [1692633600000, 65.7300],
+  [1692720000000, 66.9700],
+  [1692806400000, 69.0600],
+  [1692892800000, 69.5000],
+  [1693152000000, 70.4900],
+  [1693238400000, 70.1200],
+  [1693324800000, 69.8100],
+  [1693411200000, 71.0600],
+  [1693497600000, 70.9200],
+  [1693756800000, 70.6200],
+  [1693843200000, 72.2600],
+  [1693929600000, 70.7100],
+  [1694016000000, 72.7900],
+  [1694102400000, 69.0300],
+  [1694361600000, 67.2900],
+  [1694448000000, 66.1900],
+  [1694534400000, 65.3700],
+  [1694620800000, 66.1700],
+  [1694707200000, 63.5000],
+  [1694966400000, 62.1100],
+  [1695052800000, 62.6600],
+  [1695139200000, 62.0100],
+  [1695225600000, 63.4900],
+  [1695312000000, 63.6100],
+  [1695571200000, 62.8800],
+  [1695657600000, 62.9600],
+  [1695744000000, 62.8300],
+  [1695830400000, 62.0700],
+  [1696780800000, 64.6400],
+  [1696867200000, 61.7600],
+  [1696953600000, 60.8300],
+  [1697040000000, 61.6000],
+  [1697126400000, 62.6900],
+  [1697385600000, 61.5700],
+  [1697472000000, 64.3800],
+  [1697558400000, 63.7100]
+]; /*规模变动 mom-较上期环比*/
+var Data_fluctuationScale = {
+  "categories": ["2022-06-30", "2022-09-30", "2022-12-31", "2023-03-31",
+    "2023-06-30"
+  ],
+  "series": [{
+    "y": 7.28,
+    "mom": "-37.17%"
+  }, {
+    "y": 10.55,
+    "mom": "44.81%"
+  }, {
+    "y": 22.98,
+    "mom": "117.92%"
+  }, {
+    "y": 29.40,
+    "mom": "27.92%"
+  }, {
+    "y": 23.30,
+    "mom": "-20.75%"
+  }]
+}; /*持有人结构*/
+var Data_holderStructure = {
+  "series": [{
+    "name": "机构持有比例",
+    "data": [40.64, 42.91, 68.38, 64.22]
+  }, {
+    "name": "个人持有比例",
+    "data": [59.36, 57.09, 31.62, 35.78]
+  }, {
+    "name": "内部持有比例",
+    "data": [0.006, 0.0174, 0.0129, 0.05]
+  }],
+  "categories": ["2021-12-31", "2022-06-30", "2022-12-31", "2023-06-30"]
+}; /*资产配置*/
+var Data_assetAllocation = {
+  "series": [{
+    "name": "股票占净比",
+    "type": null,
+    "data": [1.63, 1.3, 1.14, 1.7],
+    "yAxis": 0
+  }, {
+    "name": "债券占净比",
+    "type": null,
+    "data": [2.59, 2.04, 1.8, 1.44],
+    "yAxis": 0
+  }, {
+    "name": "现金占净比",
+    "type": null,
+    "data": [3.14, 3.52, 3.84, 5.09],
+    "yAxis": 0
+  }, {
+    "name": "净资产",
+    "type": "line",
+    "data": [78.2952, 99.3008, 112.1132, 105.7939],
+    "yAxis": 1
+  }],
+  "categories": ["2022-09-30", "2022-12-31", "2023-03-31", "2023-06-30"]
+}; /*业绩评价 ['选股能力', '收益率', '抗风险', '稳定性','择时能力']*/
+var Data_performanceEvaluation = {
+  "avr": "81.25",
+  "categories": ["选证能力", "收益率", "跟踪误差", "超额收益", "管理规模"],
+  "dsc": ["反映基金挑选证券而实现风险调整\u003cbr\u003e后获得超额收益的能力", "根据阶段收益评分，反映基金的盈利能力",
+    "根据基金跟踪指数的密切程度评分", "反映基金投资的超额风险所带来的超额收益", "根据基金的资产规模评分"
+  ],
+  "data": [75.0, 75.0, 80.0, 80.0, 90.0]
+}; /*现任基金经理*/
+var Data_currentFundManager = [{
+  "id": "30066753",
+  "pic": "https://pdf.dfcfw.com/pdf/H8_30066753_1.PNG",
+  "name": "余海燕",
+  "star": 5,
+  "workTime": "11年又339天",
+  "fundSize": "1209.99亿(34只基金)",
+  "power": {
+    "avr": "93.04",
+    "categories": ["经验值", "收益率", "跟踪误差", "超额收益", "管理规模"],
+    "dsc": ["反映基金经理从业年限和管理基金的经验",
+      "根据基金经理投资的阶段收益评分，反映\u003cbr\u003e基金经理投资的盈利能力",
+      "根据基金跟踪指数的密切程度评分，反\u003cbr\u003e应基金经理的管理能力",
+      "根据基金经理投资的超额风险所带来的\u003cbr\u003e超额收益评分", "根据基金经理现任管理基金资产规模评分"
+    ],
+    "data": [97.30, 84.60, 91.70, 93.40, 98.0],
+    "jzrq": "2023-10-18"
+  },
+  "profit": {
+    "categories": ["任期收益", "同类平均", "沪深300"],
+    "series": [{
+      "data": [{
+        "name": null,
+        "color": "#7cb5ec",
+        "y": 4.0138
+      }, {
+        "name": null,
+        "color": "#414c7b",
+        "y": 27.57
+      }, {
+        "name": null,
+        "color": "#f7a35c",
+        "y": -8.4
+      }]
+    }],
+    "jzrq": "2023-10-18"
+  }
+}, {
+  "id": "30589069",
+  "pic": "https://pdf.dfcfw.com/pdf/H8_30589069_1.PNG",
+  "name": "庞亚平",
+  "star": 5,
+  "workTime": "3年又121天",
+  "fundSize": "454.97亿(26只基金)",
+  "power": {
+    "avr": "93.52",
+    "categories": ["经验值", "收益率", "跟踪误差", "超额收益", "管理规模"],
+    "dsc": ["反映基金经理从业年限和管理基金的经验",
+      "根据基金经理投资的阶段收益评分，反映\u003cbr\u003e基金经理投资的盈利能力",
+      "根据基金跟踪指数的密切程度评分，反\u003cbr\u003e应基金经理的管理能力",
+      "根据基金经理投资的超额风险所带来的\u003cbr\u003e超额收益评分", "根据基金经理现任管理基金资产规模评分"
+    ],
+    "data": [77.40, 55.80, 99.10, 99.60, 97.50],
+    "jzrq": "2023-10-18"
+  },
+  "profit": {
+    "categories": ["任期收益", "同类平均", "沪深300"],
+    "series": [{
+      "data": [{
+        "name": null,
+        "color": "#7cb5ec",
+        "y": -6.3925
+      }, {
+        "name": null,
+        "color": "#414c7b",
+        "y": -9.33
+      }, {
+        "name": null,
+        "color": "#f7a35c",
+        "y": -8.64
+      }]
+    }],
+    "jzrq": "2023-10-18"
+  }
+}]; /*申购赎回*/
+var Data_buySedemption = {
+  "series": [{
+    "name": "期间申购",
+    "data": [5.73, 10.63, 13.55, 3.15]
+  }, {
+    "name": "期间赎回",
+    "data": [2.74, 2.19, 9.97, 6.57]
+  }, {
+    "name": "总份额",
+    "data": [7.41, 15.85, 19.44, 16.02]
+  }],
+  "categories": ["2022-09-30", "2022-12-31", "2023-03-31", "2023-06-30"]
+}; /*同类型基金涨幅榜（页面底部通栏）*/
+var swithSameType = [
+  ['290012_泰信行业精选混合A_45.34', '002583_泰信行业精选混合C_45.30',
+    '012768_华夏中证动漫游戏ET_42.54', '012728_国泰中证动漫游戏ET_42.42',
+    '012769_华夏中证动漫游戏ET_42.11'
+  ],
+  ['007937_华夏饲料豆粕期货ET_76.47', '519212_万家宏观择时多策略混_59.60',
+    '519191_万家新利灵活配置混合_54.21', '519185_万家精选混合A_47.66',
+    '210002_金鹰红利价值混合A_34.67'
+  ],
+  ['168204_国联中证煤炭指数(L_100.65', '008279_国泰中证煤炭ETF联_99.94',
+    '008280_国泰中证煤炭ETF联_98.17', '004475_华泰柏瑞富利混合A_95.76',
+    '161032_富国中证煤炭指数(L_93.98'
+  ],
+  ['166301_华商新趋势优选灵活配_344.42', '001959_华商乐享互联灵活配置_324.22',
+    '519002_华安安信消费混合A_293.43', '002943_广发多因子混合_292.87',
+    '000991_工银战略转型股票A_288.99'
+  ],
+  ['001614_东方区域发展混合_47.49', '001323_东吴移动互联混合A_40.22',
+    '002170_东吴移动互联混合C_40.00', '001322_东吴新趋势价值线混合_37.11',
+    '012728_国泰中证动漫游戏ET_31.99'
+  ]
+];

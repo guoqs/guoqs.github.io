@@ -1,0 +1,119 @@
+
+
+@import url('ani.css');
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 14px;
+}
+
+ul li {
+  list-style: none;
+  margin: 10px;
+}
+
+.red {
+  background-color: red;
+  color: #fff;
+}
+
+.green {
+  background-color: seagreen;
+  color: #fff;
+}
+
+.gray {
+  background-color: lightgray;
+  color: #333;
+}
+
+h1 {
+  text-align: center;
+  font-size: 18px;
+  padding: 10px;
+}
+
+h3 {
+  margin: 25px 10px 10px 10px;
+  font-size: 16px;
+  color: #666;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.total-sum-times {
+  display: flex;
+  margin:5px 10px;
+}
+
+.webheader {
+  height: 45px;
+}
+
+.webheader select,
+.webheader input {
+  flex: 1;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background-color: transparent;
+  margin: 2px 1px;
+}
+
+.date-quick {
+  flex: 1;
+}
+
+.date-exact {
+  flex: 2;
+}
+
+.date-exact span {
+  display: flex;
+  align-self: center;
+  font-weight: bold;
+  margin: 0 3px;
+}
+
+.date-exact input {
+  width: 50px;
+}
+
+.total-sum-times span {
+  flex: 1;
+  padding: 10px 0;
+  text-align: center;
+  border-radius: 3px;
+}
+
+.total-sum-times span:nth-child(2) {
+  margin: 0 3px;
+}
+
+.daily-trend li {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 5px;
+  border-radius: 3px;
+
+}
+
+.daily-trend-details {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+}
+
+.daily-trend-details:not(:last-child) {
+  border-bottom: 1px solid #ccc;
+}
+.title-type{
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  padding: 10px;
+  margin: 10px 0;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 2px;
+}

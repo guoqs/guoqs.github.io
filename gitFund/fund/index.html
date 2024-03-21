@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"
+      content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>fund</title>
+    <script src="../uniWebView.js"></script>
+    <script src="../vue.3.3.4.js"></script>
+    <!-- <script src="./demo.js"></script> -->
+    <script>
+      var fundcode = new URLSearchParams(location.search).get('fundcode')
+      if (fundcode) {
+        var scriptStr = '<'
+        scriptStr += 'scri'
+        scriptStr += 'pt'
+        scriptStr += ' src="http://fund.eastmoney.com/pingzhongdata/' +
+          fundcode + '.js"'
+        scriptStr += '>'
+        scriptStr += '<'
+        scriptStr += '/'
+        scriptStr += 'script'
+        scriptStr += '>'
+        console.log(scriptStr)
+        document.write(scriptStr)
+      }
+
+    </script>
+    <script src="./doCount.js"></script>
+    <link rel="stylesheet" href="./fund.css">
+  </head>
+  <body>
+    <div id="app">
+      <div id="webheader-warp"
+        style="position: sticky;top:0; background-color: #fff; padding-bottom: 5px;">
+        <h1>[{{fS_code}}]{{fS_name}}</h1>
+        <div class="webheader d-flex">
+          <div class="date-quick d-flex">
+            <select @change="dateQuickChange()" v-model="dateQuickVal">
+              <option value="">请选择</option>
+              <option :value="date.type" v-for="(date,idx) in dateQuicks"
+                :idx="idx">
+                {{date.name}}
+              </option>
+            </select>
+          </div>
+          <div class="date-exact d-flex">
+            <input type="date" v-model="startDate" @change="dateExactChange()">
+            <span>-</span>
+            <!-- <input type="date" max="2023-06-20" min="2023-05-20"> -->
+            <input type="date" v-model="endDate" @change="dateExactChange()">
+          </div>
+        </div>
+        <div class="total-sum-times">
+          <span class="green">
+            跌<br>
+            {{basicData.totalTradeDown}}[{{basicData.totalTradeDownTotal}}]</span>
+          <span class="gray">平<br>{{basicData.totalTraHorizontal}}</span>
+          <span
+            class="red">涨<br>{{basicData.totalTradeUp}}[{{basicData.totalTradeUpTotal}}]</span>
+          <span>期间<br>{{(100 * (basicData.useDataWorth[basicData.useDataWorth.length - 1][1] / basicData.useDataWorth[0][1] - 1)).toFixed(2)}}%</span>
+
+        </div>
+      </div>
+      <h3 class="title-type">累计排序 <span
+          style="font-size: 12px;color:red">{{moreThan2Daies}}</span></h3>
+      <ul class="daily-trend">
+        <template v-for="(item,idx) in basicData.trendSorts" :key="idx">
+          <li :class="{red:item.trend>0,green:item.trend<0,gray:item.trend==0}"
+            @click='showDetails'>
+            <span>连续{{item.trend>0?'涨':item.trend<0?'跌':'平'}}{{item.length}}天</span>
+            <span>有{{item.items.length}}次</span>
+          </li>
+          <li style="display: none;">
+            <div style="flex:1;">
+              <section v-for="(sItem,idx) in item.items"
+                class="daily-trend-details" @click="showDetail(sItem)">
+                <span>{{sItem[0].datestr}}-{{sItem[item.length - 1].datestr}}</span>
+                <!-- <span>{{sItem.reduce((sum,item) => {return sum +'+'+ item.equityReturn},'')}}</span> -->
+                <span>{{sItem.reduce((sum,item) => {return sum + item.equityReturn},0).toFixed(3)}}</span>
+              </section>
+            </div>
+          </li>
+        </template>
+      </ul>
+      <h3 class="title-type">顺序累计<span
+          style="font-size: 12px;color:red">{{firstUp}}</span></h3>
+      <ul class="daily-trend">
+        <li v-for="(item,idx) in basicData.sumData"
+          :class="{red:item.find(si=>si.equityReturn>0),green:item.find(si=>si.equityReturn<0),gray:item.find(si=>si.equityReturn==0)}"
+          @click="showDetail(item)">
+          <span>{{item[0].datestr}} - {{item[item.length - 1].datestr}}</span>
+          <span>连续{{item.length}}天[{{item.reduce((sum,item) => sum += item.equityReturn, 0).toFixed(3)}}]</span>
+        </li>
+      </ul>
+      <Transition>
+        <div class="near-trend" v-if="mdata.length" :style="'display:block'">
+          <div class="bg"></div>
+          <div class="container">
+            <div class="content">
+              <div class="data-line-trend">
+                <!-- <div class="divide-line"></div> -->
+                <div v-for="data in mdata" class="mdata-detail"
+                  :class="{red:data.equityReturn>0,green:data.equityReturn<0,gray:data.equityReturn==0}"
+                  :style="`width:${Math.abs((Math.abs(data.equityReturn) + mdata.total)/2/mdata.total * 100)}%`">
+                  <span>{{data.datestr}}</span>
+                  <span>{{data.equityReturn}}</span>
+                </div>
+              </div>
+              <!-- 连续30天应该少见 -->
+              <div v-if="mdata.length < 30"
+                style="margin: 10px;justify-content: space-between;line-height: 3;"
+                class="d-flex">
+                <span @click="showDetail(mdata, -1)">前两个月</span>
+                <span @click="showDetail(mdata, 1)">后两个月</span>
+              </div>
+            </div>
+            <div class="close" @click="mdata.splice(0,mdata.length)">&Chi;</div>
+          </div>
+        </div>
+      </Transition>
+    </div>
+  </body>
+  <script>
+    if (window.Data_netWorthTrend) {
+      function formatDate(timeStamp) {
+        let ndate = new Date(timeStamp)
+        let year = ndate.getFullYear()
+        let month = ndate.getMonth() + 1
+        let date = ndate.getDate()
+        return `${year}-${month >9?month:'0'+month}-${date >9?date:'0'+date}`
+      }
+      const {
+        createApp,
+        reactive,
+        ref
+      } = Vue
+      // console.log('Data_netWorthTrend')
+      // console.log(Data_netWorthTrend)
+      // console.log('sumData')
+      // console.log(sumData)
+      // console.log('trendSorts')
+      // console.log(trendSorts)
+      // console.log(trendSorts.reduce((total, item) => {
+      //   total += item.length * item.items.length
+      //   return total
+      // }, 0))
+      const app = createApp({
+        computed: {
+          moreThan2Daies() {
+            console.log(this.basicData)
+            let {
+              sumData
+            } = this.basicData
+            let downTimes = 0
+            let downDaies = 0
+            let upTimes = 0
+            let upDaies = 0
+            sumData.forEach(tread => {
+              if (tread.length < 3) {
+                return
+              }
+              if (tread[0].equityReturn > 0) {
+                upTimes++
+                upDaies += tread.length
+              } else {
+                downTimes++
+                downDaies += tread.length
+              }
+            })
+            return ` 三天及以上[涨${upTimes}次,共计${upDaies}天;跌${downTimes}次,共计${downDaies}天]`
+          },
+          firstUp() {
+            let {
+              totalFirstTimes,
+              totalFirstUp,
+              totalFirstNiuBiTimes,
+              totalFirstNiuBiUp
+            } = this.basicData
+            return ` 首次上涨${totalFirstTimes}次,涨幅${totalFirstUp.toFixed(2)}%,NB:${totalFirstNiuBiTimes}次,涨幅${totalFirstNiuBiUp.toFixed(2)}%`
+          }
+        },
+        mounted() {
+          console.log(5666)
+          let warp = document.getElementById('webheader-warp')
+          console.dir(warp)
+          let warpHeight = getComputedStyle(warp, null).height
+          console.dir(warpHeight);
+          [].slice.call(document.querySelectorAll('.title-type')).forEach(
+            el => {
+              el.style.top = warpHeight
+            })
+        },
+        setup(ctx, props) {
+          let basicData = reactive(doCount())
+          console.log(basicData)
+          let doChooseDate = () => {}
+          let dateQuicks = (dn => {
+            let dateArr = [{
+              type: 30,
+              name: `30天`
+            }, {
+              type: 60,
+              name: `60天`
+            }, {
+              type: 90,
+              name: `90天`
+            }]
+            let now = new Date()
+            let nowYear = now.getFullYear()
+            let firstYear = new Date(dn[0].x).getFullYear()
+            console.log(firstYear)
+            while (nowYear >= firstYear) {
+              dateArr.push({
+                type: nowYear,
+                name: `${nowYear}年`
+              })
+              nowYear--
+            }
+            return dateArr
+          })(Data_netWorthTrend)
+          console.log(dateQuicks)
+          dateQuicks = reactive(dateQuicks)
+
+          let mdata = reactive([])
+          // 精确选择
+          let startDate = ref('')
+          let endDate = ref('')
+          // 快速选择
+          let dateQuickVal = ref('')
+          let setData = () => {
+            Object.assign(basicData, doCount([startDate.value, endDate
+              .value
+            ]))
+          }
+          let dateExactChange = () => {
+            let sv = startDate.value
+            let ev = endDate.value
+            setData()
+          }
+          let dateQuickChange = () => {
+            let val = dateQuickVal.value
+            if (!val) {
+              startDate.value = endDate.value = ''
+              setData()
+              return
+            }
+            if (val > 999) {
+              startDate.value = val + '-01-01'
+              endDate.value = val + '-12-31'
+              setData()
+              return
+            }
+            let now = new Date()
+            endDate.value = formatDate(+now)
+            startDate.value = formatDate(+now.setDate(now.getDate() -
+              val))
+            setData()
+          }
+          return {
+            fS_name,
+            fS_code,
+            basicData,
+            doChooseDate,
+            startDate,
+            endDate,
+            dateQuicks,
+            mdata,
+            dateQuickVal,
+            dateQuickChange,
+            dateExactChange,
+            showDetail(data, isMore = 0) {
+              if (isMore) {
+                let firstIdx = Data_netWorthTrend.findIndex(item => {
+                  return item.x == data[0].x
+                })
+                let lastIdx = Data_netWorthTrend.findIndex(item => {
+                  return item.x == data[data.length - 1].x
+                })
+
+                // data = Data_netWorthTrend.slice(Math.max(0, firstIdx - 30),
+                //   Math.min(Data_netWorthTrend.length, lastIdx + 30))
+                if (isMore > 0) {
+                  data = Data_netWorthTrend.slice(firstIdx,
+                    Math.min(Data_netWorthTrend.length, lastIdx + 30))
+                } else {
+                  data = Data_netWorthTrend.slice(Math.max(0, firstIdx -
+                      30),
+                    lastIdx)
+                }
+              }
+              mdata.splice(0, mdata.length)
+              setTimeout(() => {
+                // mdata.splice(0, mdata.length, ...data)
+                mdata.splice(0, 0, ...data)
+                let arrs = data.reduce((arr, item) => {
+                  arr.push(Math.abs(item.equityReturn))
+                  return arr
+                }, [])
+                // let minNum = Math.min(...arrs)
+                let maxNum = Math.max(...arrs)
+                mdata.total = Math.ceil(maxNum)
+              }, isMore ? 550 : 0)
+              // console.log(mdata)
+            },
+            showDetails(ev) {
+              let target = ev.target || ev.srcElement
+              if (target.tagName.toLowerCase() !== 'li') {
+                target = target.parentNode || target.parentElement
+              }
+              target.nextElementSibling.style
+              let nDisplay = target.nextElementSibling.style.display
+              console.log(nDisplay)
+              target.nextElementSibling.style.display = nDisplay == 'none' ?
+                'flex' : 'none'
+            }
+          }
+        }
+      })
+      app.mount('#app')
+    } else {
+      document.body.innerHTML =
+        '<h1 style="line-height:6;text-align: center;">我了个x</h1>'
+    }
+
+  </script>
+</html>

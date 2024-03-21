@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基金列表</title>
+    <!-- <script src="http://fund.eastmoney.com/js/fundcode_search.js"></script> -->
+    <script src="./demo.js"></script>
+    <!-- <script src="../uniWebView.js"></script> -->
+    <script src="../vue.3.3.4.js"></script>
+
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      font-size: 15px;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      margin: 8px 5px;
+      padding: 0 5px;
+      border-radius: 3px;
+    }
+    li span{
+      padding: 8px 0;
+    }
+
+    li:nth-child(3n) {
+      background: #ccc;
+    }
+
+    li:nth-child(3n + 1) {
+      background: #eee;
+    }
+
+    li:nth-child(3n + 2) {
+      background: #ddd;
+    }
+
+    .filter-container {
+      position: sticky;
+      top: 0;
+      background: #fff;
+      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+      height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 10px;
+    }
+
+    .filter-container input {
+      border: 1px solid #f3f3f3;
+      display: block;
+      margin: 0 5px;
+      height: 80%;
+      padding: 0 10px;
+      width: 90%;
+      /* 
+      
+      width: calc(95% - 10px); */
+      flex: 1;
+    }
+
+    .filter-container .clear {
+      flex: 36px 0 0;
+      line-height: 36px;
+      text-align: center;
+    }
+
+  </style>
+  <body>
+    <div id="app">
+      <div class="filter-container">
+        <span @click='showTotal()'>{{filterText?'搜索结果':'市场上'}}共{{filterText?filteredList.length:totalFundNums}}只基金</span>
+        <input type="text" placeholder="代码或者名称" v-model="filterText">
+        <span class="clear" @click="filterText=''">&Chi;</span>
+      </div>
+      <ul>
+        <li v-for="item in filteredList">
+          <!-- {{item}} -->
+          <span  @click="toDetail(item)">[{{item[0]}}]&nbsp;{{item[2]}}</span>
+          <span  @click="toDetail2(item)">{{item[3]}}</span>
+        </li>
+      </ul>
+    </div>
+  </body>
+  <script>
+    if (window.r) {
+      const totalFundNums = r.length
+      r = r.filter(item => {
+        return item[3].indexOf('股票') > -1 || item[3].indexOf('偏股') > -1
+      })
+      // console.log(r)
+      // alert('是好的')
+      const {
+        createApp,
+        reactive,
+        ref
+      } = Vue
+
+      const app = createApp({
+        computed: {
+          filteredList() {
+            let {
+              filterText,
+              fundLlist
+            } = this
+            console.log(filterText)
+            return fundLlist.filter(item => {
+              if (!filterText) {
+                return true
+              }
+              return item[0].indexOf(filterText) > -1 || item[2]
+                .indexOf(filterText) > -1
+            })
+          }
+        },
+        setup() {
+          let filterText = ref('')
+          return {
+            fundLlist: r,
+            totalFundNums,
+            filterText,
+            showTotal () {
+              alert(`市场上共有${totalFundNums}支基金，其中股票和偏股${this.fundLlist.length}支`)
+            },
+            toDetail(item) {
+              // uni.navigateTo({
+              //   url: `/pages/webview/webview?url=fund&fundcode=${item[0]}`
+              // })
+              location.href = `../fund/index.html?fundcode=${item[0]}`
+            },
+            toDetail2(item) {
+              // uni.navigateTo({
+              //   url: `/pages/webview/webview?url=investFixed&fundcode=${item[0]}`
+              // })
+              location.href = `../investFixed/index.html?fundcode=${item[0]}`
+            }
+          }
+        }
+      })
+
+      app.mount('#app')
+    } else {
+      // console.log('出错了')
+      alert('出错了')
+    }
+
+  </script>
+</html>

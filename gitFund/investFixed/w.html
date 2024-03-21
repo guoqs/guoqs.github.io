@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>表格</title>
+  <script src="../vue.3.3.4.js"></script>
+</head>
+<body>
+  <style>
+    .date-container{
+      display: flex;
+    }
+    .date-container span{
+      flex: 1;
+      text-align: center;
+    }
+  </style>
+</body>
+  <div id="app">
+    <h3 style="text-align:center;line-height: 3;">体温记录</h3>
+    <div v-for="(temp,idx) in temperature ">
+      <div class="date-container" style="margin: 0 100px;">
+        <span v-for="(date,dIdx) in  32" style="margin: 5px 0;" :style="dIdx !==0 && idx?'font-weight: 900':''">{{!dIdx == 1?temperature[idx-1]:  idx?'·':date-1}}</span>
+      </div>
+    </div>
+  </div>
+<script>
+  let {
+    // watch
+    createApp,
+    ref,
+    reactive
+  } = Vue
+  // console.log(watch)
+  const app = createApp({
+    setup() {
+      let temperature = reactive((function() {
+        return new Array(50).fill('').map((item,idx) => {
+          return (idx * 0.1 + 34).toFixed(1)
+        })
+      })())
+      return {
+        temperature
+      }
+    }
+  })
+    
+  app.mount('#app')
+</script>
+</html>

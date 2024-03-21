@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>假设一下</title>
+  <script src="../fund/demo.js"></script>
+  <style>
+    select,
+    input {
+      box-sizing: border-box;
+      height: 32px;
+    }
+
+    label {
+      display: flex;
+      align-items: center;
+    }
+  </style>
+  <script>
+    function formatDate (timeStamp) {
+      let ndate = new Date(timeStamp)
+      let year = ndate.getFullYear()
+      let month = ndate.getMonth() + 1
+      let date = ndate.getDate()
+      return `${year}-${month > 9 ? month : '0' + month}-${date > 9 ? date : '0' + date}`
+    }
+    var fundcode = new URLSearchParams(location.search).get('fundcode')
+    if (fundcode) {
+      var scriptStr = '<'
+      scriptStr += 'scri'
+      scriptStr += 'pt'
+      scriptStr += ' src="http://fund.eastmoney.com/pingzhongdata/' +
+        fundcode + '.js"'
+      scriptStr += '>'
+      scriptStr += '<'
+      scriptStr += '/'
+      scriptStr += 'script'
+      scriptStr += '>'
+      console.log(scriptStr)
+      document.write(scriptStr)
+    }
+
+  </script>
+  <script src="../vue.3.3.4.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <h2 style="text-align: center;font-size: 18px;">
+      <span>{{fS_name}}</span>
+      <sup style="color: #666;">{{fS_code}}</sup>
+    </h2>
+    <div v-if="jj" style="text-align: center;line-height: 5;">我了个x</div>
+    <template v-else>
+      <div style="display: flex; padding: 10px 5px;">
+
+        <select @change="dateQuickChange()" v-model="dateQuickVal">
+          <option value="">请选择</option>
+          <option :value="date.type" v-for="(date,idx) in dateQuicks" :idx="idx">
+            {{date.name}}
+          </option>
+        </select>
+        <input type="date" v-model="useDate.start" :max="useDate.end || startDate.max" :min="startDate.min"
+          style="width:0px;flex:1;margin-left:5px;">
+        <input type="date" v-model="useDate.end" :max="endDate.max" :min="useDate.start || endDate.min"
+          style="width:0px;flex:1;margin-left:5px;">
+
+      </div>
+      <div class="header" style="display: flex; padding: 10px 5px; align-items: center;">
+        <label>
+          <!-- <input type="number" placeholder="基础投入" v-model="sum.base"
+            style="flex: 56px 0 0;width:56px;padding:3px 5px;border-radius: 3px;border: 1px solid #e11;outline: none;"> -->
+          <select v-model="sum.base">
+            <option value="" disabled>基础投入</option>
+            <option :value="val" v-for="val in  [100,500,1000,2000,3000,4000,5000,6000,7000,8000,9000,10000]">{{val}}
+            </option>
+          </select>
+        </label>
+        <label>
+          <input type="radio" value="1" v-model="type">
+          <span>一样</span>
+        </label>
+        <label>
+          <input type="radio" value="2" v-model="type">
+          <span>递增</span>
+        </label>
+
+        <label>
+          <input type="radio" value="3" v-model="type">
+          <span>加倍</span>
+        </label>
+        <!-- 卖不卖 -->
+        <label>
+          <input type="checkbox" v-model="doSale">
+          <span>卖否</span>
+        </label>
+        <div class="empty" style="flex: 1;"></div>
+        <button @click='btnClick'>计算</button>
+      </div>
+      <pre
+        style="border: 1px solid #666;border-radius: 5px;background: #f6f6f6;padding: 10px 3px;font-size: 1.2em;font-weight: 900;line-height: 1.5;">{{JSON.stringify(sum,function(k,v){if (k.indexOf('worth')>-1) {return v?v.toFixed(4):v} if (k.indexOf('Times')>-1) {return v?v.toFixed(0):v} if (typeof v == 'number') {return v.toFixed(2)} return v },' ')}}
+        </pre>
+    </template>
+
+  </div>
+</body>
+<script>
+  let {
+    // watch
+    createApp,
+    ref,
+    reactive
+  } = Vue
+  // console.log(watch)
+  const app = createApp({
+    setup () {
+      if (!window.Data_netWorthTrend) {
+        return {
+          jj: true
+        }
+      }
+      console.log(Data_netWorthTrend)
+      console.log(Data_ACWorthTrend)
+      let start = new Date(Data_ACWorthTrend[0][0])
+      let end = new Date(Data_ACWorthTrend[Data_ACWorthTrend.length - 1][
+        0
+      ])
+      let sMonth = start.getMonth() + 1
+      sMonth = sMonth > 9 ? sMonth : ('0' + sMonth)
+      let eMonth = end.getMonth() + 1
+      eMonth = eMonth > 9 ? eMonth : ('0' + eMonth)
+      let sDate = start.getDate()
+      sDate = sDate > 9 ? sDate : ('0' + sDate)
+      let eDate = end.getDate()
+      eDate = eDate > 9 ? eDate : ('0' + eDate)
+      // console.log(new Date(start))
+      let type = ref('1')
+      let doSale = ref(true)
+      let startDate = reactive({
+        max: `${end.getFullYear()}-${eMonth}-${eDate}`,
+        min: `${start.getFullYear()}-${sMonth}-${sDate}`
+      })
+      let endDate = reactive({
+        max: `${end.getFullYear()}-${eMonth}-${eDate}`,
+        min: `${start.getFullYear()}-${sMonth}-${sDate}`
+      })
+      // console.log(startDate)
+      // console.log(endDate)
+      let useDate = reactive({
+        start: '',
+        end: ''
+      })
+      let sum = reactive({
+        "adTimes": 0,
+        "cutTimes": 0,
+        "base": 1000,
+        "totalMoney": 0,
+        "fundUnit": 0,
+        "fundMoney": 0,
+        "lastestAddUnit": 0,
+        "saledMoney": 0,
+        "worthFirst": 0,
+        "worthEnd": 0,
+        "profit": 0,
+        "trade": "",
+        "tradeMy": ""
+      })
+      // console.log(JSON.stringify(sum, function (k, v) {
+      //   if (typeof v == 'number') {
+      //     return v.toFixed(2)
+      //   }
+      //   return v
+      // }, ' '))
+
+      let dateQuicks = (dn => {
+        let dateArr = [{
+          type: 30,
+          name: `30天`
+        }, {
+          type: 60,
+          name: `60天`
+        }, {
+          type: 90,
+          name: `90天`
+        }]
+        let now = new Date()
+        let nowYear = now.getFullYear()
+        let firstYear = new Date(dn[0].x).getFullYear()
+        // console.log(firstYear)
+        while (nowYear >= firstYear) {
+          dateArr.push({
+            type: nowYear,
+            name: `${nowYear}年`
+          })
+          nowYear--
+        }
+        return dateArr
+      })(Data_netWorthTrend)
+      // console.log(dateQuicks)
+      dateQuicks = reactive(dateQuicks)
+      let dateQuickVal = ref('')
+      let dateQuickChange = () => {
+        let val = dateQuickVal.value
+        if (!val) {
+          useDate.start = useDate.end = ''
+          return
+        }
+        if (val > 999) {
+          useDate.start = val + '-01-01'
+          useDate.end = val + '-12-31'
+          return
+        }
+        let now = new Date()
+        useDate.end = formatDate(+now)
+        useDate.start = formatDate(+now.setDate(now.getDate() -
+          val))
+      }
+      return {
+        jj: false,
+        fS_name,
+        fS_code,
+        type,
+        doSale,
+        startDate,
+        endDate,
+        useDate,
+        sum,
+        dateQuicks,
+        dateQuickVal,
+        dateQuickChange,
+        btnClick () {
+          sum.adTimes = 0
+          sum.cutTimes = 0
+          sum.totalMoney = 0
+          sum.fundUnit = 0
+          sum.fundMoney = 0
+          sum.lastestAddUnit = 0
+          sum.saledMoney = 0
+          sum.worthFirst = 0
+          sum.worthEnd = 0
+          sum.profit = 0
+          sum.trade = ''
+          sum.tradeMy = ''
+          let tradeDownCount = 0
+          let {
+            value
+          } = type
+          let {
+            start,
+            end
+          } = useDate
+          start = +new Date(start) || 0
+          end = +new Date(end) || +new Date()
+          console.log('类型：' + value)
+          console.log({
+            start,
+            end
+          })
+          for (let idx = 0, len = Data_netWorthTrend.length; idx <
+            len; idx++) {
+            let {
+              x,
+              equityReturn
+            } = Data_netWorthTrend[idx]
+            // 不到时间
+            if (x < start) {
+              continue
+            }
+
+            // if (Math.abs(equityReturn) < 0.3) {
+            //   continue
+            // }
+            // 涨了就减仓
+            if (equityReturn > 0) {
+              tradeDownCount = 0
+              if (equityReturn < 0.3) {
+                continue
+              }
+              // 二次上升，卖了就不卖了
+              if (!sum.lastestAddUnit) {
+                continue
+              }
+              // 不卖就不卖了
+              if (!doSale.value) {
+                continue
+              }
+              sum.cutTimes++
+              let item = Data_ACWorthTrend.find(([x1]) => x1 == x)
+              let saledMoney = sum.lastestAddUnit * item[1]
+              sum.saledMoney += saledMoney
+              sum.fundUnit -= sum.lastestAddUnit
+              sum.lastestAddUnit = 0
+              continue
+            }
+            // 这就结束了
+            if (x > end) {
+              let item = Data_ACWorthTrend.find(([x1]) => x1 == x)
+              sum.fundMoney = sum.fundUnit * item[1]
+              sum.profit = (sum.fundMoney + sum.saledMoney) - sum.totalMoney
+              if (!sum.worthEnd) {
+                sum.worthEnd = item[1]
+              }
+              sum.trade = ((sum.worthEnd - sum.worthFirst) * 100 / sum
+                .worthFirst).toFixed(2) + '%'
+              sum.tradeMy = (((sum.saledMoney + sum.fundMoney) / sum.totalMoney - 1) * 100).toFixed(2) + '%'
+              break
+            }
+
+            tradeDownCount++
+            // 如果首次下跌，并且跌幅在0.3以内
+            if (tradeDownCount === 1 && equityReturn > -0.3) {
+              continue
+            }
+            sum.adTimes++
+            let delta = value == 1 ? sum.base : value == 2 ? sum.base *
+              tradeDownCount : value == 3 ? sum.base * (2 ** (tradeDownCount -
+                1)) : 0;
+            // console.log(delta)
+            let item = Data_ACWorthTrend.find(([x1]) => x1 == x);
+            let lastestAddUnit = item ? (delta / item[1]) : 0
+            // 看看买出的钱是否够，
+            if (sum.saledMoney > delta) {
+              sum.saledMoney = sum.saledMoney - delta
+              delta = 0
+            } else {
+              delta = delta - sum.saledMoney
+              sum.saledMoney = 0
+            }
+            // console.log(delta)
+
+            if (!sum.worthFirst) {
+              sum.worthFirst = Data_ACWorthTrend[idx - 1] ? Data_ACWorthTrend[idx - 1][1] : item[1]
+            }
+            sum.fundUnit += lastestAddUnit
+            sum.lastestAddUnit = lastestAddUnit
+            sum.totalMoney += delta
+          }
+          if (!sum.fundMoney) {
+            sum.fundMoney = sum.fundUnit * Data_ACWorthTrend[
+              Data_ACWorthTrend.length - 1][1]
+            sum.profit = (sum.fundMoney + sum.saledMoney) - sum
+              .totalMoney
+          }
+
+          if (!sum.worthEnd) {
+            sum.worthEnd = Data_ACWorthTrend[
+              Data_ACWorthTrend.length - 1][1]
+            sum.trade = ((sum.worthEnd - sum.worthFirst) * 100 / sum
+              .worthFirst).toFixed(2) + '%'
+            sum.tradeMy = (((sum.saledMoney + sum.fundMoney) / sum.totalMoney - 1) * 100).toFixed(2) + '%'
+          }
+          console.log(sum)
+        }
+      }
+    }
+  })
+  app.mount('#app')
+    // console.log(app)
+
+</script>
+
+</html>
