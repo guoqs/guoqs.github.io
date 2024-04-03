@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<title>N 码拼图</title>
+</head>
+<style>
+  div{
+    margin: 10px 0;
+  }
+  .btns{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
+  .btns button{
+    margin-left: 10px;
+  }
+  canvas,img{
+    display: block;
+    max-width: 100%;
+    margin: 10px auto;
+  }
+</style>
+<body>
+  <div>
+    <input type="file"/>
+  </div>
+  <div>
+    <input type="file"/>
+  </div>
+  <div class="btns" id="btns">
+    <button id="add-new">添加一个</button>
+    <button id="create-result">生成</button>
+  </div>
+  <script>
+    let getById = document.getElementById.bind(document)
+    let btns = getById('btns')
+    var addNew = getById('add-new')
+    var createResult = getById('create-result')
+    //动态添加 要拼接的图片
+    addNew.addEventListener('click', function () {
+      var inputEl = document.createElement('input')
+      inputEl.setAttribute('type','file')
+      var divEl = document.createElement('div')
+      divEl.appendChild(inputEl)
+      this.parentNode.parentNode.insertBefore(divEl,btns)
+    }, false)
+    // 生成需要的图片
+    createResult.addEventListener('click', function () {
+       var inputs = [].slice.call(document.querySelectorAll('input[type="file"]'))
+       let files = []
+       inputs.forEach(function (el) {
+         if (el.files.length) {
+           files.push(el.files[0])
+         }
+         console.dir(files)
+       })
+       if (files.length < 1) {
+          alert('至少上传两张图片')
+          return
+       }
+       var cw = 0;
+       var ch = 0;
+       var imgs = [];
+       (function doCreateResult (files,idx) {
+         let sFile = files[idx]
+         if (!sFile) {
+           var canvas = document.createElement('canvas');
+           canvas.width = cw
+           canvas.height = ch
+           var ctx = canvas.getContext('2d')
+           ctx.fillStyle = '#fff'
+           ctx.fillRect(0,0,cw,ch)
+           var posY = 0
+           imgs.forEach(function (img) {
+             ctx.drawImage(img,posY,0)
+             posY += img.naturalWidth
+           })
+          canvas.toBlob(blob => {
+            if(getById('res-img')){
+              document.body.removeChild(getById('res-img'))
+            }
+           let resImg = document.createElement('img')
+           resImg.setAttribute('id', 'res-img')
+           resImg.setAttribute('src', URL.createObjectURL(blob))
+           document.body.appendChild(resImg)
+          },'image/jpeg',0.8)
+           return
+         }
+         var img = document.createElement('img')
+         img.addEventListener('load', function () {
+           imgs.push(this)
+           cw += this.naturalWidth
+           ch = ch > this.naturalHeight?ch:this.naturalHeight
+           doCreateResult (files,++idx)
+         },false)
+         img.setAttribute('src', URL.createObjectURL(sFile))
+       })(files, 0);
+    }, false)
+  </script>
+</body>
+</html>
