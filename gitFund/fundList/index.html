@@ -81,7 +81,7 @@
   <body>
     <div id="app">
       <div class="filter-container">
-        <span @click='showTotal()'>{{filterText?'搜索结果':'市场上'}}共{{filterText?filteredList.length:totalFundNums}}只{{typeFund?'债基':'股基'}}</span>
+        <span @click='showTotal()'>{{filterText?'搜索结果':'显示结果'}}共{{filteredList.length}}只{{typeFund?'债基':'股基'}}</span>
         <input type="text" placeholder="代码或者名称" v-model="filterText">
         <span class="clear" @click="filterText=''">&Chi;</span>
       </div>
