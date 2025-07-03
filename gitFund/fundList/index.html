@@ -99,12 +99,12 @@
 
     if (window.r) {
       const totalFundNums = r.length
-      r = r.filter(item => {
+      r = r.filter((item) => {
         // return item[3].indexOf('股票') > -1 || item[3].indexOf('偏股') > -1
-        return !typeFund ? (item[3].indexOf('股票') > -1 || item[3].indexOf('偏股') > -1) : (item[3].indexOf('股票') < -1 && item[3].indexOf('偏股') < -1)
-      })
-      // console.log(r)
-      // alert('是好的')
+        return !typeFund
+          ? item[3].indexOf("股票") > -1 || item[3].indexOf("偏股") > -1
+          : item[3].indexOf("债券") > -1 || item[3].indexOf("货币") > -1;
+      });
       const {
         createApp,
         reactive,
