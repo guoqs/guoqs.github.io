@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>获取价格</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+
+        div {
+            margin: 10px;
+        }
+
+        input {
+            padding: 5px;
+            border: 1px solid #999;
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 18px;
+            border-radius: 3px;
+        }
+
+        input:focus {
+            border-color: lightskyblue;
+            outline: none;
+        }
+
+        input::placeholder {
+            font-size: 16px;
+        }
+
+        button {
+            padding: 8px 15px;
+            font-size: 16px;
+            border-radius: 3px;
+            transition-duration: .3s;
+        }
+
+        button:active {
+            background-color: lightskyblue;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div><input type="number" placeholder="请输入当前价格" id="nowPrice"></div>
+    <div><input type="number" placeholder="请输入当前数量" id="nowNumber"></div>
+    <div><input type="number" placeholder="请输入目标价格" id="targetPrice"></div>
+    <div><input type="number" placeholder="请输入出手数量" id="outNumber"></div>
+    <div style="text-align: right;"><button id="doCalc">计算</button></div>
+</body>
+<script>
+    let doCalc = document.getElementById('doCalc')
+    doCalc.addEventListener('click', () => {
+        let nowPrice = document.getElementById('nowPrice').value * 1
+        let nowNumber = document.getElementById('nowNumber').value * 1
+        let outNumber = document.getElementById('outNumber').value * 1
+        let targetPrice = document.getElementById('targetPrice').value * 1
+        // console.log(nowPrice)
+        // console.log(nowNumber)
+        // console.log(targetPrice)
+        // console.log(outNumber)
+        if (nowNumber < outNumber) {
+            alert('出手多了')
+            return
+        }
+        let targetRes =  (nowNumber * nowPrice - (nowNumber - outNumber) * targetPrice) / outNumber
+        console.log(targetRes)
+        alert(`结果：${targetRes}`)
+    }, false)
+</script>
+
+</html>
