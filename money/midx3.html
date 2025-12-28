@@ -133,7 +133,7 @@
         const app = createApp({
             setup() {
                 const storageDataStrKey = 'storageDataStrKey'
-                const showPopup = ref(true);
+                const showPopup = ref(false);
                 const storageDataStr = localStorage.getItem(storageDataStrKey);
                 const assets = ['支付宝', '微信①', '微信②', '银行卡']
                 const liabilities = ['招行', '中行', '花呗', '白条']
@@ -168,7 +168,10 @@
                         ]
                     },
                 }
-                const show = ref(true)
+                const show = ref(false)
+                if(new URLSearchParams(window.location.search).get('s')==='gqs'){
+                    show.value = true;
+                }
                 const labelWidth = ref('70px');
                 const date = ref(new Date().toLocaleString());
                 const data = reactive({
