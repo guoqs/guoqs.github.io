@@ -44,15 +44,15 @@
             <div>
                 <h4>GQS：{{gqsTotal.assets - gqsTotal.liabilities}}</h4>
                 <div style="display: flex;line-height: 3;">
-                    <h5 style="flex: 1;">资产：{{gqsTotal.assets}}</h5>
                     <h5 style="flex: 1;">负债：{{gqsTotal.liabilities}}</h5>
+                    <h5 style="flex: 1;">资产：{{gqsTotal.assets}}</h5>
                 </div>
                 <div style="display: flex;">
                     <div style="flex:1 ;">
                         <van-cell-group inset>
                             <van-field v-model="asset.value" type="digit" :label="asset.name" :label-width="labelWidth"
                                 v-for="(asset,key) in data.gqs.liabilities" :key="key" :placeholder="asset.name"
-                                label-align="right" input-align="left" />
+                                label-align="right" input-align="left"  @click-right-icon="doDelete('gqs','liabilities', key)" right-icon="delete-o"/>
                         </van-cell-group>
 
                     </div>
@@ -60,7 +60,7 @@
                         <van-cell-group inset>
                             <van-field v-model="asset.value" type="digit" :label="asset.name" :label-width="labelWidth"
                                 v-for="(asset,key) in data.gqs.assets" :key="key" :placeholder="asset.name"
-                                input-align="left" label-align="right" />
+                                input-align="left" label-align="right"  @click-right-icon="doDelete('gqs','assets', key)" right-icon="delete-o"/>
                         </van-cell-group>
                     </div>
                 </div>
@@ -69,15 +69,15 @@
                 <h4>SYN：{{synTotal.assets - synTotal.liabilities}}</h4>
 
                 <div style="display: flex;line-height: 3;">
-                    <h5 style="flex: 1;">资产：{{synTotal.assets}}</h5>
                     <h5 style="flex: 1;">负债：{{synTotal.liabilities}}</h5>
+                    <h5 style="flex: 1;">资产：{{synTotal.assets}}</h5>
                 </div>
                 <div style="display: flex;">
                     <div style="flex:1 ;">
                         <van-cell-group inset>
                             <van-field v-model="asset.value" type="digit" :label="asset.name" :label-width="labelWidth"
                                 v-for="(asset,key) in data.syn.liabilities" :key="key" :placeholder="asset.name"
-                                input-align="left" label-align="right" />
+                                input-align="left" label-align="right" @click-right-icon="doDelete('syn','liabilities', key)" right-icon="delete-o"/>
                         </van-cell-group>
 
                     </div>
@@ -85,7 +85,7 @@
                         <van-cell-group inset>
                             <van-field v-model="asset.value" type="digit" :label="asset.name" :label-width="labelWidth"
                                 v-for="(asset,key) in data.syn.assets" :key="key" :placeholder="asset.name"
-                                input-align="left" label-align="right" />
+                                input-align="left" label-align="right" @click-right-icon="doDelete('syn','assets', key)" right-icon="delete-o"/>
                         </van-cell-group>
                     </div>
                 </div>
@@ -112,7 +112,8 @@
                             </van-radio-group>
                         </template>
                     </van-field>
-                    <van-field v-model="formData.name" type="text" label="名称" maxlength="4" placeholder="输入名称"></van-field>
+                    <van-field v-model="formData.name" type="text" label="名称" maxlength="4"
+                        placeholder="输入名称"></van-field>
                     <van-field v-model="formData.val" type="digit" label="数值" placeholder="输入数值"></van-field>
                 </van-cell-group>
                 <div style="margin: 16px; display: flex;">
@@ -169,7 +170,7 @@
                     },
                 }
                 const show = ref(false)
-                if(new URLSearchParams(window.location.search).get('s')==='gqs'){
+                if (new URLSearchParams(window.location.search).get('s') === 'gqs') {
                     show.value = true;
                 }
                 const labelWidth = ref('70px');
@@ -236,22 +237,31 @@
                         }
                         localStorage.setItem(storageDataStrKey, JSON.stringify(storageData));
                     },
-                    doClear() {
-                        Object.assign(data, initData);
-                        date.value = new Date().toLocaleString();
-                        localStorage.removeItem(storageDataStrKey);
+                    doDelete(belongs, type, key) {
+                        vant.showDialog({ message: '确定删除该项？', showCancelButton: true }).then(() => {
+                            // 这里可以添加删除逻辑
+                        data[belongs][type].splice(key, 1);
+                            vant.showToast('删除成功');
+                        }).catch(() => { });
                     },
-                    submitConfirm(){
+                    doClear() {
+                        vant.showDialog({ message: '确定重置', showCancelButton: true }).then(() => {
+                            Object.assign(data, initData);
+                            date.value = new Date().toLocaleString();
+                            localStorage.removeItem(storageDataStrKey);
+                        }).catch(() => { });
+                    },
+                    submitConfirm() {
                         console.log(Toast);
-                        if(!formData.belongs){
+                        if (!formData.belongs) {
                             vant.showToast('请选择归属')
                             return;
                         }
-                        if(!formData.type){
+                        if (!formData.type) {
                             vant.showToast('请选择类型')
                             return;
                         }
-                        if(!formData.name){
+                        if (!formData.name) {
                             vant.showToast('请输入名称')
                             return;
                         }
