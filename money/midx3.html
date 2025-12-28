@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>计算</title>
+</head>
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/vant/4.9.21/index.min.css">
+<script src="https://cdn.bootcdn.net/ajax/libs/vue/3.5.22/vue.global.prod.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/vant/4.9.21/vant.min.js"></script>
+<!-- <link rel="stylesheet" href="./index.min.css">
+<script src="./vue.global.prod.min.js"></script>
+<script src="./vant.min.js"></script> -->
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        padding: 10px;
+    }
+
+    :root {
+        --van-padding-md: 0px;
+    }
+</style>
+
+<body>
+    <div id="app">
+        <div style="display: none;" :style="show?'display: block;':''">
+            <h3>资产：{{total.assets}}</h3>
+            <h3>负债：{{total.liabilities}}</h3>
+            <h3>汇总：{{total.assets - total.liabilities}}</h3>
+            <hr style="border-top: 1px solid #f9f9f9;">
+            <div style="display: flex; gap: 10px; padding: 5px 0;justify-content: flex-end; align-items: center;">
+                <p style="flex: 1; color: #999;">{{date}}</p>
+                <van-button type="danger" size="small" @click="showPopup = true">添加</van-button>
+                <van-button type="danger" size="small" @click="doClear()">重置</van-button>
+                <van-button type="danger" size="small" @click="doSave()">保存</van-button>
+            </div>
+            <div>
+                <h4>GQS：{{gqsTotal.assets - gqsTotal.liabilities}}</h4>
+                <div style="display: flex;line-height: 3;">
+                    <h5 style="flex: 1;">资产：{{gqsTotal.assets}}</h5>
+                    <h5 style="flex: 1;">负债：{{gqsTotal.liabilities}}</h5>
+                </div>
+                <div style="display: flex;">
+                    <div style="flex:1 ;">
+                        <van-cell-group inset>
+                            <van-field v-model="asset.value" type="digit" :label="asset.name" :label-width="labelWidth"
+                                v-for="(asset,key) in data.gqs.liabilities" :key="key" :placeholder="asset.name"
+                                label-align="right" input-align="left" />
+                        </van-cell-group>
+
+                    </div>
+                    <div style="flex:1 ;">
+                        <van-cell-group inset>
+                            <van-field v-model="asset.value" type="digit" :label="asset.name" :label-width="labelWidth"
+                                v-for="(asset,key) in data.gqs.assets" :key="key" :placeholder="asset.name"
+                                input-align="left" label-align="right" />
+                        </van-cell-group>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h4>SYN：{{synTotal.assets - synTotal.liabilities}}</h4>
+
+                <div style="display: flex;line-height: 3;">
+                    <h5 style="flex: 1;">资产：{{synTotal.assets}}</h5>
+                    <h5 style="flex: 1;">负债：{{synTotal.liabilities}}</h5>
+                </div>
+                <div style="display: flex;">
+                    <div style="flex:1 ;">
+                        <van-cell-group inset>
+                            <van-field v-model="asset.value" type="digit" :label="asset.name" :label-width="labelWidth"
+                                v-for="(asset,key) in data.syn.liabilities" :key="key" :placeholder="asset.name"
+                                input-align="left" label-align="right" />
+                        </van-cell-group>
+
+                    </div>
+                    <div style="flex:1 ;">
+                        <van-cell-group inset>
+                            <van-field v-model="asset.value" type="digit" :label="asset.name" :label-width="labelWidth"
+                                v-for="(asset,key) in data.syn.assets" :key="key" :placeholder="asset.name"
+                                input-align="left" label-align="right" />
+                        </van-cell-group>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 弹出层 -->
+        <van-popup v-model:show="showPopup" closeable round position="bottom" style="padding: 30px 10px 10px 10px;">
+            <van-form>
+                <van-cell-group inset>
+                    <van-field label="归属">
+                        <template #input>
+                            <van-radio-group v-model="formData.belongs" direction="horizontal">
+                                <van-radio name="gqs">gqs</van-radio>
+                                <van-radio name="syn">syn</van-radio>
+                            </van-radio-group>
+                        </template>
+                    </van-field>
+
+                    <van-field label="类型">
+                        <template #input>
+                            <van-radio-group v-model="formData.type" direction="horizontal">
+                                <van-radio name="assets">资产</van-radio>
+                                <van-radio name="liabilities">负债</van-radio>
+                            </van-radio-group>
+                        </template>
+                    </van-field>
+                    <van-field v-model="formData.name" type="text" label="名称" maxlength="4" placeholder="输入名称"></van-field>
+                    <van-field v-model="formData.val" type="digit" label="数值" placeholder="输入数值"></van-field>
+                </van-cell-group>
+                <div style="margin: 16px; display: flex;">
+                    <van-button round block type="danger" @click="showPopup = false">
+                        关闭
+                    </van-button>
+                    <span style="margin: 0 5px;"></span>
+                    <van-button round block type="primary" @click="submitConfirm()">
+                        提交
+                    </van-button>
+                </div>
+            </van-form>
+        </van-popup>
+    </div>
+    <script>
+        const { createApp, ref, computed, reactive } = Vue;
+        const { Toast } = vant;
+        const app = createApp({
+            setup() {
+                const storageDataStrKey = 'storageDataStrKey'
+                const showPopup = ref(true);
+                const storageDataStr = localStorage.getItem(storageDataStrKey);
+                const assets = ['支付宝', '微信①', '微信②', '银行卡']
+                const liabilities = ['招行', '中行', '花呗', '白条']
+                const initData = {
+                    gqs: {
+                        assets: [
+                            ...[...assets, ...['兴业', '待发', '未来', '个人养老', '证券']].map(item => ({
+                                name: item,
+                                value: undefined
+                            }))
+                        ], liabilities: [
+                            ...[...['平安', '中信', '交行', '民生'], ...liabilities].map(item => ({
+                                name: item,
+                                value: undefined
+                            }))
+
+                        ]
+
+                    },
+                    syn: {
+                        assets: [
+                            ...[...assets, ...['保险', '桂银', '和风散步行']].map(item => ({
+                                name: item,
+                                value: undefined
+                            }))
+                        ], liabilities: [
+                            ...liabilities.map(item => ({
+                                name: item,
+                                value: undefined
+                            }))
+
+                        ]
+                    },
+                }
+                const show = ref(true)
+                const labelWidth = ref('70px');
+                const date = ref(new Date().toLocaleString());
+                const data = reactive({
+                });
+                const formData = reactive({
+                    belongs: '',
+                    type: '',
+                    name: '',
+                    val: undefined
+                });
+                if (storageDataStr) {
+                    try {
+                        let storageData = JSON.parse(storageDataStr);
+                        Object.assign(data, storageData.data);
+                        date.value = storageData.date;
+                    } catch (e) {
+                        Object.assign(data, initData);
+                        date.value = new Date().toLocaleString();
+                    }
+                } else {
+                    Object.assign(data, initData);
+                    date.value = new Date().toLocaleString();
+                }
+                console.log(data);
+                const getTotal = (items) => {
+                    const { assets, liabilities } = items
+                    return {
+                        assets: assets.reduce((sum, item) => sum + (Number(item.value) || 0), 0),
+                        liabilities: liabilities.reduce((sum, item) => sum + (Number(item.value) || 0), 0)
+                    }
+                };
+                const gqsTotal = computed(() => {
+                    // 这里可以添加计算逻辑
+                    return getTotal(data.gqs);
+                });
+                const synTotal = computed(() => {
+                    // 这里可以添加计算逻辑
+                    return getTotal(data.syn);
+                });
+                const total = computed(() => {
+                    // 这里可以添加计算逻辑
+                    return {
+                        assets: gqsTotal.value.assets + synTotal.value.assets,
+                        liabilities: gqsTotal.value.liabilities + synTotal.value.liabilities
+                    }
+                });
+                return {
+                    data,
+                    date,
+                    labelWidth,
+                    total,
+                    synTotal,
+                    gqsTotal,
+                    showPopup,
+                    show,
+                    formData,
+                    doSave() {
+                        date.value = new Date().toLocaleString();
+                        const storageData = {
+                            data,
+                            date: date.value
+                        }
+                        localStorage.setItem(storageDataStrKey, JSON.stringify(storageData));
+                    },
+                    doClear() {
+                        Object.assign(data, initData);
+                        date.value = new Date().toLocaleString();
+                        localStorage.removeItem(storageDataStrKey);
+                    },
+                    submitConfirm(){
+                        console.log(Toast);
+                        if(!formData.belongs){
+                            vant.showToast('请选择归属')
+                            return;
+                        }
+                        if(!formData.type){
+                            vant.showToast('请选择类型')
+                            return;
+                        }
+                        if(!formData.name){
+                            vant.showToast('请输入名称')
+                            return;
+                        }
+                        const targetList = data[formData.belongs][formData.type];
+                        if (targetList) {
+                            targetList.push({
+                                name: formData.name,
+                                value: formData.val
+                            });
+                            // 重置表单
+                            formData.belongs = '';
+                            formData.type = '';
+                            formData.name = '';
+                            formData.val = undefined;
+                            showPopup.value = false;
+
+                        }
+                    }
+                }
+            }
+        })
+        app.use(vant);
+        app.mount('#app');     
+    </script>
+</body>
+
+</html>
