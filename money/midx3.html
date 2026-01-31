@@ -138,33 +138,29 @@
                 const storageDataStr = localStorage.getItem(storageDataStrKey);
                 const assets = ['支付宝', '微信①', '微信②', '银行卡','余利宝']
                 const liabilities = ['招行', '中行', '花呗', '白条']
+                const initItem = () => {
+                                const arr = item.split(':')
+                                          return {
+                                name: arr[0],
+                                value: arr[0]
+                            }
+                    
+                }
                 const initData = {
                     gqs: {
                         assets: [
-                            ...[...assets, ...['兴业','恩希', '待发', '未来', '个人养老', '邮储基金', '证券']].map(item => ({
-                                name: item,
-                                value: undefined
-                            }))
+                            ...[...assets, ...['兴业','恩希', '待发', '未来', '个人养老', '邮储基金', '证券']].map(initItem)
                         ], liabilities: [
-                            ...[...['平安', '中信', '交行', '民生'], ...liabilities].map(item => ({
-                                name: item,
-                                value: undefined
-                            }))
+                            ...[...['平安', '中信', '交行', '民生'], ...liabilities].map(initItem)
 
                         ]
 
                     },
                     syn: {
                         assets: [
-                            ...[...assets, ...['保险', '桂银','邮储债券','天猫卡', '和风散步行']].map(item => ({
-                                name: item,
-                                value: undefined
-                            }))
+                            ...[...assets, ...['保险', '桂银','邮储债券','天猫卡', '和风散步行']].map(initItem)
                         ], liabilities: [
-                            ...liabilities.map(item => ({
-                                name: item,
-                                value: undefined
-                            }))
+                            ...liabilities.map(initItem)
 
                         ]
                     },
