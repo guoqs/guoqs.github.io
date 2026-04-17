@@ -27,7 +27,7 @@
       let date = ndate.getDate()
       return `${year}-${month > 9 ? month : '0' + month}-${date > 9 ? date : '0' + date}`
     }
-    var fundcode = new URLSearchParams(location.search).get('fundcode')
+    var fundcode = new URLSearchParams(location.search).get('fundcode')||'510310'
     if (fundcode) {
       var scriptStr = '<'
       scriptStr += 'scri'
