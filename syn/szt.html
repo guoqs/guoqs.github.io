@@ -50,7 +50,7 @@
 </head>
 <body>
   <div id="app" style="display: none;" :style="'display: block;'">
-    <input type="number" placeholder="过滤数据" v-model="filter"/>
+    <input type="number" placeholder="过滤数据(通过ULR 可传参数:s=8.55)" v-model="filter"/>
     <ul>
     	<li v-for="item in computedArr" :key='item.dayNum'>
     	  <span>{{item.dayNum}}</span>
