@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>模拟定投</title>
+<script src="https://cdn.bootcdn.net/ajax/libs/vue/3.5.22/vue.global.prod.min.js"></script>
+
+  <style>
+    select,
+    input {
+      box-sizing: border-box;
+      height: 32px;
+    }
+
+    label {
+      display: flex;
+      align-items: center;
+    }
+  </style>
+  <script>
+    function formatDate(timeStamp) {
+      let ndate = new Date(timeStamp);
+      let year = ndate.getFullYear();
+      let month = ndate.getMonth() + 1;
+      let date = ndate.getDate();
+      return `${year}-${month > 9 ? month : "0" + month}-${date > 9 ? date : "0" + date}`;
+    }
+    var fundcode =
+      new URLSearchParams(location.search).get("fundcode") || "510310";
+    if (fundcode) {
+      var scriptStr = "<";
+      scriptStr += "scri";
+      scriptStr += "pt";
+      scriptStr +=
+        ' src="http://fund.eastmoney.com/pingzhongdata/' + fundcode + '.js"';
+      scriptStr += ">";
+      scriptStr += "<";
+      scriptStr += "/";
+      scriptStr += "script";
+      scriptStr += ">";
+      document.write(scriptStr);
+    }
+  </script>
+</head>
+
+<body>
+  <div id="app">
+    <h2 style="text-align: center; font-size: 18px">
+      <span>{{fS_name}}</span>
+      <sup style="color: #666">{{fS_code}}</sup>
+    </h2>
+    <div v-if="jj" style="text-align: center; line-height: 5">我了个x</div>
+    <template v-else>
+      <div style="display: flex; padding: 10px 5px">
+        <select @change="dateQuickChange()" v-model="dateQuickVal">
+          <option value="">请选择</option>
+          <option :value="date.type" v-for="(date,idx) in dateQuicks" :idx="idx">
+            {{date.name}}
+          </option>
+        </select>
+        <input type="date" v-model="useDate.start" :max="useDate.end || startDate.max" :min="startDate.min"
+          style="width: 0px; flex: 1; margin-left: 5px" />
+        <input type="date" v-model="useDate.end" :max="endDate.max" :min="useDate.start || endDate.min"
+          style="width: 0px; flex: 1; margin-left: 5px" />
+      </div>
+      <div class="header" style="display: flex; padding: 10px 5px; align-items: center;margin: 1px 0;">
+        <label style="flex: 1; display: block">
+          <!-- <input type="number" placeholder="基础投入" v-model="sum.base"
+            style="flex: 56px 0 0;width:56px;padding:3px 5px;border-radius: 3px;border: 1px solid #e11;outline: none;"> -->
+          <select v-model="sum.base" style="width: 100%">
+            <option value="" disabled>基础投入</option>
+            <option :value="val" v-for="val in  [1000,2000,5000,10000,20000,50000,100000]">
+              {{val}}
+            </option>
+          </select>
+        </label>
+        <label>
+          <input type="radio" value="day" v-model="investType" />
+          <span>日定投</span>
+        </label>
+        <label>
+          <input type="radio" value="week" v-model="investType" />
+          <span>周定投</span>
+        </label>
+        <label>
+          <input type="radio" value="month" v-model="investType" />
+          <span>月定投</span>
+        </label>
+        <button @click="btnClick">计算</button>
+      </div>
+      <pre style="
+            border: 1px solid #666;
+            border-radius: 5px;
+            background: #f6f6f6;
+            padding: 10px 3px;
+            font-size: 1.2em;
+            font-weight: 900;
+            line-height: 1.5;
+          ">
+{{JSON.stringify(sum,function(k,v){if (k.indexOf('orth')>-1) {return v?v.toFixed(4):v} if (k.indexOf('Times')>-1) {return v?v.toFixed(0):v} if (typeof v == 'number') {return v.toFixed(2)} return v },' ')}}
+        </pre>
+    </template>
+  </div>
+</body>
+<script>
+  let {
+    // watch
+    createApp,
+    ref,
+    reactive,
+  } = Vue;
+  // console.log(watch)
+  const app = createApp({
+    setup() {
+      if (!window.Data_netWorthTrend) {
+        return {
+          jj: true,
+        };
+      }
+      // console.log(Data_netWorthTrend);
+      // 下面这个是累计净值
+      // console.log(Data_ACWorthTrend);
+      let start = new Date(Data_ACWorthTrend[0][0]);
+      let end = new Date(Data_ACWorthTrend[Data_ACWorthTrend.length - 1][0]);
+      let sMonth = start.getMonth() + 1;
+      sMonth = sMonth > 9 ? sMonth : "0" + sMonth;
+      let eMonth = end.getMonth() + 1;
+      eMonth = eMonth > 9 ? eMonth : "0" + eMonth;
+      let sDate = start.getDate();
+      sDate = sDate > 9 ? sDate : "0" + sDate;
+      let eDate = end.getDate();
+      eDate = eDate > 9 ? eDate : "0" + eDate;
+      // console.log(new Date(start))
+      let investType = ref("week");
+      let startDate = reactive({
+        max: `${end.getFullYear()}-${eMonth}-${eDate}`,
+        min: `${start.getFullYear()}-${sMonth}-${sDate}`,
+      });
+      let endDate = reactive({
+        max: `${end.getFullYear()}-${eMonth}-${eDate}`,
+        min: `${start.getFullYear()}-${sMonth}-${sDate}`,
+      });
+      // console.log(startDate)
+      // console.log(endDate)
+      let useDate = reactive({
+        start: "",
+        end: "",
+      });
+      let sum = reactive({
+        adTimes: 0,
+        base: 1000,
+        firstWorth: 0,
+        lastWorth: 0,
+        totalMoney: 0,
+        fundUnit: 0,
+        fundMoney: 0,
+        profit: 0,
+        trade: "",
+        myTrade: "",
+      });
+      // console.log(JSON.stringify(sum, function (k, v) {
+      //   if (typeof v == 'number') {
+      //     return v.toFixed(2)
+      //   }
+      //   return v
+      // }, ' '))
+
+      let dateQuicks = ((dn) => {
+        let dateArr = [
+          {
+            type: 30,
+            name: `30天`,
+          },
+          {
+            type: 60,
+            name: `60天`,
+          },
+          {
+            type: 90,
+            name: `90天`,
+          },
+        ];
+        let now = new Date();
+        let nowYear = now.getFullYear();
+        let firstYear = new Date(dn[0].x).getFullYear();
+        // console.log(firstYear)
+        while (nowYear >= firstYear) {
+          dateArr.push({
+            type: nowYear,
+            name: `${nowYear}年`,
+          });
+          nowYear--;
+        }
+        return dateArr;
+      })(Data_netWorthTrend);
+      // console.log(dateQuicks)
+      dateQuicks = reactive(dateQuicks);
+      let dateQuickVal = ref("");
+      let dateQuickChange = () => {
+        let val = dateQuickVal.value;
+        if (!val) {
+          useDate.start = useDate.end = "";
+          return;
+        }
+        // 大于 99 被认为是 一整年
+        if (val > 999) {
+          useDate.start = val + "-01-01";
+          useDate.end = val + "-12-31";
+          console.log(+new Date(useDate.start), Data_ACWorthTrend[0][0])
+
+          console.log(useDate.start, useDate.end)
+          return;
+        } else {
+          let now = new Date();
+          useDate.end = formatDate(+now);
+          useDate.start = formatDate(+now.setDate(now.getDate() - val));
+
+        }
+
+        if (+new Date(useDate.start) < Data_ACWorthTrend[0][0]) {
+          useDate.start = formatDate(Data_ACWorthTrend[0][0])
+        }
+
+        if (+new Date(useDate.end) > Data_ACWorthTrend[Data_ACWorthTrend.length - 1][0]) {
+          useDate.end = formatDate(Data_ACWorthTrend[Data_ACWorthTrend.length - 1][0])
+        }
+      };
+      const dataMap = {
+        day: 1,
+        week: 7,
+        month: 30,
+      };
+      return {
+        jj: false,
+        fS_name,
+        fS_code,
+        investType,
+        startDate,
+        endDate,
+        useDate,
+        sum,
+        dateQuicks,
+        dateQuickVal,
+        dateQuickChange,
+        btnClick() {
+          Object.keys(sum).forEach(key => {
+            if (key === 'base') {
+              return
+
+            }
+            sum[key] = 0
+          })
+          const getDataItem = (date) => {
+            const timeStamp = +new Date(date)
+            for (let i = 0; i < Data_ACWorthTrend.length; i++) {
+              if (timeStamp <= Data_ACWorthTrend[i][0]) {
+                return Data_ACWorthTrend[i];
+              }
+            }
+            return null;
+          }
+          let { start, end } = useDate
+          // 如果没有选择日期，就默认用数据的开始和结束日期
+          if (!start) {
+            start = Data_ACWorthTrend[0][0]
+          }
+          if (!end) {
+            end = Data_ACWorthTrend[Data_ACWorthTrend.length - 1][0]
+          }
+          const { base } = sum
+          const ivnType = investType.value
+
+
+          let date = new Date(start)
+          let dataItem = getDataItem(start)
+          let firstValue = 0
+          let lastValue = 0
+          let preDate = null
+          while (dataItem) {
+            if (preDate != dataItem[0]) {
+              sum.adTimes++
+              sum.totalMoney += base
+              sum.fundUnit += base / dataItem[1]
+              preDate = dataItem[0]
+
+            }
+            if (!firstValue) {
+              firstValue = dataItem[1]
+            }
+            lastValue = dataItem[1]
+            console.log(formatDate(dataItem[0]), dataItem[1])
+            date = new Date(date.getTime() + dataMap[ivnType] * 24 * 3600 * 1000)
+            if (date.getTime() > new Date(end).getTime()) {
+              dataItem = null
+            } else {
+              dataItem = getDataItem(date)
+            }
+          }
+          // 最后的计算
+          let lastDataItem = getDataItem(end)
+          if (lastDataItem) {
+            lastValue = lastDataItem[1]
+          }
+          sum.firstWorth = firstValue
+          sum.lastWorth = lastValue
+          sum.fundMoney = sum.fundUnit * lastValue
+          sum.profit = sum.fundMoney - sum.totalMoney
+          sum.trade = ((lastValue / firstValue - 1) * 100).toFixed(2) + '%'
+          sum.myTrade = ((sum.fundMoney / sum.totalMoney - 1) * 100).toFixed(2) + '%'
+          console.log('最后一个dataItem:', dataItem);
+          console.log('sum:', sum);
+          if (dataItem) {
+            // Do something with the found data item
+            console.log('Found data item:', dataItem);
+          }
+
+          console.log(start, end)
+          console.log(ivnType)
+          console.log(Data_ACWorthTrend)
+          console.log(base)
+        },
+      };
+    },
+  });
+  app.mount("#app");
+  // console.log(app)
+</script>
+
+</html>
