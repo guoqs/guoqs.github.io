@@ -152,7 +152,9 @@
         adTimes: 0,
         base: 1000,
         firstWorth: 0,
+        firstDate: "",
         lastWorth: 0,
+        lastDate: "",
         totalMoney: 0,
         fundUnit: 0,
         fundMoney: 0,
@@ -195,7 +197,7 @@
         }
         return dateArr;
       })(Data_netWorthTrend);
-      // console.log(dateQuicks)
+      console.log(dateQuicks)
       dateQuicks = reactive(dateQuicks);
       let dateQuickVal = ref("");
       let dateQuickChange = () => {
@@ -208,7 +210,13 @@
         if (val > 999) {
           useDate.start = val + "-01-01";
           useDate.end = val + "-12-31";
-          console.log(+new Date(useDate.start), Data_ACWorthTrend[0][0])
+          const endTimeStamp = +new Date(useDate.end.split('-').map(item => {
+            return Number(item)
+          }))
+          if (endTimeStamp > Data_ACWorthTrend[Data_ACWorthTrend.length - 1][0]) {
+            useDate.end = formatDate(Data_ACWorthTrend[Data_ACWorthTrend.length - 1][0])
+
+          }
 
           console.log(useDate.start, useDate.end)
           return;
@@ -304,7 +312,9 @@
             lastValue = lastDataItem[1]
           }
           sum.firstWorth = firstValue
+          sum.firstDate = formatDate(+new Date(start))
           sum.lastWorth = lastValue
+          sum.lastDate = formatDate(+new Date(end))
           sum.fundMoney = sum.fundUnit * lastValue
           sum.profit = sum.fundMoney - sum.totalMoney
           sum.trade = ((lastValue / firstValue - 1) * 100).toFixed(2) + '%'
