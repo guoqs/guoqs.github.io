@@ -78,6 +78,10 @@
           <input type="radio" :value="2" v-model="saleType" />
           <span>买一卖二</span>
         </label>
+        <label>
+          <input type="radio" :value="3" v-model="saleType" />
+          <span>买一卖二②</span>
+        </label>
       </div>
       <div class="header" style="display: flex; padding: 10px 5px; align-items: center;margin: 1px 0;">
         <label style="flex: 1; display: block">
@@ -147,7 +151,7 @@
       let eDate = end.getDate();
       eDate = eDate > 9 ? eDate : "0" + eDate;
       // console.log(new Date(start))
-      let investType = ref("week");
+      let investType = ref("day");
       let saleType = ref(0);
       let itemIndex = ref(0);
       let startDate = reactive({
@@ -166,6 +170,8 @@
       });
       let sum = reactive({
         adTimes: 0,
+        upTimes: 0,
+        downTimes: 0,
         counts: 0,
         maxCount: 0,
         base: 1000,
@@ -312,19 +318,40 @@
           while (dataItem) {
             if (preDate != dataItem[0]) {
 
-              //先考虑把之前的卖了 下面是卖的逻辑
-              if (sum.counts > 7) {
                 // 满足 7 天才能卖出
                 const preItem = Data_ACWorthTrend[itemIndex.value - 1]
+                const prePreItem = Data_ACWorthTrend[itemIndex.value - 2]
+              //先考虑把之前的卖了 下面是卖的逻辑
+              if (sum.counts > 7) {
                 // 涨了 就卖了
-                if (dataItem[1] > preItem[1]) {
-                  const deltaUnit = (base / preItem[1]) * saType
-                  sum.fundUnit -= deltaUnit
-                  sum.saledMoney += deltaUnit * dataItem[1]
-                  sum.counts -= saType
+                if (saType < 3) {
+                  if (dataItem[1] > preItem[1]) {
+                    const deltaUnit = (base / preItem[1]) * saType
+                    sum.fundUnit -= deltaUnit
+                    sum.saledMoney += deltaUnit * dataItem[1]
+                    sum.counts -= saType
+                  }
+                }else{
+                  // 分两种情况，大于跌的 或者 涨了两天才开始卖
+                  if ((dataItem[1] > preItem[1] && preItem[1] > prePreItem[1]) || (dataItem[1] > prePreItem[1])) {
+                    const tempSaType = 2
+                    const deltaUnit = (base / preItem[1]) * tempSaType
+                    sum.fundUnit -= deltaUnit
+                    sum.saledMoney += deltaUnit * dataItem[1]
+                    sum.counts -= tempSaType
+
+                  }
                 }
               }
               sum.adTimes++
+              if (preItem) {
+              if (dataItem[1] > preItem[1]) {
+                sum.upTimes++
+              } else if (dataItem[1] < preItem[1]) {
+                sum.downTimes++
+              }
+
+              }
               sum.counts++
               sum.maxCount = Math.max(sum.counts, sum.maxCount)
               // 如果 买入的时候 有卖了的钱就用这个钱买，本机不再投入了
