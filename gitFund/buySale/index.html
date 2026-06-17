@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>模拟定投</title>
-<script src="//cdn.bootcdn.net/ajax/libs/vue/3.5.22/vue.global.prod.min.js"></script>
+  <script src="//cdn.bootcdn.net/ajax/libs/vue/3.5.22/vue.global.prod.min.js"></script>
 
   <style>
     select,
@@ -173,6 +173,7 @@
         upTimes: 0,
         downTimes: 0,
         counts: 0,
+        soldOut:0,
         maxCount: 0,
         maxCountDate: '',
         base: 1000,
@@ -187,6 +188,7 @@
         profit: 0,
         trade: "",
         myTrade: "",
+        soldOutDates:[]
       });
       // console.log(JSON.stringify(sum, function (k, v) {
       //   if (typeof v == 'number') {
@@ -287,7 +289,7 @@
             sum[key] = 0
           })
           const getDataItem = (date, itemIndex) => {
-            const timeStamp = +new Date(date) -  8*3600*1000
+            const timeStamp = +new Date(date) - 8 * 3600 * 1000
             for (let i = 0; i < Data_ACWorthTrend.length; i++) {
               if (timeStamp <= Data_ACWorthTrend[i][0]) {
                 if (itemIndex) {
@@ -323,27 +325,37 @@
               const preItem = Data_ACWorthTrend[itemIndex.value - 1]
               const prePreItem = Data_ACWorthTrend[itemIndex.value - 2]
               //先考虑把之前的卖了 下面是卖的逻辑
-              if (sum.counts > 7) {
-                // 涨了 就卖了
-                if (saType < 3) {
-                  if (dataItem[1] > preItem[1]) {
-                    const deltaUnit = (base / preItem[1]) * saType
-                    sum.fundUnit -= deltaUnit
-                    sum.saledMoney += deltaUnit * dataItem[1]
-                    sum.counts -= saType
-                  }
-                } else {
-                  // 分两种情况，大于跌的 或者 涨了两天才开始卖
-                  if ((dataItem[1] > preItem[1] && preItem[1] > prePreItem[1]) || (dataItem[1] > prePreItem[1])) {
-                    const tempSaType = 2
-                    const deltaUnit = (base / preItem[1]) * tempSaType
-                    sum.fundUnit -= deltaUnit
-                    sum.saledMoney += deltaUnit * dataItem[1]
-                    sum.counts -= tempSaType
+              if (sum.adTimes > 7) {
+                if (sum.counts > 7) {
+                  // 涨了 就卖了
+                  if (saType < 3) {
+                    if (dataItem[1] > preItem[1]) {
+                      const deltaUnit = (base / preItem[1]) * saType
+                      sum.fundUnit -= deltaUnit
+                      sum.saledMoney += deltaUnit * dataItem[1]
+                      sum.counts -= saType
+                    }
+                  } else {
+                    // 分两种情况，大于跌的 或者 涨了两天才开始卖
+                    if ((dataItem[1] > preItem[1] && preItem[1] > prePreItem[1]) || (dataItem[1] > prePreItem[1])) {
+                      const tempSaType = 2
+                      const deltaUnit = (base / preItem[1]) * tempSaType
+                      sum.fundUnit -= deltaUnit
+                      sum.saledMoney += deltaUnit * dataItem[1]
+                      sum.counts -= tempSaType
 
+                    }
+                  }
+                }else{
+                  sum.soldOut += 1
+                  if (Array.isArray(sum.soldOutDates)) {
+                    sum.soldOutDates.push(new Date(dataItem[0]).toLocaleDateString())
+                  }else{
+                    sum.soldOutDates = [new Date(dataItem[0]).toLocaleDateString()]
                   }
                 }
               }
+
               sum.adTimes++
               if (preItem) {
                 if (dataItem[1] > preItem[1]) {
@@ -351,7 +363,6 @@
                 } else if (dataItem[1] < preItem[1]) {
                   sum.downTimes++
                 }
-
               }
               sum.counts++
               if (sum.counts > sum.maxCount) {
@@ -362,14 +373,11 @@
               if (sum.saledMoney > base) {
                 sum.saledMoney -= base
               } else {
-
                 sum.totalMoney += (base - sum.saledMoney)
                 sum.saledMoney = 0
-
               }
               sum.fundUnit += base / dataItem[1]
               preDate = dataItem[0]
-
             }
             if (!firstValue) {
               firstValue = dataItem[1]
