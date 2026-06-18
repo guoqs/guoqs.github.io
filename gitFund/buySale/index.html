@@ -173,7 +173,7 @@
         upTimes: 0,
         downTimes: 0,
         counts: 0,
-        soldOut:0,
+        soldOut: 0,
         maxCount: 0,
         maxCountDate: '',
         base: 1000,
@@ -186,9 +186,13 @@
         fundMoney: 0,
         saledMoney: 0,
         profit: 0,
+        MaxProfit: -1,
+        MaxProfitDate:'',
+        MinProfit: 1,
+        MinProfitDate:'',
         trade: "",
         myTrade: "",
-        soldOutDates:[]
+        soldOutDates: []
       });
       // console.log(JSON.stringify(sum, function (k, v) {
       //   if (typeof v == 'number') {
@@ -286,6 +290,14 @@
             if (key === 'base') {
               return
             }
+            if (key === 'MaxProfit') {
+              sum[key] = -1
+              return
+            }
+            if (key === 'MinProfit') {
+              sum[key] = 1
+              return
+            }
             sum[key] = 0
           })
           const getDataItem = (date, itemIndex) => {
@@ -326,7 +338,7 @@
               const prePreItem = Data_ACWorthTrend[itemIndex.value - 2]
               //先考虑把之前的卖了 下面是卖的逻辑
               if (sum.adTimes > 7) {
-                if (sum.counts > 7) {
+                if (sum.counts >= 7) {
                   // 涨了 就卖了
                   if (saType < 3) {
                     if (dataItem[1] > preItem[1]) {
@@ -346,12 +358,15 @@
 
                     }
                   }
-                }else{
-                  sum.soldOut += 1
-                  if (Array.isArray(sum.soldOutDates)) {
-                    sum.soldOutDates.push(new Date(dataItem[0]).toLocaleDateString())
-                  }else{
-                    sum.soldOutDates = [new Date(dataItem[0]).toLocaleDateString()]
+                } else {
+                  if (dataItem[1] > preItem[1]) {
+                    sum.soldOut += 1
+                    if (Array.isArray(sum.soldOutDates)) {
+                      sum.soldOutDates.push(new Date(dataItem[0]).toLocaleDateString())
+                    } else {
+                      sum.soldOutDates = [new Date(dataItem[0]).toLocaleDateString()]
+                    }
+
                   }
                 }
               }
@@ -379,6 +394,16 @@
               sum.fundUnit += base / dataItem[1]
               preDate = dataItem[0]
             }
+            // 最大获利或者亏损
+            const tProfit = sum.fundUnit * dataItem[1] + sum.saledMoney - sum.totalMoney
+            if (tProfit > sum.MaxProfit) {
+              sum.MaxProfitDate = formatDate(dataItem[0])
+            }
+            sum.MaxProfit = Math.max(tProfit, sum.MaxProfit)
+            if (tProfit < sum.MinProfit) {
+              sum.MinProfitDate = formatDate(dataItem[0])
+            }
+            sum.MinProfit = Math.min(tProfit, sum.MinProfit)
             if (!firstValue) {
               firstValue = dataItem[1]
             }
