@@ -1,9 +1,10 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>T</title>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>T</title>
   <script src="//cdn.bootcdn.net/ajax/libs/vue/3.5.22/vue.global.prod.min.js"></script>
     <script>
     var fundcode =
@@ -22,321 +23,384 @@
       document.write(scriptStr);
     }
   </script>
-  </head>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    input,
-    button,
-    select {
-      padding: 6px 1px;
-    }
-    .section-area {
-      display: flex;
-      align-self: center;
-      margin: 5px 0;
-    }
-    .section-item {
-      flex: 1;
-      margin: 0 3px;
-    }
-    select.section-item {
-      flex: 2 0 0;
-    }
-    [type="date"].section-item {
-      flex: 3 0 0;
-    }
-    label.section-item {
-      display: flex;
-      align-items: center;
-    }
-    pre {
-      background-color: #f3f3f3;
-      margin: 10px 0;
-      padding: 16px 5px;
-      font-size: 16px;
-      border-radius: 10px;
-      line-height: 1.5;
-    }
-  </style>
+</head>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-  <body>
-    <div id="app">
-      <div
-        class="app-container"
-        style="max-width: 700px; margin: 0 auto; padding: 10px 5px"
-      >
-        <h4 style="text-align: center; margin: 20px 0" v-if="iShow">
-          <span>{{fS_name}}</span>
-          <sup style="margin-left: 5px">{{fS_code}}</sup>
-        </h4>
-        <div class="section-area">
-          <select v-model="investmentBase" class="section-item">
-            <option :value="base" :key="base" v-for="base in baseList">
-              {{base}}
-            </option>
-          </select>
-          <select
-            v-model="quickDate"
-            @change="onQuickDateChange()"
-            class="section-item"
-          >
-            <option :value="0">选择年份</option>
-            <option :value="date" :key="date" v-for="date in yearRange">
-              {{date}}
-            </option>
-          </select>
-          <input
-            class="section-item"
-            type="date"
-            v-model="startDate"
-            :max="endDate || dateRagne.max"
-            :min="dateRagne.min"
-          />
-          <input
-            type="date"
-            class="section-item"
-            v-model="endDate"
-            :max="dateRagne.max"
-            :min="startDate || dateRagne.min"
-          />
-        </div>
-        <div class="section-area">
-          <label class="section-item">
-            <input type="radio" :value="0" v-model="saleType" />
-            <span>0000</span>
-          </label>
-          <label class="section-item">
-            <input type="radio" :value="1" v-model="saleType" />
-            <span>1111</span>
-          </label>
-          <label class="section-item">
-            <input type="radio" :value="2" v-model="saleType" />
-            <span>2222</span>
-          </label>
-          <label class="section-item">
-            <input type="radio" :value="3" v-model="saleType" />
-            <span>3333</span>
-          </label>
-          <button
-            @click="doCalc"
-            style="padding-left: 10px; padding-right: 10px"
-          >
-            计算
-          </button>
-        </div>
-        
-        <pre v-if="lastObjects.dateStr">
-{{JSON.stringify(lastObjects, formatJson,'  ')}}</pre
-        >
-        <pre v-if="maxObjects.dateStr">
-{{JSON.stringify(maxObjects, formatJson,'  ')}}</pre
-        >
-        <pre v-if="minObjects.dateStr">
-{{JSON.stringify(minObjects, formatJson,'  ')}}</pre
-        >
+  input,
+  button,
+  select {
+    padding: 6px 1px;
+  }
+
+  .section-area {
+    display: flex;
+    align-self: center;
+    margin: 5px 0;
+  }
+
+  .section-item {
+    flex: 1;
+    margin: 0 3px;
+  }
+
+  select.section-item {
+    flex: 2 0 0;
+  }
+
+  [type="date"].section-item {
+    flex: 3 0 0;
+  }
+
+  label.section-item {
+    display: flex;
+    align-items: center;
+  }
+
+  pre {
+    background-color: #f3f3f3;
+    margin: 10px 0;
+    padding: 16px 5px;
+    font-size: 16px;
+    border-radius: 10px;
+    line-height: 1.5;
+  }
+</style>
+
+<body>
+  <div id="app">
+    <div class="app-container" style="max-width: 700px; margin: 0 auto; padding: 10px 5px">
+      <h4 style="text-align: center; margin: 20px 0" v-if="iShow">
+        <span>{{fS_name}}</span>
+        <sup style="margin-left: 5px">{{fS_code}}</sup>
+      </h4>
+      <div class="section-area">
+        <select v-model="investmentBase" class="section-item">
+          <option :value="base" :key="base" v-for="base in baseList">
+            {{base}}
+          </option>
+        </select>
+        <select v-model="quickDate" @change="onQuickDateChange()" class="section-item">
+          <option :value="0">选择年份</option>
+          <option :value="date" :key="date" v-for="date in yearRange">
+            {{date}}
+          </option>
+        </select>
+        <input class="section-item" type="date" v-model="startDate" :max="endDate || dateRagne.max"
+          :min="dateRagne.min" />
+        <input type="date" class="section-item" v-model="endDate" :max="dateRagne.max"
+          :min="startDate || dateRagne.min" />
       </div>
+      <div class="section-area">
+        <label class="section-item">
+          <input type="radio" :value="0" v-model="saleType" />
+          <span>NoSale</span>
+        </label>
+        <label class="section-item">
+          <input type="radio" :value="1" v-model="saleType" />
+          <span>UP*1</span>
+        </label>
+        <label class="section-item">
+          <input type="radio" :value="2" v-model="saleType" />
+          <span>UP*2</span>
+        </label>
+        <label class="section-item">
+          <input type="radio" :value="3" v-model="saleType" />
+          <span>NB||0.05</span>
+        </label>
+        <label class="section-item">
+          <input type="radio" :value="4" v-model="saleType" />
+          <span>NB||0.1</span>
+        </label>
+      </div>
+      <div class="section-area" style="justify-content: flex-end;">
+        <button @click="doCalc" style="padding-left: 10px; padding-right: 10px">
+          计算
+        </button>
+      </div>
+
+      <pre v-if="lastObjects.dateStr">
+{{JSON.stringify(lastObjects, formatJson,'  ')}}</pre>
+      <pre v-if="maxObjects.dateStr">
+{{JSON.stringify(maxObjects, formatJson,'  ')}}</pre>
+      <pre v-if="minObjects.dateStr">
+{{JSON.stringify(minObjects, formatJson,'  ')}}</pre>
     </div>
-    <script>
-      // const keys = Object.keys(window);
-      // console.log(keys);
-      // keys.forEach((key) => {
-      //   if (key.includes("_")) {
-      //     console.log(key);
-      //   }
-      // });
-      const { createApp, ref } = Vue;
-      const dataFormat = (date) => {
-        return date
-          .toLocaleDateString("zh-CN", {
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit",
-          })
-          .replaceAll("/", "-");
-      };
-      const app = createApp({
-        setup() {
-          const investmentBase = ref(1000);
-          let maxObjects = ref({});
-          let minObjects = ref({});
-          let lastObjects = ref({});
-          let startDate = ref();
-          let endDate = ref();
-          let quickDate = ref(0);
-          let saleType = ref(3);
-          const dateRagne = ref({
-            max: dataFormat(new Date()),
-            min: dataFormat(new Date(Data_ACWorthTrend[0][0])),
-          });
-          const getIndex = (timestamp, isEnd = false) => {
-            for (let index = 0; index < Data_ACWorthTrend.length; index++) {
-              const [date] = Data_ACWorthTrend[index];
-              if (date >= timestamp) {
-                return index;
+  </div>
+  <script>
+    // const keys = Object.keys(window);
+    // console.log(keys);
+    // keys.forEach((key) => {
+    //   if (key.includes("_")) {
+    //     console.log(key);
+    //   }
+    // });
+    const { createApp, ref } = Vue;
+    const dataFormat = (date) => {
+      return date
+        .toLocaleDateString("zh-CN", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        })
+        .replaceAll("/", "-");
+    };
+    const app = createApp({
+      setup() {
+        const investmentBase = ref(1000);
+        let maxObjects = ref({});
+        let minObjects = ref({});
+        let lastObjects = ref({});
+        let startDate = ref();
+        let endDate = ref();
+        let quickDate = ref(0);
+        let saleType = ref(3);
+        const dateRagne = ref({
+          max: dataFormat(new Date()),
+          min: dataFormat(new Date(Data_ACWorthTrend[0][0])),
+        });
+        const getIndex = (timestamp, isEnd = false) => {
+          for (let index = 0; index < Data_ACWorthTrend.length; index++) {
+            const [date] = Data_ACWorthTrend[index];
+            if (date >= timestamp) {
+              return index;
+            }
+          }
+          if (!isEnd) {
+            return Data_ACWorthTrend.length - 1;
+          } else {
+            return 0;
+          }
+        };
+        // 记录每一天的情况
+        const doCalc = () => {
+          // console.log(minObjects)
+          // console.log(saleType);
+          // console.log(startDate);
+          // console.log(endDate);
+
+          let investmentConuts = 0;
+          let remainingCounts = 0;
+          let upTimes = 0;
+          let downTimes = 0;
+          let straightTimes = 0;
+          let total = 0;
+          let saledTotal = 0;
+          let fundUnits = 0;
+          let lastestWorth = 0;
+          let firstWorth = 0;
+          let useStartDate = 0;
+          let useEndDate = 0;
+          maxObjects.value = {};
+          minObjects.value = {};
+          let listObjects = [];
+          Data_ACWorthTrend.forEach(([date, netWorth], idx) => {
+            if (startDate.value) {
+              const timestamp = +new Date(`${startDate.value} 00:00:00`);
+              // 比开始时间小 舍去
+              if (date < timestamp) {
+                return;
               }
             }
-            if (!isEnd) {
-              return Data_ACWorthTrend.length - 1;
+            if (endDate.value) {
+              const timestamp = +new Date(`${endDate.value} 00:00:00`);
+              // 比结束时间大 舍去
+              if (date > timestamp) {
+                return;
+              }
+            }
+            // 下面开始计算
+            investmentConuts++;
+            remainingCounts++;
+            fundUnits += investmentBase.value / netWorth;
+
+            if (saledTotal > investmentBase.value) {
+              saledTotal -= investmentBase.value
             } else {
-              return 0;
+              total += (investmentBase.value - saledTotal);
+              saledTotal = 0
             }
-          };
-          // 记录每一天的情况
-          const doCalc = () => {
-            // console.log(minObjects)
-            // console.log(saleType);
-            // console.log(startDate);
-            // console.log(endDate);
+            if (idx) {
+              // 首次不算 第二次开始计算
+              const preItem = Data_ACWorthTrend[idx - 1];
+              if (netWorth > preItem[1]) {
+                upTimes++;
+                // 这里判断 是否落袋 了
+                if (remainingCounts > 5) {
+                  const stv = saleType.value;
+                  // saleType 0 = 不落袋 1 = 只落袋上一条有利润的   2 = 落袋两天的（好比当天落袋 但不继续投） 3 = 特殊处理 看代码
+                  const itemUnits = investmentBase.value / preItem[1];
+                  let saledNums = 0;
+                  const prePreNetWorth = Data_ACWorthTrend[idx - 2][1];
+                  if (stv <= 2) {
+                    saledNums = stv;
+                  } else if (stv == 3) {
+                    if (
+                      netWorth > prePreNetWorth ||
+                      (netWorth - preItem[1]) / preItem[1] > 0.005
+                    ) {
+                      saledNums = 2;
+                    }
+                  } else if (stv == 4) {
+                    if (
+                      netWorth > prePreNetWorth ||
+                      (netWorth - preItem[1]) / preItem[1] > 0.01
+                    ) {
+                      saledNums = 2;
+                    }
+                  }
 
-            let investmentConuts = 0;
-            let total = 0;
-            let fundUnits = 0;
-            let lastestWorth = 0;
-            let firstWorth = 0;
-            let useStartDate = 0
-            let useEndDate = 0
-            maxObjects.value = {};
-            minObjects.value = {};
-            let listObjects = [];
-            Data_ACWorthTrend.forEach(([date, netWorth]) => {
-              if (startDate.value) {
-                const timestamp = +new Date(startDate.value);
-                // 比开始时间小 舍去
-                if (date < timestamp) {
-                  return;
+                  remainingCounts -= saledNums;
+                  fundUnits -= saledNums * itemUnits;
+                  saledTotal += netWorth * saledNums * itemUnits;
                 }
+              } else if (netWorth < preItem[1]) {
+                downTimes++;
+              } else {
+                straightTimes++;
               }
-              if (endDate.value) {
-                const timestamp = +new Date(endDate.value);
-                // 比结束时间大 舍去
-                if (date > timestamp) {
-                  return;
-                }
-              }
-              // console.log(dataFormat(new Date(date)));
-              investmentConuts++;
-              // const dateStr = new Date(date).toLocaleDateString("zh-CN", {
-              //   year: "numeric",
-              //   month: "2-digit",
-              //   day: "2-digit",
-              // });
-              fundUnits += investmentBase.value / netWorth;
-              total += investmentBase.value;
-              if (!firstWorth) {
-                firstWorth = netWorth;
-                useStartDate = date
-              }
-              latested = netWorth;
-              useEndDate = date
-              const fundWorth = fundUnits * latested;
-              let profit = fundWorth - total;
-              listObjects.push({
-                date,
-                useStartDate:dataFormat(new Date(useStartDate)),
-                useEndDate:dataFormat(new Date(useEndDate)),
-                dateStr: dataFormat(new Date(date)),
+            }
+            // 记录一下第一次
+            if (!firstWorth) {
+              firstWorth = netWorth;
+              useStartDate = date;
+            }
+            // 每次都给最后一次，不会错，
+            latested = netWorth;
+            useEndDate = date;
+            const fundWorth = fundUnits * latested;
+            let profit = fundWorth + saledTotal - total;
+
+            listObjects.push({
+              date,
+              useStartDate: dataFormat(new Date(useStartDate)),
+              useEndDate: dataFormat(new Date(useEndDate)),
+              dateStr: dataFormat(new Date(date)),
+              conuts: {
+                investmentConuts,
+                remainingCounts,
+              },
+              upsAndDowns: {
+                upTimes,
+                downTimes,
+                straightTimes,
+              },
+              result: {
                 total,
+                saledTotal,
                 fundUnits,
-                firstWorth,
-                lastestWorth: latested,
                 profit,
-                defPercentage: `${((latested / firstWorth  - 1) * 100).toFixed(2)}%`,
-                myPercentage: `${((profit / total) * 100).toFixed(2)}%`,
-                fundWorth,
+              },
+              firstWorth,
+              lastestWorth: latested,
+              dePercentage: `${((latested / firstWorth - 1) * 100).toFixed(2)}%`,
+              myPercentage: `${((profit / total) * 100).toFixed(2)}%`,
+              fundWorth,
+            });
+          });
+
+          listObjects.forEach((item, idx, list) => {
+            if (!idx) {
+              Object.assign(maxObjects.value, item, {
+                result: {
+                  profit: -999999,
+                },
               });
-            });
+              Object.assign(minObjects.value, item, {
+                result: {
+                  profit: 999999,
+                },
+              });
+              return;
+            }
+            if (maxObjects.value.result.profit < item.result.profit) {
+              Object.assign(maxObjects.value, item);
+            }
+            if (minObjects.value.result.profit > item.result.profit) {
+              Object.assign(minObjects.value, item);
+            }
+          });
 
-            listObjects.forEach((item, idx, list) => {
-              if (!idx) {
-                Object.assign(maxObjects.value, item);
-                Object.assign(minObjects.value, item);
-                return;
-              }
-              if (maxObjects.value.profit < item.profit) {
-                Object.assign(maxObjects.value, item, { investmentConuts });
-              }
-              if (minObjects.value.profit > item.profit) {
-                Object.assign(minObjects.value, item, { investmentConuts });
-              }
-            });
-
-            Object.assign(
-              lastObjects.value,
-              listObjects[listObjects.length - 1],
-              { investmentConuts },
+          Object.assign(
+            lastObjects.value,
+            listObjects[listObjects.length - 1],
+          );
+        };
+        doCalc();
+        return {
+          doCalc,
+          formatJson(key, value) {
+            if (
+              typeof value == "number" &&
+              value < +new Date() / 100 &&
+              value % 1 != 0
+            ) {
+              return Number(value.toFixed(4));
+            }
+            return value;
+          },
+          investmentBase,
+          baseList: [1, 2, 3, 4, 5, 10, 15, 20, 30, 40, 50].map(
+            (item) => item * 1000,
+          ),
+          fS_name,
+          fS_code,
+          // iShow: false,
+          iShow:true,
+          maxObjects,
+          minObjects,
+          lastObjects,
+          quickDate,
+          startDate,
+          endDate,
+          dateRagne,
+          saleType,
+          onQuickDateChange() {
+            console.log(quickDate);
+            if (!quickDate.value) {
+              startDate.value = undefined;
+              endDate.value = undefined;
+              return;
+            }
+            startDate.value = dataFormat(
+              new Date(
+                Math.max(
+                  +new Date(Data_ACWorthTrend[0][0]),
+                  +new Date(`${quickDate.value}-01-01`),
+                ),
+              ),
             );
-          };
-          doCalc()
-          return {
-            doCalc,
-            formatJson (key,value) {
-              if (typeof value == 'number' && value < (+new Date()) / 100) {
-                return value.toFixed(2)
-              }
-              return value
-            },
-            investmentBase,
-            baseList: [1, 2, 3, 4, 5, 10, 15, 20, 30, 40, 50].map(
-              (item) => item * 1000,
-            ),
-            fS_name,
-            fS_code,
-            iShow: false,
-            // iShow:true,
-            maxObjects,
-            minObjects,
-            lastObjects,
-            quickDate,
-            startDate,
-            endDate,
-            dateRagne,
-            saleType,
-            onQuickDateChange() {
-              console.log(quickDate);
-              if (!quickDate.value) {
-                startDate.value = undefined;
-                endDate.value = undefined;
-                return;
-              }
-              startDate.value = dataFormat(
-                new Date(
-                  Math.max(
-                    +new Date(Data_ACWorthTrend[0][0]),
-                    +new Date(`${quickDate.value}-01-01`),
+            endDate.value = dataFormat(
+              new Date(
+                Math.min(
+                  +new Date(
+                    Data_ACWorthTrend[Data_ACWorthTrend.length - 1][0],
                   ),
+                  +new Date(`${quickDate.value}-12-31`),
                 ),
-              );
-              endDate.value = dataFormat(
-                new Date(
-                  Math.min(
-                    +new Date(
-                      Data_ACWorthTrend[Data_ACWorthTrend.length - 1][0],
-                    ),
-                    +new Date(`${quickDate.value}-12-31`),
-                  ),
-                ),
-              );
-            },
-            yearRange: (() => {
-              const firstYear = new Date(Data_ACWorthTrend[0][0]).getFullYear();
-              const years = [];
-              const thisYeaer = new Date().getFullYear();
-              let useYear = firstYear;
-              do {
-                years.push(useYear);
-                useYear++;
-              } while (useYear <= thisYeaer);
-              return years;
-            })(),
-          };
-        },
-      });
-      app.mount("#app");
-      console.log(app);
-    </script>
-  </body>
+              ),
+            );
+          },
+          yearRange: (() => {
+            const firstYear = new Date(Data_ACWorthTrend[0][0]).getFullYear();
+            const years = [];
+            const thisYeaer = new Date().getFullYear();
+            let useYear = firstYear;
+            do {
+              years.push(useYear);
+              useYear++;
+            } while (useYear <= thisYeaer);
+            return years;
+          })(),
+        };
+      },
+    });
+    app.mount("#app");
+  </script>
+</body>
+
 </html>
