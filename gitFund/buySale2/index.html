@@ -15,6 +15,7 @@
           ' src="//cdn.bootcdn.net/ajax/libs/vue/3.5.22/vue.global.prod.min.js"';
       } else {
         vueSrc += ' src="//192.168.1.153:88/demo/vue/vue.global.prod.min.js"';
+        // vueSrc += ' src="./vue.global.prod.min.js"';
       }
       vueSrc += ">";
       vueSrc += "<";
@@ -58,7 +59,7 @@
     .section-area {
       display: flex;
       align-self: center;
-      margin: 5px 0;
+      margin: 10px 0;
     }
 
     .section-item {
@@ -148,6 +149,21 @@
             <span>NB||0.1</span>
           </label>
         </div>
+        <!-- 清仓条件，持有利润超过一定比例 就 saleOut -->
+        <div class="section-area" v-if="saleType<=2">
+          <label class="section-item">
+            <span>SaleOut条件</span>
+            <select v-model="saleOutType" class="section-item">
+              <option
+                :value="base"
+                :key="base"
+                v-for="base in [0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3]"
+              >
+                {{`${base==0?'不清仓':`持有利润超过${(base*100).toFixed(0)}%`}`}}
+              </option>
+            </select>
+          </label>
+        </div>
         <div class="section-area" style="justify-content: flex-end">
           <button
             @click="doCalc"
@@ -166,6 +182,11 @@
         <pre v-if="minObjects.dateStr">
 {{JSON.stringify(minObjects, formatJson,'  ')}}</pre
         >
+        <div v-if="saledObjects.length>0">
+          <h4 style="text-align: center; margin: 20px 0">清仓记录</h4>
+
+          <pre> {{saledObjects}}</pre>
+        </div>
       </div>
     </div>
     <script>
@@ -197,6 +218,7 @@
           let endDate = ref();
           let quickDate = ref(0);
           let saleType = ref(3);
+          let saleOutType = ref(0);
           const dateRagne = ref({
             max: dataFormat(new Date()),
             min: dataFormat(new Date(Data_ACWorthTrend[0][0])),
@@ -231,15 +253,14 @@
             let total = 0;
             let saledTotal = 0;
             let fundUnits = 0;
-            let lastestWorth = 0;
             let firstWorth = 0;
+            let lastestWorth = 0;
             let useStartDate = 0;
             let useEndDate = 0;
             maxObjects.value = {};
             minObjects.value = {};
             lastObjects.value = {};
             saledObjects.value = [];
-            let listObjects = [];
             Data_ACWorthTrend.forEach(([date, netWorth], idx) => {
               if (startDate.value) {
                 const timestamp = +new Date(`${startDate.value} 00:00:00`);
@@ -255,49 +276,70 @@
                   return;
                 }
               }
-
-              if (idx) {
-                // 首次不算 第二次开始计算
-                const preItem = Data_ACWorthTrend[idx - 1];
-                if (netWorth > preItem[1]) {
-                  upTimes++;
-                  // 这里判断 是否落袋 了
-                  if (remainingCounts > 5) {
-                    const stv = saleType.value;
-                    // saleType 0 = 不落袋 1 = 只落袋上一条有利润的   2 = 落袋两天的（好比当天落袋 但不继续投） 3 = 特殊处理 看代码
-                    const itemUnits = investmentBase.value / preItem[1];
-                    let saledNums = 0;
-                    const prePreNetWorth = Data_ACWorthTrend[idx - 2][1];
-                    if (stv <= 2) {
-                      saledNums = stv;
-                    } else if (stv == 3) {
-                      if (netWorth > prePreNetWorth) {
-                        saledNums = 2;
-                      } else {
-                        saledNums = 1;
-                      }
-                    }
-
-                    remainingCounts -= saledNums;
-                    fundUnits -= saledNums * itemUnits;
-                    saledTotal += netWorth * itemUnits * saledNums;
-                  }
-                } else if (netWorth < preItem[1]) {
-                  downTimes++;
-                } else {
-                  straightTimes++;
-                }
-              }
               // 记录一下第一次
               if (!firstWorth) {
                 firstWorth = netWorth;
                 useStartDate = date;
               }
               // 每次都给最后一次，不会错，
-              latested = netWorth;
+              lastestWorth = netWorth;
               useEndDate = date;
-              const fundWorth = fundUnits * latested;
-              let profit = fundWorth + saledTotal - total;
+              if (idx) {
+                // 首次不算 第二次开始计算
+                const preItem = Data_ACWorthTrend[idx - 1];
+                if (netWorth > preItem[1]) {
+                  upTimes++;
+                  // 这里判断 是否落袋 了
+                  // if (remainingCounts > 5) {
+                  // }
+                  const stv = saleType.value;
+
+                  // saleType 0 = 不落袋 1 = 只落袋上一条有利润的   2 = 落袋两天的（好比当天落袋 但不继续投） 3 = 特殊处理 看代码
+                  const itemUnits = investmentBase.value / preItem[1];
+                  let saledNums = 0;
+                  const prePreNetWorth = Data_ACWorthTrend[idx - 2][1];
+                  if (stv <= 2) {
+                    saledNums = stv;
+                  } else if (stv == 3) {
+                    if (netWorth > prePreNetWorth) {
+                      saledNums = 2;
+                    } else {
+                      saledNums = 1;
+                    }
+                  }
+                  remainingCounts -= saledNums;
+                  fundUnits -= saledNums * itemUnits;
+                  saledTotal += netWorth * itemUnits * saledNums;
+                } else if (netWorth < preItem[1]) {
+                  downTimes++;
+                } else {
+                  straightTimes++;
+                }
+              }
+              const fundWorth = fundUnits * lastestWorth;
+              let totalProfit = fundWorth + saledTotal - total;
+              let fundProfit =
+                fundWorth - remainingCounts * investmentBase.value;
+
+              const stov = saleOutType.value;
+              let fundPercentage =
+                fundProfit / (remainingCounts * investmentBase.value);
+
+              if (saleType.value <= 2 && stov > 0 && fundPercentage > stov) {
+                saledObjects.value.push({
+                  date,
+                  dateStr: dataFormat(new Date(date)),
+                  fundUnits,
+                  remainingCounts,
+                  fundWorth,
+                  fundPercentage: `${(fundPercentage * 100).toFixed(2)}%`,
+                  fundProfit,
+                });
+                // 清仓
+                saledTotal += fundWorth;
+                fundUnits = 0;
+                remainingCounts = 0;
+              }
               lastObjects.value = {
                 date,
                 useStartDate: dataFormat(new Date(useStartDate)),
@@ -318,22 +360,26 @@
                   saledTotal,
                   fundWorth,
                   fundUnits,
-                  profit,
+                  totalProfit,
+                  fundProfit,
                 },
                 firstWorth,
-                lastestWorth: latested,
-                dePercentage: `${((latested / firstWorth - 1) * 100).toFixed(2)}%`,
-                myPercentage: `${((profit / total) * 100).toFixed(2)}%`,
+                lastestWorth,
+                defPercentage: `${((lastestWorth / firstWorth - 1) * 100).toFixed(2)}%`,
+                fundPercentage: `${(fundPercentage * 100).toFixed(2)}%`,
+                totalPercentage: `${((totalProfit / total) * 100).toFixed(2)}%`,
               };
+              // 记录最大利润值
               if (
-                !maxObjects.value?.result?.profit ||
-                maxObjects.value?.result?.profit < profit
+                !maxObjects.value?.result?.totalProfit ||
+                maxObjects.value?.result?.totalProfit < totalProfit
               ) {
                 maxObjects.value = lastObjects.value;
               }
+              // 记录最小利润值 亏损负利润
               if (
-                !minObjects.value?.result?.profit ||
-                minObjects.value?.result?.profit > profit
+                !minObjects.value?.result?.totalProfit ||
+                minObjects.value?.result?.totalProfit > totalProfit
               ) {
                 minObjects.value = lastObjects.value;
               }
@@ -379,11 +425,13 @@
             maxObjects,
             minObjects,
             lastObjects,
+            saledObjects,
             quickDate,
             startDate,
             endDate,
             dateRagne,
             saleType,
+            saleOutType,
             onQuickDateChange() {
               if (!quickDate.value) {
                 startDate.value = undefined;
