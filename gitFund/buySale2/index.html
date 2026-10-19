@@ -307,6 +307,10 @@
                       saledNums = 1;
                     }
                   }
+                  // 不够减 就减至 0
+                  if(remainingCounts < saledNums){
+                    saledNums = remainingCounts
+                  }
                   remainingCounts -= saledNums;
                   fundUnits -= saledNums * itemUnits;
                   saledTotal += netWorth * itemUnits * saledNums;
