@@ -297,11 +297,11 @@
                   // saleType 0 = 不落袋 1 = 只落袋上一条有利润的   2 = 落袋两天的（好比当天落袋 但不继续投） 3 = 特殊处理 看代码
                   const itemUnits = investmentBase.value / preItem[1];
                   let saledNums = 0;
-                  const prePreNetWorth = Data_ACWorthTrend[idx - 2][1];
+                  const prePreNetWorth = Data_ACWorthTrend[idx - 2]?  Data_ACWorthTrend[idx - 2][1]:undefined;
                   if (stv <= 2) {
                     saledNums = stv;
                   } else if (stv == 3) {
-                    if (netWorth > prePreNetWorth) {
+                    if ( prePreNetWorth && netWorth > prePreNetWorth) {
                       saledNums = 2;
                     } else {
                       saledNums = 1;
