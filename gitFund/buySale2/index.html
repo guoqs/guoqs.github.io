@@ -150,7 +150,7 @@
           </label>
         </div>
         <!-- 清仓条件，持有利润超过一定比例 就 saleOut -->
-        <div class="section-area" v-if="saleType<=2">
+        <div class="section-area" v-if="saleType<2">
           <label class="section-item">
             <span>SaleOut条件</span>
             <select v-model="saleOutType" class="section-item">
