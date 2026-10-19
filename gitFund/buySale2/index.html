@@ -185,7 +185,7 @@
         <div v-if="saledObjects.length>0">
           <h4 style="text-align: center; margin: 20px 0">清仓记录</h4>
 
-          <pre> {{saledObjects}}</pre>
+          <pre>{{JSON.stringify(saledObjects, formatJson,'  ')}} </pre>
         </div>
       </div>
     </div>
