@@ -292,7 +292,8 @@
                     saledNums = 1;
                   }
                 }
-                console.log(saledNums)
+                
+                //  这种情况下，多卖出一份
                 if (stv == 1 && prePreNetWorth && prePreNetWorth < netWorth && saleTypeNb.value.length) {
                   saledNums = 2
                 }
