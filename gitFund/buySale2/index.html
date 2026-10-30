@@ -293,10 +293,10 @@
                   }
                 }
                 
-                //  这种情况下，多卖出一份
-                if (stv == 1 && prePreNetWorth && prePreNetWorth < netWorth && saleTypeNb.value.length) {
-                  saledNums = 2
-                }
+                //  这种情况下，多卖出一份  
+                  if (stv == 1 && prePreNetWorth && prePreNetWorth < netWorth && prePreNetWorth > preItem[1] && saleTypeNb.value.length) {
+                    saledNums = 2
+                  }
                 // 不够减 就减至 0
                 if (remainingCounts < saledNums) {
                   saledNums = remainingCounts
